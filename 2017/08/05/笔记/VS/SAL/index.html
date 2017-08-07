@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="VS,C++," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Microsoft 源代码注释语言 (SAL)头文件sal.h使用源代码批注，可以使代码背后的意图更加清晰。 这些注释还可以使用自动化的静态分析工具更准确地分析代码，显著减少误判。在代码中使用SAL后，可以在项目属性的代码分析页面勾选生成时启用代码分析，即可让编译器帮你检查函数有没有被正确使用。    使用例子如（WinAPI函数定义上带有的那些宏定义就是SAL）:1234567891011121">
+<meta name="keywords" content="VS,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SAL笔记">
+<meta property="og:url" content="/2017/08/05/笔记/VS/SAL/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="Microsoft 源代码注释语言 (SAL)头文件sal.h使用源代码批注，可以使代码背后的意图更加清晰。 这些注释还可以使用自动化的静态分析工具更准确地分析代码，显著减少误判。在代码中使用SAL后，可以在项目属性的代码分析页面勾选生成时启用代码分析，即可让编译器帮你检查函数有没有被正确使用。    使用例子如（WinAPI函数定义上带有的那些宏定义就是SAL）:1234567891011121">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-05T14:35:49.020Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SAL笔记">
+<meta name="twitter:description" content="Microsoft 源代码注释语言 (SAL)头文件sal.h使用源代码批注，可以使代码背后的意图更加清晰。 这些注释还可以使用自动化的静态分析工具更准确地分析代码，显著减少误判。在代码中使用SAL后，可以在项目属性的代码分析页面勾选生成时启用代码分析，即可让编译器帮你检查函数有没有被正确使用。    使用例子如（WinAPI函数定义上带有的那些宏定义就是SAL）:1234567891011121">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/08/05/笔记/VS/SAL/"/>
+
+
+
+
+
+  <title>SAL笔记 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i>
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/08/05/笔记/VS/SAL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SAL笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-05T21:21:41+08:00">
+                2017-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Microsoft 源代码注释语言 (SAL)<br>头文件<code>sal.h</code><br>使用源代码批注，可以使代码背后的意图更加清晰。 这些注释还可以使用自动化的静态分析工具更准确地分析代码，显著减少误判。<br>在代码中使用SAL后，可以在项目属性的代码分析页面勾选<strong>生成时启用代码分析</strong>，即可让编译器帮你检查函数有没有被正确使用。  </p>
+<hr>
+<p>使用例子如（WinAPI函数定义上带有的那些宏定义就是SAL）:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">WINBASEAPI</div><div class="line">_<span class="function">Ret_maybenull_</span></div><div class="line">HMODULE</div><div class="line">WINAPI</div><div class="line"><span class="title">LoadLibraryA</span><span class="params">(</span></div><div class="line">    _In_ LPCSTR lpLibFileName</div><div class="line">    );</div><div class="line"><span class="function">WINBASEAPI</span></div><div class="line">FARPROC</div><div class="line">WINAPI</div><div class="line"><span class="title">GetProcAddress</span><span class="params">(</span></div><div class="line">    _In_ HMODULE hModule,</div><div class="line">    _In_ LPCSTR lpProcName</div><div class="line">    );</div></pre></td></tr></table></figure></p>
+<p>比如LoadLibraryA这个定义就可以直接看出，传入的参数不可为空，返回值可能为null。<br>此时如果这样用：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">auto</span> dll = LoadLibraryA(<span class="number">0</span>);</div><div class="line">	GetProcAddress(dll, <span class="number">0</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编译时会警告：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">“_Param_(1)”可能是“0”: 这不符合函数“LoadLibraryA”的规范。</div><div class="line">“_Param_(2)”可能是“0”: 这不符合函数“GetProcAddress”的规范。</div></pre></td></tr></table></figure></p>
+<p>如果需要通过这个检查，就在调用前后用判断确保值正确即可。</p>
+<hr>
+<p>SAL 定义了四个基本参数，由用法模式分类。  </p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>批注参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>向调用函数输入</td>
+<td><code>_In_</code></td>
+<td>数据传递给被调用函数且被视为只读。</td>
+</tr>
+<tr>
+<td>向调用者输出</td>
+<td><code>_Out_</code></td>
+<td>调用者为函数提供空间以输出数据。</td>
+</tr>
+<tr>
+<td>向调用函数输入并向调用者输出</td>
+<td><code>_Inout_</code></td>
+<td>可用数据传入函数也可能会被修改。</td>
+</tr>
+<tr>
+<td>向调用者输出指针</td>
+<td><code>_Outptr_</code></td>
+<td>类似<code>_Out_</code>，但返回的值是一个指针。</td>
+</tr>
+</tbody>
+</table>
+<p>上面这些在参数为指针时，值必须非nullptr。<br>如果参数是可选的就加上<code>_opt_</code>后缀，当参数是指针时表示允许nullptr。  </p>
+<p>以下是相关定义，基本上看名字就可以知道其功能，所以有一些不写说明，太多。</p>
+<p><strong>函数参数批注</strong></p>
+<table>
+<thead>
+<tr>
+<th>批注</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_In_</code></td>
+<td>标量，结构，结构指针为类型的输入参数，不会被修改</td>
+</tr>
+<tr>
+<td><code>_Out_</code></td>
+<td>标量，结构，结构指针为类型的输出参数，参数在之前状态不必须有效，但是之后状态必须有效</td>
+</tr>
+<tr>
+<td><code>_Inout_</code></td>
+<td>调用之前之后都必须有效，并假定是不同的值</td>
+</tr>
+<tr>
+<td><code>_In_z_</code></td>
+<td>以 null 结尾的字符串的指针为输入</td>
+</tr>
+<tr>
+<td><code>_Inout_z_</code></td>
+<td>将修改的 null 终止的字符数组的指针。在调用之前和之后都必须有效，但是假定值已经更改。</td>
+</tr>
+<tr>
+<td><code>_In_reads_(s)</code><br><code>_In_reads_bytes_(s)</code></td>
+<td>一个数组的指针，可被该函数读取。数组大小是 s 元素，该元素绑定有效。<br><em>bytes</em> 变量以字节为范围而不是元素。  当范围不能表示为元素时，请使用此方法。</td>
+</tr>
+<tr>
+<td><code>_In_reads_z_(s)</code></td>
+<td>指向以 null 终止并具有已知大小的数组的指针。s为元素个数，下同</td>
+</tr>
+<tr>
+<td><code>_In_reads_or_z_(s)</code></td>
+<td>指向以 null 终止或具有已知大小的数组或二者都有的指针。</td>
+</tr>
+<tr>
+<td><code>_Out_writes_(s)</code> <br> <code>_Out_writes_bytes_(s)</code></td>
+<td>输出指定长度的数组</td>
+</tr>
+<tr>
+<td><code>_Out_writes_z_(s)</code></td>
+<td>输出指定长度数组并以0结尾</td>
+</tr>
+<tr>
+<td><code>_Inout_updates_(s)</code><br><code>_Inout_updates_bytes_(s)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>_Inout_updates_z_(s)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>_Out_writes_to_(s,c)</code><br><code>_Out_writes_bytes_to_(s,c)</code><br><code>_Out_writes_all_(s)</code><br><code>_Out_writes_bytes_all_(s)</code></td>
+<td>写直到c个元素</td>
+</tr>
+<tr>
+<td><code>_Inout_updates_to_(s,c))</code><br><code>_Inout_updates_bytes_to_(s,c)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>_Inout_updates_all_(s))</code><br><code>_Inout_updates_bytes_all_(s)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>_In_reads_to_ptr_(p)</code></td>
+<td>数组的一个指针表达式 类似xxx-123这种</td>
+</tr>
+<tr>
+<td><code>_In_reads_to_ptr_z_(p)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>_Out_writes_to_ptr_(p)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>_Out_writes_to_ptr_z_(p)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>_Outptr_</code></td>
+<td>输出指针，如果是输出引用，把ptr改成ref</td>
+</tr>
+<tr>
+<td><code>_Outptr_opt_</code></td>
+<td>可选输出指针</td>
+</tr>
+<tr>
+<td><code>_Outptr_result_maybenull_</code></td>
+<td>参数不能是空的，在点发送状态对位置可以为空。</td>
+</tr>
+<tr>
+<td><code>_Outptr_opt_result_maybenull_</code></td>
+</tr>
+</tbody>
+</table>
+<p>某些是可以加<code>_opt_</code>的，不全记了，用VS时有提示一看就能明白。  </p>
+<p><strong>返回值的批注</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">_Ret_z_</div><div class="line">_Ret_writes_(s)</div><div class="line">_Ret_writes_bytes_(s)</div><div class="line">_Ret_writes_z_(s)</div><div class="line">_Ret_writes_to_(s,c)</div><div class="line">_Ret_writes_maybenull_(s)</div><div class="line">_Ret_writes_to_maybenull_(s)</div><div class="line">_Ret_writes_maybenull_z_(s)</div><div class="line">_Ret_maybenull_</div><div class="line">_Ret_maybenull_z_</div><div class="line">_Ret_null_</div><div class="line">_Ret_notnull_</div><div class="line">_Ret_writes_bytes_to_</div><div class="line">_Ret_writes_bytes_maybenull_</div><div class="line">_Ret_writes_bytes_to_maybenull_</div></pre></td></tr></table></figure></p>
+<p>后面基本上都是定义说明（我不常用），直接帖链接减少无意义内容。</p>
+<p>函数参数批注完整内容：<br><a href="https://msdn.microsoft.com/zh-cn/library/hh916382(v=vs.120).aspx" target="_blank" rel="external">https://msdn.microsoft.com/zh-cn/library/hh916382(v=vs.120).aspx</a></p>
+<p><strong>函数行为批注</strong><br><a href="https://msdn.microsoft.com/zh-cn/library/jj159529.aspx" target="_blank" rel="external">https://msdn.microsoft.com/zh-cn/library/jj159529.aspx</a><br><code>_Check_return_</code>可以用一下，但是编译时好像没反应</p>
+<p><strong>结构批注</strong><br>基本上是一些提示类型大小的<br><a href="https://msdn.microsoft.com/zh-cn/library/jj159528.aspx" target="_blank" rel="external">https://msdn.microsoft.com/zh-cn/library/jj159528.aspx</a></p>
+<p><strong>锁定批注</strong><br>用来减少并发BUG的<br><a href="https://msdn.microsoft.com/zh-cn/library/hh916381.aspx" target="_blank" rel="external">https://msdn.microsoft.com/zh-cn/library/hh916381.aspx</a></p>
+<p><strong>批注的内部函数</strong><br>可以在传递参数时用某些函数检查<br><a href="https://msdn.microsoft.com/zh-cn/library/jj159527(v=vs.120).aspx" target="_blank" rel="external">https://msdn.microsoft.com/zh-cn/library/jj159527(v=vs.120).aspx</a></p>
+<p><strong>例子</strong><br><a href="https://msdn.microsoft.com/zh-cn/library/jj159525.aspx" target="_blank" rel="external">https://msdn.microsoft.com/zh-cn/library/jj159525.aspx</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/08/05/笔记/VS/SAL/" title="SAL笔记">/2017/08/05/笔记/VS/SAL/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/VS/" class="fa fa-tag" rel="tag"> VS</a>
+          
+            <a href="/tags/C/" class="fa fa-tag" rel="tag"> C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/05/笔记/VS/VS-snippet中的函数/" rel="next" title="VS snippet中的函数">
+                <i class="fa fa-chevron-left"></i> VS snippet中的函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/07/其它/换模板/" rel="prev" title="换模板">
+                换模板 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">99</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js" color="54,66,81" opacity='0.3' zIndex="-2" count="40"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
