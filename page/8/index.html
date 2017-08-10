@@ -211,6 +211,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
@@ -253,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/31/笔记/C++/惯用法/25-Execute-Around-Pointer/">
+    <link itemprop="mainEntityOfPage" href="/2017/07/31/学习笔记/C++/惯用法/26-Exploding-Return-Type/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nargnos">
@@ -272,7 +282,163 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/31/笔记/C++/惯用法/25-Execute-Around-Pointer/" itemprop="url">[C++ Idioms] 25. Execute-Around Pointer</a></h1>
+                <a class="post-title-link" href="/2017/07/31/学习笔记/C++/惯用法/26-Exploding-Return-Type/" itemprop="url">[C++ Idioms] 26. [易] Exploding Return Type</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-31T16:07:31+08:00">
+                2017-07-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
+                    <span itemprop="name">C++ Idioms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>用返回值返回异常或错误代码。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/31/学习笔记/C++/惯用法/26-Exploding-Return-Type/#more" rel="contents">              
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/07/31/学习笔记/C++/惯用法/25-Execute-Around-Pointer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/31/学习笔记/C++/惯用法/25-Execute-Around-Pointer/" itemprop="url">[C++ Idioms] 25. Execute-Around Pointer</a></h1>
         
 
         <div class="post-meta">
@@ -307,7 +473,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Idioms/" itemprop="url" rel="index">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
                     <span itemprop="name">C++ Idioms</span>
                   </a>
                 </span>
@@ -348,7 +525,7 @@
           <p>跟踪对象的函数调用。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/31/笔记/C++/惯用法/25-Execute-Around-Pointer/#more" rel="contents">              
+            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/31/学习笔记/C++/惯用法/25-Execute-Around-Pointer/#more" rel="contents">              
             </a>
           </div>
           <!--/noindex-->
@@ -398,7 +575,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/31/笔记/C++/惯用法/24-Erase-Remove/">
+    <link itemprop="mainEntityOfPage" href="/2017/07/31/学习笔记/C++/惯用法/24-Erase-Remove/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nargnos">
@@ -417,7 +594,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/31/笔记/C++/惯用法/24-Erase-Remove/" itemprop="url">[C++ Idioms] 24. [易] Erase Remove</a></h1>
+                <a class="post-title-link" href="/2017/07/31/学习笔记/C++/惯用法/24-Erase-Remove/" itemprop="url">[C++ Idioms] 24. [易] Erase Remove</a></h1>
         
 
         <div class="post-meta">
@@ -452,7 +629,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Idioms/" itemprop="url" rel="index">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
                     <span itemprop="name">C++ Idioms</span>
                   </a>
                 </span>
@@ -493,7 +681,7 @@
           <p>从容器中消除元素。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/31/笔记/C++/惯用法/24-Erase-Remove/#more" rel="contents">              
+            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/31/学习笔记/C++/惯用法/24-Erase-Remove/#more" rel="contents">              
             </a>
           </div>
           <!--/noindex-->
@@ -543,7 +731,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/31/笔记/C++/惯用法/23-Enable-if/">
+    <link itemprop="mainEntityOfPage" href="/2017/07/31/学习笔记/C++/惯用法/23-Enable-if/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nargnos">
@@ -562,7 +750,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/31/笔记/C++/惯用法/23-Enable-if/" itemprop="url">[C++ Idioms] 23. [替] Enable if</a></h1>
+                <a class="post-title-link" href="/2017/07/31/学习笔记/C++/惯用法/23-Enable-if/" itemprop="url">[C++ Idioms] 23. [替] Enable if</a></h1>
         
 
         <div class="post-meta">
@@ -597,7 +785,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Idioms/" itemprop="url" rel="index">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
                     <span itemprop="name">C++ Idioms</span>
                   </a>
                 </span>
@@ -638,7 +837,7 @@
           <p>让编译器根据条件选择合适的函数进行编译。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/31/笔记/C++/惯用法/23-Enable-if/#more" rel="contents">              
+            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/31/学习笔记/C++/惯用法/23-Enable-if/#more" rel="contents">              
             </a>
           </div>
           <!--/noindex-->
@@ -688,7 +887,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/30/笔记/C++/惯用法/22-Empty-Base-Optimization/">
+    <link itemprop="mainEntityOfPage" href="/2017/07/30/学习笔记/C++/惯用法/22-Empty-Base-Optimization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nargnos">
@@ -707,7 +906,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/30/笔记/C++/惯用法/22-Empty-Base-Optimization/" itemprop="url">[C++ Idioms] 22. [易] Empty Base Optimization</a></h1>
+                <a class="post-title-link" href="/2017/07/30/学习笔记/C++/惯用法/22-Empty-Base-Optimization/" itemprop="url">[C++ Idioms] 22. [易] Empty Base Optimization</a></h1>
         
 
         <div class="post-meta">
@@ -742,7 +941,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Idioms/" itemprop="url" rel="index">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
                     <span itemprop="name">C++ Idioms</span>
                   </a>
                 </span>
@@ -783,7 +993,7 @@
           <p>优化掉空类/结构体的占用空间。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/笔记/C++/惯用法/22-Empty-Base-Optimization/#more" rel="contents">              
+            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/学习笔记/C++/惯用法/22-Empty-Base-Optimization/#more" rel="contents">              
             </a>
           </div>
           <!--/noindex-->
@@ -833,7 +1043,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/30/笔记/C++/惯用法/21-Curiously-Recurring-Template-Pattern/">
+    <link itemprop="mainEntityOfPage" href="/2017/07/30/学习笔记/C++/惯用法/21-Curiously-Recurring-Template-Pattern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nargnos">
@@ -852,7 +1062,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/30/笔记/C++/惯用法/21-Curiously-Recurring-Template-Pattern/" itemprop="url">[C++ Idioms] 21. Curiously Recurring Template Pattern</a></h1>
+                <a class="post-title-link" href="/2017/07/30/学习笔记/C++/惯用法/21-Curiously-Recurring-Template-Pattern/" itemprop="url">[C++ Idioms] 21. Curiously Recurring Template Pattern</a></h1>
         
 
         <div class="post-meta">
@@ -887,7 +1097,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Idioms/" itemprop="url" rel="index">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
                     <span itemprop="name">C++ Idioms</span>
                   </a>
                 </span>
@@ -928,7 +1149,7 @@
           <p>这就是很多惯用法都用到的CRTP。这是去除虚表的一种方法。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/笔记/C++/惯用法/21-Curiously-Recurring-Template-Pattern/#more" rel="contents">              
+            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/学习笔记/C++/惯用法/21-Curiously-Recurring-Template-Pattern/#more" rel="contents">              
             </a>
           </div>
           <!--/noindex-->
@@ -978,7 +1199,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/30/笔记/C++/惯用法/20-Covariant-Return-Types/">
+    <link itemprop="mainEntityOfPage" href="/2017/07/30/学习笔记/C++/惯用法/20-Covariant-Return-Types/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nargnos">
@@ -997,7 +1218,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/30/笔记/C++/惯用法/20-Covariant-Return-Types/" itemprop="url">[C++ Idioms] 20. [易] Covariant Return Types</a></h1>
+                <a class="post-title-link" href="/2017/07/30/学习笔记/C++/惯用法/20-Covariant-Return-Types/" itemprop="url">[C++ Idioms] 20. [易] Covariant Return Types</a></h1>
         
 
         <div class="post-meta">
@@ -1032,7 +1253,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Idioms/" itemprop="url" rel="index">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
                     <span itemprop="name">C++ Idioms</span>
                   </a>
                 </span>
@@ -1073,7 +1305,7 @@
           <p>返回值协变。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/笔记/C++/惯用法/20-Covariant-Return-Types/#more" rel="contents">              
+            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/学习笔记/C++/惯用法/20-Covariant-Return-Types/#more" rel="contents">              
             </a>
           </div>
           <!--/noindex-->
@@ -1123,7 +1355,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/30/笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/">
+    <link itemprop="mainEntityOfPage" href="/2017/07/30/学习笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nargnos">
@@ -1142,7 +1374,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/30/笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/" itemprop="url">[C++ Idioms] 19. [易] Counted Body/Reference Counting (intrusive)</a></h1>
+                <a class="post-title-link" href="/2017/07/30/学习笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/" itemprop="url">[C++ Idioms] 19. [易] Counted Body/Reference Counting (intrusive)</a></h1>
         
 
         <div class="post-meta">
@@ -1177,7 +1409,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Idioms/" itemprop="url" rel="index">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
                     <span itemprop="name">C++ Idioms</span>
                   </a>
                 </span>
@@ -1218,7 +1461,7 @@
           <p>享元模式的一个应用。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/#more" rel="contents">              
+            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/学习笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/#more" rel="contents">              
             </a>
           </div>
           <!--/noindex-->
@@ -1268,7 +1511,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/30/笔记/C++/惯用法/18-Copy-on-write/">
+    <link itemprop="mainEntityOfPage" href="/2017/07/30/学习笔记/C++/惯用法/18-Copy-on-write/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nargnos">
@@ -1287,7 +1530,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/30/笔记/C++/惯用法/18-Copy-on-write/" itemprop="url">[C++ Idioms] 18. [易] Copy on write</a></h1>
+                <a class="post-title-link" href="/2017/07/30/学习笔记/C++/惯用法/18-Copy-on-write/" itemprop="url">[C++ Idioms] 18. [易] Copy on write</a></h1>
         
 
         <div class="post-meta">
@@ -1322,7 +1565,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Idioms/" itemprop="url" rel="index">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
                     <span itemprop="name">C++ Idioms</span>
                   </a>
                 </span>
@@ -1363,7 +1617,7 @@
           <p>写时复制。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/笔记/C++/惯用法/18-Copy-on-write/#more" rel="contents">              
+            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/学习笔记/C++/惯用法/18-Copy-on-write/#more" rel="contents">              
             </a>
           </div>
           <!--/noindex-->
@@ -1413,7 +1667,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/30/笔记/C++/惯用法/17-Copy-and-swap/">
+    <link itemprop="mainEntityOfPage" href="/2017/07/30/学习笔记/C++/惯用法/17-Copy-and-swap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nargnos">
@@ -1432,7 +1686,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/30/笔记/C++/惯用法/17-Copy-and-swap/" itemprop="url">[C++ Idioms] 17. [易] Copy and swap</a></h1>
+                <a class="post-title-link" href="/2017/07/30/学习笔记/C++/惯用法/17-Copy-and-swap/" itemprop="url">[C++ Idioms] 17. [易] Copy and swap</a></h1>
         
 
         <div class="post-meta">
@@ -1467,7 +1721,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Idioms/" itemprop="url" rel="index">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
                     <span itemprop="name">C++ Idioms</span>
                   </a>
                 </span>
@@ -1508,152 +1773,7 @@
           <p>创建赋值操作的异常安全实现。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/笔记/C++/惯用法/17-Copy-and-swap/#more" rel="contents">              
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/30/笔记/C++/惯用法/16-Construction-Tracker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Nargnos">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="{S}">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/30/笔记/C++/惯用法/16-Construction-Tracker/" itemprop="url">[C++ Idioms] 16. Construction Tracker</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T18:14:48+08:00">
-                2017-07-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-Idioms/" itemprop="url" rel="index">
-                    <span itemprop="name">C++ Idioms</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>区分构造函数中产生的同类型异常。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/笔记/C++/惯用法/16-Construction-Tracker/#more" rel="contents">              
+            <a class="btn fa fa-ellipsis-h button-style" href="/2017/07/30/学习笔记/C++/惯用法/17-Copy-and-swap/#more" rel="contents">              
             </a>
           </div>
           <!--/noindex-->
@@ -1740,7 +1860,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">99</span>
+                <span class="site-state-item-count">100</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1751,7 +1871,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
