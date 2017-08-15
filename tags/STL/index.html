@@ -85,8 +85,6 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="C++," />
-
 
 
 
@@ -101,18 +99,13 @@
 
 
 
-<meta name="description" content="享元模式的一个应用。">
-<meta name="keywords" content="C++">
-<meta property="og:type" content="article">
-<meta property="og:title" content="[C++ Idioms] 19. [易] Counted Body&#x2F;Reference Counting (intrusive)">
-<meta property="og:url" content="/2017/07/30/学习笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{S}">
+<meta property="og:url" content="/tags/STL/index.html">
 <meta property="og:site_name" content="{S}">
-<meta property="og:description" content="享元模式的一个应用。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-11T14:41:33.005Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[C++ Idioms] 19. [易] Counted Body&#x2F;Reference Counting (intrusive)">
-<meta name="twitter:description" content="享元模式的一个应用。">
+<meta name="twitter:title" content="{S}">
 
 
 
@@ -141,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="/2017/07/30/学习笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/"/>
+  <link rel="canonical" href="/tags/STL/"/>
 
 
 
 
 
-  <title>[C++ Idioms] 19. [易] Counted Body/Reference Counting (intrusive) | {S}</title>
+  <title>标签: STL | {S}</title>
   
 
 
@@ -172,7 +165,7 @@
     
   
 
-  <div class="container sidebar-position-right page-post-detail ">
+  <div class="container sidebar-position-right  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -254,202 +247,54 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>STL<small>标签</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2017/07/30/学习笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Nargnos">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="{S}">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2017/08/13/学习笔记/MMP/Stl线程操作相关类库/" itemprop="url">
+              
+                <span itemprop="name">[MMP] Stl线程操作相关类库</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">[C++ Idioms] 19. [易] Counted Body/Reference Counting (intrusive)</h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T19:28:04+08:00">
-                2017-07-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
-                    <span itemprop="name">C++ Idioms</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>享元模式的一个应用。<a id="more"></a><br>给某个共享资源加counter，为0时析构掉，直接用个智能指针就行。<br>“享元”已经能概括这个惯用法了，不再扩展。  </p>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-      <div>
-        <ul class="post-copyright box-shadow">
-  <li class="post-copyright-author">
-    <strong>本文作者：</strong>
-    Nargnos
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="/2017/07/30/学习笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/" title="[C++ Idioms] 19. [易] Counted Body/Reference Counting (intrusive)">/2017/07/30/学习笔记/C++/惯用法/19-Counted-Body-Reference-Counting-intrusive/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>
-    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-08-13T17:09:45+08:00"
+              content="2017-08-13" >
+          08-13
+        </time>
       </div>
-    
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/C/" class="fa fa-tag" rel="tag"> C++</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/07/30/学习笔记/C++/惯用法/18-Copy-on-write/" rel="next" title="[C++ Idioms] 18. [易] Copy on write">
-                <i class="fa fa-chevron-left"></i> [C++ Idioms] 18. [易] Copy on write
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/30/学习笔记/C++/惯用法/20-Covariant-Return-Types/" rel="prev" title="[C++ Idioms] 20. [易] Covariant Return Types">
-                [C++ Idioms] 20. [易] Covariant Return Types <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
@@ -457,10 +302,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -642,10 +483,10 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-
+  
 
   
 
