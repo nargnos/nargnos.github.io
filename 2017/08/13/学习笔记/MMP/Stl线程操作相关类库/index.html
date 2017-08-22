@@ -85,7 +85,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="MMP,STL," />
+  <meta name="keywords" content="C++,MMP,STL," />
 
 
 
@@ -102,14 +102,14 @@
 
 
 <meta name="description" content="stl涉及到多线程的一些内容。">
-<meta name="keywords" content="MMP,STL">
+<meta name="keywords" content="C++,MMP,STL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[MMP] Stl线程操作相关类库">
 <meta property="og:url" content="/2017/08/13/学习笔记/MMP/Stl线程操作相关类库/index.html">
 <meta property="og:site_name" content="{S}">
 <meta property="og:description" content="stl涉及到多线程的一些内容。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-15T08:56:52.353Z">
+<meta property="og:updated_time" content="2017-08-19T14:57:57.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[MMP] Stl线程操作相关类库">
 <meta name="twitter:description" content="stl涉及到多线程的一些内容。">
@@ -413,6 +413,7 @@
 <h1 id="异步操作"><a href="#异步操作" class="headerlink" title="异步操作"></a>异步操作</h1><p><em>其实stl的异步操作类库并没有ppl的好用，但是在其它环境好像没有ppl。</em></p>
 <h2 id="future"><a href="#future" class="headerlink" title="future"></a>future</h2><p><code>&lt;future&gt;</code></p>
 <p><strong>future</strong><br>可用get阻塞线程，当future有值时就会唤醒阻塞的线程，也可以用wait，还提供了超时机制可用。<br>get只能取值一次，用get取值多次会发生错误；如果要取多次就用share获取<code>share_future</code>对象，这个对象也可以用wait、get等函数阻塞线程。<br>一般这个类型不直接创建（因为是无效的），需要由其它Providers(提供者)创建。<br>在取值前可以用valid()来判断是否有效（有没有取过值）。</p>
+<p>注意：这个类型是可以传递任何类型的，也就是说可以传递容器、函数甚至future自身。</p>
 <p><strong>promise</strong>  (提供者)<br>保存一个值用于异步获取，表示将来可以用它取到值。取值前需要先生成future对象，给它赋值后，从之前用它生成的对象可以取到值。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">promise&lt;int&gt; pm;</div><div class="line">auto fu = pm.get_future();</div><div class="line">// 给其它线程设置值</div><div class="line">thread t([pm_ = move(pm)]() mutable &#123;pm_.set_value(123); &#125;);</div><div class="line">cout &lt;&lt; fu.get() &lt;&lt; endl;</div></pre></td></tr></table></figure></p>
 <p>可以用<code>set_value_at_thread_exit</code>设置在promise对象析构时给future设置指定值（但是此时便不能在中途设置值）。<br>时未设置值，会从future处引发异常，也可以用<code>set_exception</code>、<code>set_exception_at_thread_exit</code>直接引发异常。  </p>
 <p><strong>packaged_task</strong>  (提供者)<br>打包一个函数来存储它的返回值，以用于异步获取。<br>类似promise，但是它需要传入函数，在调用<code>packaged_task</code>时会把函数的返回值传递给future。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">packaged_task&lt;<span class="keyword">int</span>(<span class="keyword">int</span>)&gt; task([](<span class="keyword">int</span> val) &#123;<span class="keyword">return</span> val*val; &#125;);</div><div class="line"><span class="keyword">auto</span> fu = task.get_future();</div><div class="line"><span class="comment">// 可以给线程池执行</span></div><div class="line">thread(move(task), <span class="number">10</span>).detach();</div><div class="line"><span class="built_in">cout</span> &lt;&lt; fu.get() &lt;&lt; <span class="built_in">endl</span>;</div></pre></td></tr></table></figure></p>
@@ -453,6 +454,8 @@
     <footer class="post-footer">
       
         <div class="post-tags">
+          
+            <a href="/tags/C/" class="fa fa-tag" rel="tag"> C++</a>
           
             <a href="/tags/MMP/" class="fa fa-tag" rel="tag"> MMP</a>
           
@@ -558,7 +561,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">107</span>
+                <span class="site-state-item-count">110</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -580,7 +583,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

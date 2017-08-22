@@ -109,7 +109,7 @@
 <meta property="og:site_name" content="{S}">
 <meta property="og:description" content="这里的意思是：只通过添加文件的形式（不修改到任何已有代码）不使用继承给类添加新的接口实现，并可直接通过删除文件来删除相应的接口。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-18T06:46:09.501Z">
+<meta property="og:updated_time" content="2017-08-19T11:30:25.567Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以添加文件的方式扩展代码">
 <meta name="twitter:description" content="这里的意思是：只通过添加文件的形式（不修改到任何已有代码）不使用继承给类添加新的接口实现，并可直接通过删除文件来删除相应的接口。">
@@ -406,7 +406,7 @@
 <p>定义新实现<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"IFly.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"InterfaceImpl.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"FlyingFish.h"</span></span></div><div class="line"><span class="keyword">template</span>&lt;&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">InterfaceImpl</span>&lt;FlyingFish, IFly&gt; :</span></div><div class="line">	<span class="keyword">public</span> IFly</div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> Type = FlyingFish;</div><div class="line">	InterfaceImpl(<span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Fish&gt;&amp;&amp; f) :</div><div class="line">		RawPtr(<span class="built_in">std</span>::dynamic_pointer_cast&lt;FlyingFish&gt;(f))</div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">// 这里调用到新类型的新函数</span></div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Fly</span><span class="params">()</span> override</span></div><div class="line">	&#123;</div><div class="line">		RawPtr-&gt;DoPlus(<span class="string">"Fly"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;FlyingFish&gt; RawPtr;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>执行是这样<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// main.cpp</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ISwim.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Fish.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"FishInTheWater.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"IFly.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"FlyingFish.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"FlyingFishInTheAir.h"</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">InTheWater</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;ISwim&gt;&amp; s)</span></span></div><div class="line">&#123;</div><div class="line">	s-&gt;Swim();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">InTheAir</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;IFly&gt;&amp; f)</span></span></div><div class="line">&#123;</div><div class="line">	f-&gt;Fly();</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">auto</span> fish = make_shared&lt;Fish&gt;();</div><div class="line">	InTheWater(*fish);</div><div class="line">	<span class="comment">// InTheAir(*fish);</span></div><div class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"----"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	<span class="keyword">auto</span> flyingfish = make_shared&lt;FlyingFish&gt;(<span class="string">"gnos"</span>);</div><div class="line">	InTheWater(*flyingfish);</div><div class="line">	InTheAir(*flyingfish);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>新类型继承了父类的接口实现，并且自己实现了新接口。  </p>
-<p>也可以在子类使用类似的方法，取消掉对父类的继承；不过可能不需要了，因为现在类型只做数据存储和区分类型，函数和其它功能都从外部附加，提升了极大的灵活度。  </p>
+<p>也可以在子类使用类似的方法，取消掉对父类的继承；不过可能不需要了，因为现在类型只做数据存储和区分类型，函数和其它功能都从外部附加，极大的提升了灵活度。  </p>
 <p>如果需要省掉创建接口实现对象的开销（其实没多少），就需要在类中维护相关的对象（单例），这在多线程时就需要锁机制，其实再扩展一点就可以实现动态接口了，所以相关内容等写动态接口笔记时再扩展。  </p>
 
       
@@ -467,6 +467,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/18/学习笔记/C++/运行时动态添加删除接口/" rel="prev" title="运行时动态添加删除接口">
+                运行时动态添加删除接口 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -543,7 +547,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">107</span>
+                <span class="site-state-item-count">110</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -565,7 +569,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

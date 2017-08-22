@@ -109,7 +109,7 @@
 <meta property="og:site_name" content="{S}">
 <meta property="og:description" content="命名参数。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-11T14:41:31.721Z">
+<meta property="og:updated_time" content="2017-08-21T07:05:54.683Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[C++ Idioms] 50. Named Parameter">
 <meta name="twitter:description" content="命名参数。">
@@ -371,7 +371,7 @@
         <p>命名参数。<a id="more"></a>用在有多个可选参数要设置的情况。  </p>
 <p>用链式函数的方式，例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 简单的例子，有很多不好的地方，只表达出意思，写完整费时间</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function">MyClass&amp; <span class="title">SetA</span><span class="params">(<span class="keyword">int</span> val)</span></span></div><div class="line">	&#123;</div><div class="line">		a_ = val;</div><div class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="function">MyClass&amp; <span class="title">SetB</span><span class="params">(<span class="keyword">char</span> val)</span></span></div><div class="line">	&#123;</div><div class="line">		b_ = val;</div><div class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> a_;</div><div class="line">	<span class="keyword">char</span> b_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">auto</span> c = MyClass().SetA(<span class="number">1</span>).SetB(<span class="number">2</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>还可以在编写Set函数时返回的是一个代理类，用来详细设置配置信息。<br>比如<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">MyType *instance = segment.construct&lt;MyType&gt;</div><div class="line">         (<span class="string">"MyType instance"</span>)  <span class="comment">//name of the object</span></div><div class="line">         (<span class="number">0.0</span>, <span class="number">0</span>);</div><div class="line">MyType *<span class="built_in">array</span> = segment.construct&lt;MyType&gt;</div><div class="line">         (<span class="string">"MyType array"</span>)     <span class="comment">//name of the object</span></div><div class="line">         [<span class="number">10</span>]                 <span class="comment">//number of elements</span></div><div class="line">         (<span class="number">0.0</span>, <span class="number">0</span>);            <span class="comment">//Same two ctor arguments for all objects</span></div></pre></td></tr></table></figure></p>
-<p>这里不扩展了，boost里有一些类就是用到这个.</p>
+<p>这里不扩展了，boost里有一些类就是用到这个（interprocess）。<br>类库中的用法是，在创建对象的同时为对象设置名字。  </p>
 
       
     </div>
@@ -500,7 +500,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">107</span>
+                <span class="site-state-item-count">110</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -522,7 +522,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

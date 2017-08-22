@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++,MMP,Boost," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="这里主要写进程间通信和一些boost相关类库，boost的线程相关类库跟stl差不多，重复的部分不记了。">
+<meta name="keywords" content="C++,MMP,Boost">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MMP] Boost线程进程操作相关类库">
+<meta property="og:url" content="/2017/08/19/学习笔记/MMP/Boost线程进程操作相关类库/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="这里主要写进程间通信和一些boost相关类库，boost的线程相关类库跟stl差不多，重复的部分不记了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-22T03:48:35.083Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[MMP] Boost线程进程操作相关类库">
+<meta name="twitter:description" content="这里主要写进程间通信和一些boost相关类库，boost的线程相关类库跟stl差不多，重复的部分不记了。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/08/19/学习笔记/MMP/Boost线程进程操作相关类库/"/>
+
+
+
+
+
+  <title>[MMP] Boost线程进程操作相关类库 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/08/19/学习笔记/MMP/Boost线程进程操作相关类库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[MMP] Boost线程进程操作相关类库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-19T12:13:00+08:00">
+                2017-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/MMP/" itemprop="url" rel="index">
+                    <span itemprop="name">MMP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这里主要写进程间通信和一些boost相关类库，boost的线程相关类库跟stl差不多，重复的部分不记了。<a id="more"></a>关于协程类库以后再记（以前简单看过，现在忘记了）。  </p>
+<p><em>这个库内容比较多，所以看文档能明白的这里就少记，整体的内容类似于概览（就是告诉有这么个东西，具体去查文档就好了）。</em>   </p>
+<h1 id="无锁"><a href="#无锁" class="headerlink" title="无锁"></a>无锁</h1><p>lockfree<br>提供基本的结构如栈、队、循环队等，如果想用链表可以在detail里找到。<br><code>queue</code>、<code>stack</code> 支持多线程同时读写。<br><code>spsc_queue</code> 只支持单生产者单消费者同时处理。<br>在pop和push时是不会阻塞的，只会返回操作是否成功。<br>注意由于要进行原子操作，其析构和赋值操作必须是极简（default、非虚）的，其类型成员也必须符合这个规则，否则无法使用。<br><em>可以用指针作为类型，智能指针、function等都不能用做该容器类型。</em><br>例子在<code>boost/doc/html/lockfree/examples.html</code>（这是自带帮助文档的路径）  </p>
+<h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><p>这里是其它一些扩展（比stl多的那些类）。<br>有实用性的类并没有很多，基本stl都包括了。  </p>
+<p>注意连接时需要<code>-lboost_system -lboost_thread</code>。  </p>
+<p>可以使用<code>thread_attributes</code>设置调用栈的大小。  </p>
+<p><code>boost::scoped_thread</code>、<code>thread_guard</code><br>一般thread在析构时如果可join就会断言提示，scoped_thread析构时判断是否可join，然后join。<br>thread_guard也是类似功能，不过需要传入thread</p>
+<p>有3种预定模式可以选<br><code>detach</code><br><code>join_if_joinable</code><br><code>interrupt_and_join_if_joinable</code></p>
+<p>还有一些join的函数<code>time_join\try_join</code></p>
+<p><code>thread_group</code><br>线程组，方便管理的东西，内部用list管理。  </p>
+<p><code>barrier</code><br>运行栅栏，线程同步点。线程运行到这里时等待，直到有指定个线程都等在这就放行，然后重置。<br>内部使用条件变量实现。<br>gpu编程时会比较常见，一般用来等待数据就绪。  </p>
+<p><code>latch</code><br>内部使用条件变量实现。需要在构造时传入等待数量。<br>跟go的sync.WaitGroup一样的功能。</p>
+<p>boost似乎对future相关的类加了一些函数，看官方文档把。<br>其它有一些类，文档有写可能会有bug，这里就不记了。  </p>
+<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p>内部就是<code>vector&lt;thread&gt;</code>，一起等待一个同步队列。  </p>
+<p><code>executor_adaptor</code>可以把一些执行体统一接口（适配）。<br>线程池不能给它sumit工作时间太长的函数，线程还是有限的。<br>回调用work存储，这个结构用虚函数组织调用，模板接收不同回调类型（类型擦除，用虚函数调用）。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 注意cout这里分了多步骤输出，在多线程时会显示错乱（我忘了从哪贴来的例子）</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/thread/thread_pool.hpp&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	boost::basic_thread_pool p;</div><div class="line">	p.submit([]()</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; boost::this_thread::get_id() &lt;&lt; <span class="string">":1"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;);</div><div class="line">	p.submit([]()</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; boost::this_thread::get_id() &lt;&lt; <span class="string">":2"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;);</div><div class="line">	p.join();</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>关于executor还有这样用（）<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">boost::executor_adaptor &lt; boost::executors::basic_thread_pool &gt; ea(<span class="number">4</span>);</div><div class="line">boost::executor_adaptor &lt; boost::executors::loop_executor &gt; ea2;</div><div class="line">boost::executor_adaptor &lt; boost::executors::serial_executor &gt; ea2(ea1);</div><div class="line">boost::executor_adaptor &lt; boost::executors::thread_executor &gt; ea1;</div></pre></td></tr></table></figure></p>
+<p>这样future的async可以传入池（注意是boost的实现），直接传池也行（这是test里的用法，但是我测试不成功）。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">boost::future&lt;<span class="keyword">int</span>&gt; t1 = boost::async(ea, &amp;f1);</div></pre></td></tr></table></figure></p>
+<h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1><h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/process.hpp&gt;</span></span></div></pre></td></tr></table></figure>
+<p>child<br>可以创建进程<del>，貌似可以用running检查运行状态，但是测试时发现会有一些问题（运行起来了返回false）</del>，可以用wait等待其它进程结束，如果提供的路径不存在会引发异常（可以传入<code>std::error_code</code>参数获取，也可以用<code>ignore_error</code>参数忽略掉）。<br>可以设置一些事件回调什么的，这里略。<br>可以在进程里用this_process取得一些相关信息（比如环境变量）。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/process.hpp&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> boost::process;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    ipstream pipe_stream;</div><div class="line">    <span class="function">child <span class="title">c</span><span class="params">(<span class="string">"gcc --version"</span>, std_out &gt; pipe_stream)</span></span>;</div><div class="line"></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> line;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (pipe_stream &amp;&amp; <span class="built_in">std</span>::getline(pipe_stream, line) &amp;&amp; !line.empty())</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; line &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    c.wait();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以在创建子进程时将输出重定向到管道。<br>可以用asio来处理管道的一些io（async_pipe）。<br>示例见boost示例，略。  </p>
+<h2 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h2><p>除了上面提到的pipe，还有很多方式可以实现进程间通信。<br>Windows一般可以用：剪贴板（Clipboard）、COM、数据拷贝（Data Copy）、消息、DDE、文件映射（File Mapping，共享内存）、邮槽（Mailslots）、管道（Pipes）、远程过程调用（RPC）、Socket等手段来实现（这里不把信号量作为通信手段，因为感觉更多的是同步而不是通信）。<br>Linux有文件、管道、信号、共享内存、消息队列、Socket等。  </p>
+<p>这里记的是boost的Interprocess库的内容，更多的是共享内存的东西。<br><em>关于常用的如pipe、socket的笔记不在这记录。系统调用也不在这记录。</em>  </p>
+<h3 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/shared_memory_object.hpp&gt;</span></span></div></pre></td></tr></table></figure>
+<p>linux连接时可能需要<code>-lrt</code>。<br>Windows下会创建文件，然后用文件映射的方式共享内存（因为win的共享内存会自动销毁，使用文件映射才能使posix和windows共享内存的生命周期相似，保证可移植性）。  </p>
+<p>创建共享内存段。如果已经创建了，会抛异常：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function">shared_memory_object <span class="title">shm_obj</span>  </span></div><div class="line">   <span class="params">(create_only                  <span class="comment">//only create  </span></span></div><div class="line">   ,<span class="string">"shared_memory"</span>              <span class="comment">//name  </span></div><div class="line">   ,read_write                   <span class="comment">//read-write mode  </span></div><div class="line">   );</div></pre></td></tr></table></figure></p>
+<p>打开或创建一个共享内存段：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function">shared_memory_object <span class="title">shm_obj</span>  </span></div><div class="line">   <span class="params">(open_or_create               <span class="comment">//open or create  </span></span></div><div class="line">   ,<span class="string">"shared_memory"</span>              <span class="comment">//name  </span></div><div class="line">   ,read_only                    <span class="comment">//read-only mode  </span></div><div class="line">   );</div></pre></td></tr></table></figure></p>
+<p>仅打开一个共享内存段。如果不存在，会抛异常：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function">shared_memory_object <span class="title">shm_obj</span>  </span></div><div class="line">   <span class="params">(open_only                    <span class="comment">//only open  </span></span></div><div class="line">   ,<span class="string">"shared_memory"</span>              <span class="comment">//name  </span></div><div class="line">   ,read_write                   <span class="comment">//read-write mode  </span></div><div class="line">   );</div></pre></td></tr></table></figure></p>
+<p>当共享内存对象创建后，默认大小为0，使用truncate设置（分配）大小，</p>
+<p>因为共享内存具有内核或文件系统持久化性质，因此用户必须显式销毁它。如果共享内存不存在、文件被打开或文件仍旧被其他进程内存映射，则删除操作可能会失败且返回false：<br><code>shared_memory_object::remove(&quot;shared_memory&quot;);</code><br>（文档说unix下会调用shm_unlink）</p>
+<p>直接取不到指针，需要用mapped_region映射(可以是整个共享内存或是一部分)到某内存位置读取。<br>mapped_region可以设置读取权限（跟windows的map差不多）。<br>在构造函数里可以传入映射的开始和结束位置，默认是整个段。<br><code>get_address</code> 和 <code>get_size</code> 可以获得信息。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Create a shared memory object.</span></div><div class="line"><span class="function">shared_memory_object <span class="title">shm</span> <span class="params">(create_only, <span class="string">"MySharedMemory"</span>, read_write)</span></span>;</div><div class="line"></div><div class="line"><span class="comment">//Set size</span></div><div class="line">shm.truncate(<span class="number">1000</span>);</div><div class="line"></div><div class="line"><span class="comment">//Map the whole shared memory in this process</span></div><div class="line"><span class="function">mapped_region <span class="title">region</span><span class="params">(shm, read_write)</span></span>;</div><div class="line"></div><div class="line"><span class="comment">//Get the address of the region</span></div><div class="line">region.get_address();</div><div class="line"></div><div class="line"><span class="comment">//Get the size of the region</span></div><div class="line">region.get_size();</div></pre></td></tr></table></figure>
+<p>可以用guard的方式管理共享内存的创建和销毁，比如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">shm_remove</span></span></div><div class="line">&#123;</div><div class="line">	shm_remove() &#123; shared_memory_object::remove(<span class="string">"MySharedMemory"</span>); &#125;</div><div class="line">	~shm_remove()&#123; shared_memory_object::remove(<span class="string">"MySharedMemory"</span>); &#125;</div><div class="line">&#125; remover;</div></pre></td></tr></table></figure></p>
+<h4 id="Windows共享内存"><a href="#Windows共享内存" class="headerlink" title="Windows共享内存"></a>Windows共享内存</h4><p><code>windows_shared_memory</code><br>当没有进程引用共享内存对象时会自己销毁，所以如果创建端在其它进程连接前退出，其它进程连接就会出错。<br>创建时必须传入大小，如果要在服务和用户程序间共享内存，名称必须添加前缀”Global\\“表示在全局命名空间创建。注意在Session 0之外的会话中，在全局命名空间创建是一种特权操作。  </p>
+<p>使用方式跟之前的很像，就只是创建时需要这样：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">windows_shared_memory <span class="title">shm</span> <span class="params">(create_only, <span class="string">"MySharedMemory"</span>, read_write, <span class="number">1000</span>)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>如果使用open_only就不需要传入大小。  </p>
+<h4 id="Linux共享内存"><a href="#Linux共享内存" class="headerlink" title="Linux共享内存"></a>Linux共享内存</h4><p><strong>匿名共享内存</strong><br>unix内部用mmap，windows用的是没名字的<code>windows_shared_memory</code>对象。<br>用 <code>anonymous_shared_memory</code> 可以返回一个 mapped_region。<br>这样fork后就可以使用mapped_region对象管理。  </p>
+<p><strong>System V 共享内存</strong><br>用<code>xsi_shared_memory</code>，用法差不多。<br>使用<code>xsi_key</code>识别不同对象，必须显式删除，不支持写时复制但支持匿名共享内存。  </p>
+<h3 id="内存映射文件"><a href="#内存映射文件" class="headerlink" title="内存映射文件"></a>内存映射文件</h3><p>可以将文件的一部分与进程地址空间相关联，而不需要完全载入整个文件（因为文件可能会大于整个进程的地址空间）。<br>文件映射可以用于进程间通信，当进程写入时在另一个进程可以看到修改，但是因为系统必须将文件内容与存储器内容同步，所以不比共享内存快。<br>创建步骤为：先创建（或选择）要映射的文件，然后将文件和进程地址空间关联。<br>在关联时可以设置对应内存的权限（读写执行）。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/file_mapping.hpp&gt;</span></span></div><div class="line"><span class="function">file_mapping <span class="title">file</span><span class="params">(path,read_write)</span></span>;</div><div class="line"><span class="function">mapped_region <span class="title">region</span><span class="params">(file, read_write)</span></span>;</div></pre></td></tr></table></figure>
+<p>可以设置映射范围，如果不填表示映射整个文件，如果没写大小，将会从偏移位置映射到文件尾。<br>在使用flush更新时，填入的参数也用一样的方式表示范围。<br>注意flush时操作的是映射的范围（表示的是映射范围的offset），对于自身<code>mapped_region</code>未映射的部分则不处理。  </p>
+<p>用 file_mapping::remove(const char *) 删除。  </p>
+<h4 id="offset-ptr"><a href="#offset-ptr" class="headerlink" title="offset_ptr"></a>offset_ptr</h4><p>不同程序中，文件的映射位置（返回的地址）不一定相同（可以在映射时指定映射地址，但不一定会成功，注意指定地址时，偏移量需要为页大小的整数倍）。<br>这会使这部分内存内的指针失效，但是相互之间的偏移量不变，这时候就需要用偏移指针来处理数据。<br>也是由于这个原因，不要在这部分内存中使用引用（在其它进程会失效），也不要用虚函数，因为虚表里有指针。<br>另外需要注意类静态成员的使用，因为在其它进程里可能会修改它。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/offset_ptr.hpp&gt;</span></span></div></pre></td></tr></table></figure>
+<p>只要是同一个共享块，即使在不同映射地址或不同进程都可以正确使用。<br>注意，这里将偏移量1定义为空指针（原因见文档），所以不能指向自身偏移1字节的地址。  </p>
+<p>其它一些内容在<code>boost/doc/html/interprocess/interprocess_smart_ptr.html</code>  </p>
+<h3 id="同步、通信机制"><a href="#同步、通信机制" class="headerlink" title="同步、通信机制"></a>同步、通信机制</h3><p>如果只能共享内存，但是多进程之间不同步，这个共享是没有意义的。<br>boost提供以下一些同步机制。<br>基本上跟线程用的差不多，分成匿名和命名的，命名要在在构造时传入对象名，匿名的需要用一些方式让多进程共享（比如通过共享内存传递）。</p>
+<h4 id="Mutex"><a href="#Mutex" class="headerlink" title="Mutex"></a>Mutex</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 这个对象是可以通过共享内存传递的（因为用自旋锁）</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/interprocess_mutex.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/interprocess_recursive_mutex.hpp&gt;</span></span></div><div class="line"><span class="comment">// 这个在windows下内部似乎用的是文件的形式</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/named_mutex.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/named_recursive_mutex.hpp&gt;</span></span></div><div class="line"><span class="comment">// 相关工具</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/scoped_lock.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/interprocess_sharable_mutex.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/named_sharable_mutex.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/interprocess_upgradable_mutex.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/sharable_lock.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/upgradable_lock.hpp&gt;</span></span></div></pre></td></tr></table></figure>
+<h4 id="Condition-Variable"><a href="#Condition-Variable" class="headerlink" title="Condition Variable"></a>Condition Variable</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/interprocess_condition.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/interprocess_condition_any.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/named_condition.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/named_condition_any.hpp&gt;</span></span></div></pre></td></tr></table></figure>
+<p>同样也是分匿名命名，没什么特别，因为有官方文档，内容就略。<br>注意这些类型用的锁对应前面的匿名命名互斥量。  </p>
+<h4 id="Semaphore"><a href="#Semaphore" class="headerlink" title="Semaphore"></a>Semaphore</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/interprocess_semaphore.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/named_semaphore.hpp&gt;</span></span></div></pre></td></tr></table></figure>
+<h4 id="File-Lock"><a href="#File-Lock" class="headerlink" title="File Lock"></a>File Lock</h4><p>有两种方式：系统维护锁定列表，进程可以获取，但是也可以忽略掉这个锁定从而修改文件，需要进程之间合作来实现同步访问；系统强制检查读写请求，验证执行操作。<br>由于可移植性原因，这里使用第一种方式实现。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/sync/file_lock.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<h4 id="Message-Queue"><a href="#Message-Queue" class="headerlink" title="Message Queue"></a>Message Queue</h4><p>消息队列。线程可以添加删除消息，消息具有优先级。<br>线程有3种方式使用：</p>
+<ul>
+<li>阻塞：如果发送时满或接收时空，线程将会阻塞到队列可用。  </li>
+<li>尝试：如果发生前面阻塞的情况时，会返回错误（并允许继续执行其它代码）。  </li>
+<li>定时：为阻塞设置超时时间。  </li>
+</ul>
+<p>消息队列只在进程间复制原始字节，这表示如果要发送对象，这个对象必须是可序列化的。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/ipc/message_queue.hpp&gt;</span></span></div><div class="line"><span class="keyword">using</span> boost::interprocess;</div><div class="line"><span class="comment">//Create a message_queue. If the queue</span></div><div class="line"><span class="comment">//exists throws an exception</span></div><div class="line"><span class="function">message_queue <span class="title">mq</span></span></div><div class="line">   <span class="params">(create_only         <span class="comment">//only create</span></span></div><div class="line">   ,<span class="string">"message_queue"</span>     <span class="comment">//name</span></div><div class="line">   ,<span class="number">100</span>                 <span class="comment">//max message number</span></div><div class="line">   ,<span class="number">100</span>                 <span class="comment">//max message size</span></div><div class="line">   );</div><div class="line"></div><div class="line"><span class="comment">//Creates or opens a message_queue. If the queue</span></div><div class="line"><span class="comment">//does not exist creates it, otherwise opens it.</span></div><div class="line"><span class="comment">//Message number and size are ignored if the queue</span></div><div class="line"><span class="comment">//is opened</span></div><div class="line"><span class="function">message_queue <span class="title">mq</span></span></div><div class="line">   <span class="params">(open_or_create      <span class="comment">//open or create</span></span></div><div class="line">   ,<span class="string">"message_queue"</span>     <span class="comment">//name</span></div><div class="line">   ,<span class="number">100</span>                 <span class="comment">//max message number</span></div><div class="line">   ,<span class="number">100</span>                 <span class="comment">//max message size</span></div><div class="line">   );   </div><div class="line"></div><div class="line"><span class="comment">//Opens a message_queue. If the queue</span></div><div class="line"><span class="comment">//does not exist throws an exception.</span></div><div class="line"><span class="function">message_queue <span class="title">mq</span></span></div><div class="line">   <span class="params">(open_only           <span class="comment">//only open</span></span></div><div class="line">   ,<span class="string">"message_queue"</span>     <span class="comment">//name</span></div><div class="line">   );</div></pre></td></tr></table></figure>
+<p>创建时需要设置最大消息数和消息最大大小。<br>使用send发送时需要附带消息大小和优先级信息。<br>使用receive接收时需要传入buffer，接收到的是原始字节，需要反序列化。<br>可用message_queue::remove删除消息队列对象。  </p>
+<h3 id="托管共享内存段"><a href="#托管共享内存段" class="headerlink" title="托管共享内存段"></a>托管共享内存段</h3><p>可以把管理共享内存的一些操作交由类库来做，可以实现动态分配内存、将对象与名称关联等。<br>一般用<code>managed_shared_memory\wmanaged_shared_memory</code>，它们用的是偏移指针，如果想用固定指针时，就用<code>fixed_managed_shared_memory\wfixed_managed_shared_memory</code>。  </p>
+<h4 id="Managed-Shared-Memory"><a href="#Managed-Shared-Memory" class="headerlink" title="Managed Shared Memory"></a>Managed Shared Memory</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/managed_shared_memory.hpp&gt;</span></span></div></pre></td></tr></table></figure>
+<p>创建方式同前面的其它对象的创建。销毁用<code>shared_memory_object::remove</code>。  </p>
+<p><strong>通用操作</strong><br>这些操作在下面其它的类型中也是通用的。<br>基本上都是一些内存池会有的操作。  </p>
+<p><code>get_address</code><br>获得基础内存块的地址<br><code>get_free_memory</code><br>可以获取剩余大小<br><code>allocate</code><br>分配内存，判断是否allocate成功可以用这个函数判断前后大小来获得<br><code>allocate_aligned</code><br>分配对齐内存<br><code>allocate_many</code><br>一次分配一连串的内存<br><code>deallocate</code><br>回收<br><code>get_handle_from_address</code><br>可以获得分配的地址的handle，然后传给其它程序使用</p>
+<p><code>remove_shared_memory_on_destroy name(&quot;&quot;)</code><br>可以在析构时销毁共享块<br><code>grow</code><br>可以增长大小，非线程安全，这是在当没有其它拥有相同资源的进程存在时调用的<br><code>shrink_to_fit</code><br>非线程安全</p>
+<p><code>construct&lt;Type&gt;</code><br>可以在共享块中创建对象，对象数可以省掉<br><code>construct&lt;Type&gt;(&quot;对象名&quot;)[对象数](对象构造参数)</code><br>还可以传入数组作为构建对象数组时的参数<br><code>construct&lt;Type&gt;(&quot;对象名&quot;)[对象数](&amp;构造参数1数组,&amp;构造参数2数组)</code></p>
+<p>之后查找对象时使用<br><code>find&lt;Type&gt;(name)</code><br>返回类型为<br><code>std::pair&lt;Type*, managed_shared_memory::size_type&gt;</code></p>
+<p>可以用<code>find_or_construct</code>获得或创建对象<br>用<code>destroy&lt;Type&gt;(name)</code> 销毁</p>
+<p>当执行某函数时不希望在函数执行期间内存被其它进程修改（指的是创建销毁对象），可以使用<code>atomic_func</code>，注意这个函数仅阻止其他进程创建、搜索和销毁对象。  </p>
+<p><code>allocation_command</code><br>可以用来调整缓冲区，实现前后扩展收缩。  </p>
+<p>可以使用<code>open_copy_on_write</code>做构造参数，这样便具有写时复制特性。  </p>
+<p>如果希望用windows的共享内存机制，就用<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/managed_windows_shared_memory.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>Xsi（System V）可用<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/managed_xsi_shared_memory.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<h4 id="Managed-Mapped-File"><a href="#Managed-Mapped-File" class="headerlink" title="Managed Mapped File"></a>Managed Mapped File</h4><p>可以用<code>managed_mapped_file</code>来管理文件映射。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/managed_mapped_file.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>可以创建一个文件并映射，提供的函数跟<code>managed_shared_memory</code>差不多，可以指定路径，但是似乎会检查文件格式是否符合自身定义的格式，如果不符合会抛异常。<br>使用<code>file_mapping::remove</code>销毁，也可以用删除文件的方式删除。  </p>
+<h4 id="Managed-External-Buffer"><a href="#Managed-External-Buffer" class="headerlink" title="Managed External Buffer"></a>Managed External Buffer</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/managed_external_buffer.hpp&gt;</span></span></div></pre></td></tr></table></figure>
+<p>提供了跟前面相同的接口，可以对自己定义的内存位置使用，创建了相关对象后，可以直接通过网络或其它方式传递给其它进程，因为对象结构相同，其它进程可直接使用，省掉了序列化反序列化的操作。<br>比如可以定义成allocator，这样就可以传送比如vector这样的对象给其它进程。  </p>
+<h4 id="Managed-Heap-Memory"><a href="#Managed-Heap-Memory" class="headerlink" title="Managed Heap Memory"></a>Managed Heap Memory</h4><p>类似上面，只是内存由类帮忙管理。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/managed_heap_memory.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<h2 id="衍生结构"><a href="#衍生结构" class="headerlink" title="衍生结构"></a>衍生结构</h2><p>基于托管共享内存段衍生的一些结构。  </p>
+<h3 id="分配器"><a href="#分配器" class="headerlink" title="分配器"></a>分配器</h3><p>不要交换两个具有不同分配器（包括不同分配目标）的容器，其行为是不确定的，但是错误是肯定的。（原因见文档）<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/allocators/allocator.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>这里的allocator是适配器。  </p>
+<p>在分配小内存或者连续对象时，会有不同的分配策略，所以类库提供<code>node_allocator/ private_node_allocator/cached_node_allocator</code>分配方式。  </p>
+<p><strong>node_allocator</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/allocators/node_allocator.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>初始化时它会在段中搜索自身是否存在，不存在就创建一个，保证单例，总节点共享。<br>线程安全。<br>具体看文档，这里略。  </p>
+<p><strong>private_node_allocator</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/allocators/private_node_allocator.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>这个跟上面一样，但是每个对象有自己的隔离存储池，这样在销毁时会比较快。<br>非线程安全。  </p>
+<p><strong>cached_node_allocator</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/allocators/cached_node_allocator.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>从相同的段分配节点，但是会私下缓存其中一些，这样以后分配就没有同步的开销，当缓存满时会返还一些给池。<br>分配和释放不是线程安全的。（文档是这么写的，我前面的理解可能有误，具体看文档。）  </p>
+<p>例子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> allocator&lt;<span class="keyword">int</span>, managed_shared_memory::segment_manager&gt;  ShmemAllocator;</div></pre></td></tr></table></figure></p>
+<h3 id="池"><a href="#池" class="headerlink" title="池"></a>池</h3><p>类似分配器，也分成了几种不同策略的池。它们可以在销毁对象时回收内存。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/allocators/adaptive_pool.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/allocators/private_adaptive_pool.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/allocators/cached_adaptive_pool.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<h3 id="容器和其它结构"><a href="#容器和其它结构" class="headerlink" title="容器和其它结构"></a>容器和其它结构</h3><p>其实就是重新using了标准容器，分配器是需要自己传入的。<br>直接用stl容器可能也一样（没试过）。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/containers/vector.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/containers/deque.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/containers/list.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/containers/slist.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/containers/set.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/containers/map.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/containers/flat_set.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/containers/flat_map.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/interprocess/containers/string.hpp&gt;</span></span></div><div class="line"><span class="comment">// ... 其它见文档</span></div></pre></td></tr></table></figure></p>
+<p>使用方法<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">#include &lt;boost/interprocess/containers/vector.hpp&gt;</div><div class="line">#include &lt;boost/interprocess/allocators/allocator.hpp&gt;</div><div class="line">#include &lt;boost/interprocess/managed_shared_memory.hpp&gt;</div><div class="line"></div><div class="line">int main ()</div><div class="line">&#123;</div><div class="line">   using namespace boost::interprocess;</div><div class="line">   //Remove shared memory on construction and destruction</div><div class="line">   struct shm_remove</div><div class="line">   &#123;</div><div class="line">      shm_remove() &#123; shared_memory_object::remove("MySharedMemory"); &#125;</div><div class="line">      ~shm_remove()&#123; shared_memory_object::remove("MySharedMemory"); &#125;</div><div class="line">   &#125; remover;</div><div class="line"></div><div class="line">   //A managed shared memory where we can construct objects</div><div class="line">   //associated with a c-string</div><div class="line">   managed_shared_memory segment(create_only,</div><div class="line">                                 "MySharedMemory",  //segment name</div><div class="line">                                 65536);</div><div class="line"></div><div class="line">   //Alias an STL-like allocator of ints that allocates ints from the segment</div><div class="line">   typedef allocator&lt;int, managed_shared_memory::segment_manager&gt;</div><div class="line">      ShmemAllocator;</div><div class="line"></div><div class="line">   //Alias a vector that uses the previous STL-like allocator</div><div class="line">   typedef vector&lt;int, ShmemAllocator&gt; MyVector;</div><div class="line"></div><div class="line">   int initVal[]        = &#123;0, 1, 2, 3, 4, 5, 6 &#125;;</div><div class="line">   const int *begVal    = initVal;</div><div class="line">   const int *endVal    = initVal + sizeof(initVal)/sizeof(initVal[0]);</div><div class="line"></div><div class="line">   //Initialize the STL-like allocator</div><div class="line">   const ShmemAllocator alloc_inst (segment.get_segment_manager());</div><div class="line">   // 这样在扩展大小的时候就可以使用设置的allocator分配元素，</div><div class="line">   // 这个分配器初始化时需要填入共享块的manager（get_segment_manager获得）</div><div class="line">   // 然后再用共享块创建vector对象,需要传入alloc对象,其它进程用find获取对象即可</div><div class="line"></div><div class="line">   //Construct the vector in the shared memory segment with the STL-like allocator</div><div class="line">   //from a range of iterators</div><div class="line">   MyVector *myvector =</div><div class="line">      segment.construct&lt;MyVector&gt;</div><div class="line">         ("MyVector")/*object name*/</div><div class="line">         (begVal     /*first ctor parameter*/,</div><div class="line">         endVal     /*second ctor parameter*/,</div><div class="line">         alloc_inst /*third ctor parameter*/);</div><div class="line"></div><div class="line">   //Use vector as your want</div><div class="line">   std::sort(myvector-&gt;rbegin(), myvector-&gt;rend());</div><div class="line">   // . . .</div><div class="line">   //When done, destroy and delete vector from the segment</div><div class="line">   segment.destroy&lt;MyVector&gt;("MyVector");</div><div class="line">   return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>有一些关于内存分配算法的内容和一些自定义相关类库的内容见帮助文档</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/08/19/学习笔记/MMP/Boost线程进程操作相关类库/" title="[MMP] Boost线程进程操作相关类库">/2017/08/19/学习笔记/MMP/Boost线程进程操作相关类库/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" class="fa fa-tag" rel="tag"> C++</a>
+          
+            <a href="/tags/MMP/" class="fa fa-tag" rel="tag"> MMP</a>
+          
+            <a href="/tags/Boost/" class="fa fa-tag" rel="tag"> Boost</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/18/学习笔记/C++/运行时动态添加删除接口/" rel="next" title="运行时动态添加删除接口">
+                <i class="fa fa-chevron-left"></i> 运行时动态添加删除接口
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/22/其它/电脑出了点问题/" rel="prev" title="电脑出了点问题">
+                电脑出了点问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#无锁"><span class="nav-number">1.</span> <span class="nav-text">无锁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程"><span class="nav-number">2.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池"><span class="nav-number">2.1.</span> <span class="nav-text">线程池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程"><span class="nav-number">3.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程管理"><span class="nav-number">3.1.</span> <span class="nav-text">进程管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程间通信"><span class="nav-number">3.2.</span> <span class="nav-text">进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#共享内存"><span class="nav-number">3.2.1.</span> <span class="nav-text">共享内存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Windows共享内存"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">Windows共享内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux共享内存"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">Linux共享内存</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存映射文件"><span class="nav-number">3.2.2.</span> <span class="nav-text">内存映射文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#offset-ptr"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">offset_ptr</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步、通信机制"><span class="nav-number">3.2.3.</span> <span class="nav-text">同步、通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mutex"><span class="nav-number">3.2.3.1.</span> <span class="nav-text">Mutex</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Condition-Variable"><span class="nav-number">3.2.3.2.</span> <span class="nav-text">Condition Variable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Semaphore"><span class="nav-number">3.2.3.3.</span> <span class="nav-text">Semaphore</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#File-Lock"><span class="nav-number">3.2.3.4.</span> <span class="nav-text">File Lock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Message-Queue"><span class="nav-number">3.2.3.5.</span> <span class="nav-text">Message Queue</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#托管共享内存段"><span class="nav-number">3.2.4.</span> <span class="nav-text">托管共享内存段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Managed-Shared-Memory"><span class="nav-number">3.2.4.1.</span> <span class="nav-text">Managed Shared Memory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Managed-Mapped-File"><span class="nav-number">3.2.4.2.</span> <span class="nav-text">Managed Mapped File</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Managed-External-Buffer"><span class="nav-number">3.2.4.3.</span> <span class="nav-text">Managed External Buffer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Managed-Heap-Memory"><span class="nav-number">3.2.4.4.</span> <span class="nav-text">Managed Heap Memory</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#衍生结构"><span class="nav-number">3.3.</span> <span class="nav-text">衍生结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分配器"><span class="nav-number">3.3.1.</span> <span class="nav-text">分配器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#池"><span class="nav-number">3.3.2.</span> <span class="nav-text">池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器和其它结构"><span class="nav-number">3.3.3.</span> <span class="nav-text">容器和其它结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它"><span class="nav-number">3.4.</span> <span class="nav-text">其它</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js" color="54,66,81" opacity='0.3' zIndex="-2" count="40"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
