@@ -51,32 +51,6 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
@@ -109,7 +83,7 @@
 <meta property="og:site_name" content="{S}">
 <meta property="og:description" content="stl涉及到多线程的一些内容。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-19T14:57:57.894Z">
+<meta property="og:updated_time" content="2017-09-02T13:23:51.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[MMP] Stl线程操作相关类库">
 <meta name="twitter:description" content="stl涉及到多线程的一些内容。">
@@ -388,7 +362,7 @@
 <p>在循环操作中用compare_exchange_weak性能更好，它允许伪失败（比较相同仍返回false）<br>对于compare_exchange_weak()函数，当原始值与预期值一致时，存储也可能会不成功。这可能发生在缺少独立“比较-交换”指令的机器上，当处理器不能保证这个操作能够自动的完成——可能是因为线程的操作将指令队列从中间关闭，并且另一个线程安排的指令将会被操作系统所替换(这里线程数多于处理器数量)。这被称为“伪失败”(spurious failure)，因为造成这种情况的原因是时间，而不是变量值。</p>
 </blockquote>
 <p>atomic对整型做了一些特化，可以支持一些算术操作，并允许用户自定义类型，但是貌似类型必须是POD。</p>
-<h1 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h1><h2 id="Mutex"><a href="#Mutex" class="headerlink" title="Mutex"></a>Mutex</h2><p><code>&lt;mutex&gt;</code><br><strong>std::mutex</strong><br>提供了基本的互斥机制。内部使用criticalSection实现（vc带的stl，windows）。</p>
+<h1 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h1><h2 id="Mutex"><a href="#Mutex" class="headerlink" title="Mutex"></a>Mutex</h2><p><code>&lt;mutex&gt;</code><br><strong>std::mutex</strong><br>提供了基本的互斥机制。之前内部好像使用criticalSection实现（vc带的stl，windows），但是现在好像用的是SRWLock，因为锁函数调用时会用到API RtlAcquireSRWLockExclusive。</p>
 <p>未lock时unlock会引发错误，不能在其它线程unlock解消占用。<br>不可递归，不能跨进程使用。<br>线程退出不会自动unlock。（注意：跟winapi不同，不可递归，线程退出不解消）<br>unlock后立即lock，其它等待的线程有极大概率不能获取执行机会。</p>
 <p><strong>recursive_mutex</strong><br>递归锁。<br>线程退出不会清除。<br><em>没有用内核对象的东西，好像是自己弄了一个变量存储递归情况。</em><br>释放互斥量时需要调用与该锁层次深度相同次数的 unlock()。</p>
 <p><strong>timed_mutex</strong><br>超时等待锁，超时会返回false。  </p>
@@ -406,10 +380,10 @@
 <p><strong>defer_lock</strong><br>lock_guard不能用。<br>unique_lock中创建时不锁，并且之前也没锁过。</p>
 <p><strong>try_to_lock</strong><br>lock_guard不能用。<br>unique_lock中创建时试锁，如果成功会在析构时解锁，不成功就不处理。  </p>
 <h2 id="常用锁算法"><a href="#常用锁算法" class="headerlink" title="常用锁算法"></a>常用锁算法</h2><p>try_lock: 尝试获得互斥锁的所有权<br>lock: 加锁指定的互斥锁，如果不能则阻塞（Block）<br>std::lock: 可以一次锁住多个对象，不会有副作用（如死锁什么的）</p>
-<p><strong>单次调用</strong><br>once_flag: 用于确保 <code>call_once</code> 仅请求调用指定函数一次的辅助对象<br>call_once: 仅请求调用指定函数<strong>一次</strong>，即使被多条线程调用</p>
+<p><strong>单次调用</strong><br>once_flag: 用于确保 <code>call_once</code> 仅请求调用指定函数一次的辅助对象<br>call_once: 仅请求调用指定函数<strong>一次</strong>，即使被多条线程调用，注意这个函数是阻塞的，会保证执行（或曾经执行）过才放行</p>
 <h1 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h1><p><code>&lt;condition_variable&gt;</code><br><code>condition_variable</code>在wait时只支持<code>unique_lock&lt;mutex&gt;</code>，用<code>condition_variable_any</code>可支持更多参数。<br>当wait时线程会释放锁并挂起（这个挂起好像并不是等待传入的锁而引起的挂起），唤醒时获取锁，并检查条件，符合将会继续运行（或者未设置条件时），否则继续阻塞。<br>在wait之前，线程必须获取要等待的锁，否则无法唤醒。<br>notify会唤醒（一个或所有）等待的线程，如果调用时没有线程再等待，则忽略（先notify再wait是无效的）掉。<br>如果有多个线程等待，唤醒一个时不知道是否会惊群，没看到有相关记录。<br>有超时机制。</p>
 <p>可以设置条件，实际执行的是下面的代码（唤醒时检查，不符合就继续阻塞）：<br>注意在wait调用时也会检查一次，为true就不进入阻塞步骤。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在wait时设置的条件返回true时继续执行，false阻塞</span></div><div class="line"><span class="keyword">while</span>(!Pred())</div><div class="line">    wait(Lck);</div></pre></td></tr></table></figure></p>
-<p>可以这个用来实现信号量。<br>注意检查和等待不是原子的，在调用notify唤醒线程后再设置条件为true，此时会有一定几率通过验证，这是调用速度决定的。（所以最好先设置条件再唤醒）<br>多个条件变量可以共享一个互斥量。  </p>
+<p>可以这个用来实现信号量。<br>注意检查和等待不是原子的，在调用notify唤醒线程后再设置条件为true，此时会有一定几率通过验证，这是调用速度决定的。（所以最好先设置条件再唤醒）<br>多个条件变量可以共享一个互斥量。<br>在Windows下，wait用的是SleepConditionVariableSRW，不用SleepConditionVariableCS，所以mutex的实现现在用的是SRWLock。</p>
 <h1 id="异步操作"><a href="#异步操作" class="headerlink" title="异步操作"></a>异步操作</h1><p><em>其实stl的异步操作类库并没有ppl的好用，但是在其它环境好像没有ppl。</em></p>
 <h2 id="future"><a href="#future" class="headerlink" title="future"></a>future</h2><p><code>&lt;future&gt;</code></p>
 <p><strong>future</strong><br>可用get阻塞线程，当future有值时就会唤醒阻塞的线程，也可以用wait，还提供了超时机制可用。<br>get只能取值一次，用get取值多次会发生错误；如果要取多次就用share获取<code>share_future</code>对象，这个对象也可以用wait、get等函数阻塞线程。<br>一般这个类型不直接创建（因为是无效的），需要由其它Providers(提供者)创建。<br>在取值前可以用valid()来判断是否有效（有没有取过值）。</p>
@@ -561,7 +535,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -572,7 +546,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -583,7 +557,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -675,15 +649,15 @@
   
 
 
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
   
-
-
-
-
-
-
-
-
 
 
 
@@ -706,7 +680,7 @@
   <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
   
-  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js" color="54,66,81" opacity='0.3' zIndex="-2" count="40"></script>
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
 
 
   

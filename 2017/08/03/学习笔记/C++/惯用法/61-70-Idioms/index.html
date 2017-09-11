@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++,模板," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Pointer To Implementation（Pimpl）、Policy Clone、Policy-based Design、Polymorphic Exception、Polymorphic Value Types、Recursive Type Composition、Requiring or Prohibiting Heap-based Objects、Resource Acquisit">
+<meta name="keywords" content="C++,模板">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[C++ Idioms] 61-70">
+<meta property="og:url" content="/2017/08/03/学习笔记/C++/惯用法/61-70-Idioms/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="Pointer To Implementation（Pimpl）、Policy Clone、Policy-based Design、Polymorphic Exception、Polymorphic Value Types、Recursive Type Composition、Requiring or Prohibiting Heap-based Objects、Resource Acquisit">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-25T08:37:33.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[C++ Idioms] 61-70">
+<meta name="twitter:description" content="Pointer To Implementation（Pimpl）、Policy Clone、Policy-based Design、Polymorphic Exception、Polymorphic Value Types、Recursive Type Composition、Requiring or Prohibiting Heap-based Objects、Resource Acquisit">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/08/03/学习笔记/C++/惯用法/61-70-Idioms/"/>
+
+
+
+
+
+  <title>[C++ Idioms] 61-70 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/08/03/学习笔记/C++/惯用法/61-70-Idioms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[C++ Idioms] 61-70</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T17:33:05+08:00">
+                2017-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
+                    <span itemprop="name">C++ Idioms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Pointer To Implementation（Pimpl）、Policy Clone、Policy-based Design、Polymorphic Exception、Polymorphic Value Types、Recursive Type Composition、Requiring or Prohibiting Heap-based Objects、Resource Acquisition Is Initialization、Resource Return、Return Type Resolver
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Pointer-To-Implementation（Pimpl）"><a href="#Pointer-To-Implementation（Pimpl）" class="headerlink" title="Pointer To Implementation（Pimpl）"></a>Pointer To Implementation（Pimpl）</h1><p>将类的实现与其使用者隔离。隔离后的类在独自修改时，不会使其它使用到它的类被重新编译（编译防火墙），还可以对类的使用者隐藏实现。<br>这个惯用法有很多文章都会讨论（也给它起了很多名字），但实际看一些代码，其实用得不多（可能是因为要实现调用转发要重新编写一次接口太累了，至少我这样认为）。在速度上是会降一些，但是在可接受范围之内。  </p>
+<p>大体上结构是这样的：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 只传达意思，省去了会混淆的内容</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Impl</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"DO"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PImpl</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	PImpl()</div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 可以直接new，或者用对象池</span></div><div class="line">		impl_ = <span class="keyword">new</span> Impl();</div><div class="line">	&#125;</div><div class="line">	~PImpl()</div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 做一些回收工作，这里略</span></div><div class="line">	&#125;</div><div class="line">	<span class="comment">// 实现接口，实现转发调用，但是如果有很多函数的话就很累了（可以用写脚本生成代码的方式生成）</span></div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		impl_-&gt;Do();</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	Impl* impl_;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这样在Impl变化的时候，由于其它类型引用的是PImpl，所以不会使其它类被重新编译，在这个类被普遍使用的时候且这个项目很大时可以节约很多编译时间。</p>
+<hr>
+<h1 id="Policy-Clone"><a href="#Policy-Clone" class="headerlink" title="Policy Clone"></a>Policy Clone</h1><p>模板策略克隆。让已经绑定到模板的策略类重新绑定到新的类型，在某些不能直接取得类的策略模板原型的时候，通过这个惯用法可以获得新的绑定类型。<br>如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Policy</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(T) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TPolicy = Policy&lt;T&gt;&gt;</div><div class="line">class MyClass</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	MyClass()</div><div class="line">	&#123;</div><div class="line">		TPolicy::Print();</div><div class="line">		<span class="comment">// 假设此时想修改TPolicy的绑定类型（模板参数），是无法修改的，因为不知道它的原始类型</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>此时修改成这样便可以解决：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Policy</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(T) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> U&gt;</div><div class="line">	<span class="keyword">using</span> Rebind = Policy&lt;U&gt;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TPolicy = Policy&lt;T&gt;&gt;</div><div class="line">class MyClass</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	MyClass()</div><div class="line">	&#123;</div><div class="line">		TPolicy::Print();</div><div class="line">		<span class="comment">// 重绑定</span></div><div class="line">		TPolicy::Rebind&lt;<span class="keyword">double</span>&gt;::Print();</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Policy-based-Design-补"><a href="#Policy-based-Design-补" class="headerlink" title="Policy-based Design [补]"></a>Policy-based Design [补]</h1><p>基于策略设计。原文无内容，这是YY。<br>这是模板的策略模式，不同于一般的策略模式实现，这里用模板参数作为策略，用法如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AddPolicy</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Calc</span><span class="params">(<span class="keyword">int</span> val)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> val + val;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">MultiPolicy</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Calc</span><span class="params">(<span class="keyword">int</span> val)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> val * val;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 调用时可以传入不同的策略来影响计算结果</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TPolicy = AddPolicy&gt;</div><div class="line"><span class="keyword">int</span> Calc(<span class="keyword">int</span> val)</div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> ret = val;</div><div class="line">	<span class="comment">// 做其它事情</span></div><div class="line">	++ret;</div><div class="line">	<span class="comment">// 执行类策略</span></div><div class="line">	ret = TPolicy::Calc(ret);</div><div class="line">	<span class="comment">// 做其它事情</span></div><div class="line">	++ret;</div><div class="line">	<span class="keyword">return</span> ret;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TPolicy = DefaultPolicy&gt;</div><div class="line">class MyClass</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">int</span> DoCalc(<span class="keyword">int</span> val)</div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 这里借用上面的函数</span></div><div class="line">		<span class="keyword">return</span> Calc&lt;TPolicy&gt;(val);</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>一般策略类的函数可以声明为static，也可以不是静态（在需要保存状态的情况，这时候需要创建相关对象），stl用得很多，比如各种容器可以传入自定义的分配器，这个就是模板策略。</p>
+<hr>
+<h1 id="Polymorphic-Exception-易"><a href="#Polymorphic-Exception-易" class="headerlink" title="Polymorphic Exception [易]"></a>Polymorphic Exception [易]</h1><p>多态异常。用异常基类捕获异常，需要注意catch用引用捕获，不扩展了。</p>
+<hr>
+<h1 id="Polymorphic-Value-Types-补"><a href="#Polymorphic-Value-Types-补" class="headerlink" title="Polymorphic Value Types [补]"></a>Polymorphic Value Types [补]</h1><p>为值类型添加运行时多态支持，并且不使用继承关系。原文没内容，只给了<a href="https://channel9.msdn.com/Events/GoingNative/2013/Inheritance-Is-The-Base-Class-of-Evil" target="_blank" rel="external">视频</a>和<a href="https://github.com/boostcon/cppnow_presentations_2012/blob/master/fri/value_semantics/value_semantics.pdf?raw=true" target="_blank" rel="external">PPT</a>。这里内容就自己YY。  </p>
+<p>先来说视频内容。先放代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; x, ostream&amp; out, <span class="keyword">size_t</span> position)</span></span></div><div class="line">&#123;</div><div class="line">	out &lt;&lt; <span class="built_in">string</span>(position, <span class="string">' '</span>) &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp; x, ostream&amp; out, <span class="keyword">size_t</span> position)</span></span></div><div class="line">&#123;</div><div class="line">	out &lt;&lt; <span class="built_in">string</span>(position, <span class="string">' '</span>) &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">object_t</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div><div class="line">	<span class="keyword">object_t</span>(<span class="keyword">const</span> T&amp; x) :</div><div class="line">		object_(make_shared&lt;model&lt;T&gt;&gt;(x))</div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(<span class="keyword">const</span> <span class="keyword">object_t</span>&amp; x, ostream&amp; out, <span class="keyword">size_t</span> position)</span></span></div><div class="line">	&#123;</div><div class="line">		x.object_-&gt;draw_(out, position);</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">concept_t</span> &#123;</span></div><div class="line">		<span class="keyword">virtual</span> ~<span class="keyword">concept_t</span>() = <span class="keyword">default</span>;</div><div class="line">		<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">draw_</span><span class="params">(ostream&amp;, <span class="keyword">size_t</span>)</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">	&#125;;</div><div class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div><div class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">model</span> :</span> <span class="keyword">concept_t</span> &#123;</div><div class="line">		model(<span class="keyword">const</span> T&amp; x) : data_(x) &#123; &#125;</div><div class="line">		<span class="function"><span class="keyword">void</span> <span class="title">draw_</span><span class="params">(ostream&amp; out, <span class="keyword">size_t</span> position)</span> <span class="keyword">const</span></span></div><div class="line">		&#123;</div><div class="line">			draw(data_, out, position);</div><div class="line">		&#125;</div><div class="line">		T data_;</div><div class="line">	&#125;;</div><div class="line">	<span class="built_in">shared_ptr</span>&lt;<span class="keyword">const</span> <span class="keyword">concept_t</span>&gt; object_;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">using</span> <span class="keyword">document_t</span> = <span class="built_in">vector</span>&lt;<span class="keyword">object_t</span>&gt;;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">(<span class="keyword">const</span> <span class="keyword">document_t</span>&amp; x, ostream&amp; out, <span class="keyword">size_t</span> position)</span> </span>&#123;</div><div class="line">	out &lt;&lt; <span class="built_in">string</span>(position, <span class="string">' '</span>) &lt;&lt; <span class="string">"&lt;document&gt;"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span>&amp; e : x) draw(e, out, position + <span class="number">2</span>);</div><div class="line">	out &lt;&lt; <span class="built_in">string</span>(position, <span class="string">' '</span>) &lt;&lt; <span class="string">"&lt;/document&gt;"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">using</span> <span class="keyword">history_t</span> = <span class="built_in">vector</span>&lt;<span class="keyword">document_t</span>&gt;;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">commit</span><span class="params">(<span class="keyword">history_t</span>&amp; x)</span></span></div><div class="line">&#123;</div><div class="line">	assert(x.size());</div><div class="line">	x.push_back(x.back());</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">undo</span><span class="params">(<span class="keyword">history_t</span>&amp; x)</span></span></div><div class="line">&#123;</div><div class="line">	assert(x.size()); x.pop_back();</div><div class="line">&#125;</div><div class="line"><span class="keyword">document_t</span>&amp; current(<span class="keyword">history_t</span>&amp; x)</div><div class="line">&#123;</div><div class="line">	assert(x.size()); <span class="keyword">return</span> x.back();</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">my_class_t</span> &#123;</span>    <span class="comment">/* ... */</span> &#125;;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">(<span class="keyword">const</span> <span class="keyword">my_class_t</span>&amp;, ostream&amp; out, <span class="keyword">size_t</span> position)</span></span></div><div class="line">&#123;</div><div class="line">	out &lt;&lt; <span class="built_in">string</span>(position, <span class="string">' '</span>) &lt;&lt; <span class="string">"my_class_t"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">history_t</span> h(<span class="number">1</span>);</div><div class="line">	current(h).emplace_back(<span class="number">0</span>);</div><div class="line">	current(h).emplace_back(<span class="built_in">string</span>(<span class="string">"Hello!"</span>));</div><div class="line">	draw(current(h), <span class="built_in">cout</span>, <span class="number">0</span>);</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"--------------------------"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	commit(h);</div><div class="line">	current(h).emplace_back(current(h));</div><div class="line">	current(h).emplace_back(<span class="keyword">my_class_t</span>());</div><div class="line">	current(h)[<span class="number">1</span>] = <span class="built_in">string</span>(<span class="string">"World"</span>);</div><div class="line">	draw(current(h), <span class="built_in">cout</span>, <span class="number">0</span>);</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"--------------------------"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	undo(h);</div><div class="line">	draw(current(h), <span class="built_in">cout</span>, <span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在编写photoshop的历史记录功能时，需要记录每个操作步骤，此时如果将每个步骤的结果图片都存储那是不可能的（内存占用会暴涨，而且还有多个图层），所以这里用命令模式设计，只记录操作命令；然后他们提出了一种技巧，可以在保留历史记录的同时可对之前的记录进行选择性重放或修改（历史记录画笔功能），修改后还能返回之前未修改的记录；视频中的主要内容就是讨论这个和如何优化在复制历史命令时产生的复制构造消耗性能的问题。<br>上面代码就是解决方案，<code>document_t</code>可以看作是文档的历史记录（<code>vector&lt;command&gt;</code>，保存了各操作命令），<code>history_t</code>是文档历史记录的历史记录（<code>vector&lt;document_t&gt;</code>），在完成某个操作时，会使用<code>commit</code>复制一份<code>document_t</code>，其后的操作都在新历史记录版本上操作，此时可以对复制版本做任何修改而不影响到之前的记录，在撤销时直接把当前历史丢掉，就得到了旧版本历史。对于解决复制拷贝的问题，用<code>shared_ptr</code>存储命令就行了（享元），复制时只复制相应指针，修改历史记录时只是把对应记录的指针换成指向其它命令对象。  </p>
+<p>那么这个视频内容跟这个惯用法有什么关系呢？原文和PPT后带了一个类库<a href="http://stlab.adobe.com/group__poly__related.html" target="_blank" rel="external">链接</a>，研究了一下，它可能是指，在类型擦除后仍可对这个类型执行相对应的重载函数，其核心结构可能是<code>model</code>里的<code>draw_</code>，看了一下poly源码，似乎也有点这个意思，不过例子太少不太会用这个类库，所以先放下，以后技术长进再回来研究。</p>
+<hr>
+<h1 id="Recursive-Type-Composition-缺"><a href="#Recursive-Type-Composition-缺" class="headerlink" title="Recursive Type Composition [缺]"></a>Recursive Type Composition [缺]</h1><p>编译时递归类型定义。原文无内容，附带的链接是一篇论文，但是我无法查看原文（貌似注册蛮麻烦的）。<br>本来想YY一些，但是看了论文的摘要，感觉说的不是我想YY的东西，所以……此篇无内容。</p>
+<hr>
+<h1 id="Requiring-or-Prohibiting-Heap-based-Objects-易"><a href="#Requiring-or-Prohibiting-Heap-based-Objects-易" class="headerlink" title="Requiring or Prohibiting Heap-based Objects [易]"></a>Requiring or Prohibiting Heap-based Objects [易]</h1><p>让对象只能在堆或栈中创建。以前写过了，这里应该是原文内容重复了。</p>
+<hr>
+<h1 id="Resource-Acquisition-Is-Initialization-易"><a href="#Resource-Acquisition-Is-Initialization-易" class="headerlink" title="Resource Acquisition Is Initialization [易]"></a>Resource Acquisition Is Initialization [易]</h1><p>资源获取就是初始化（RAII）。使用对象生命周期来控制资源生命周期。主要是使用对象的ctor和dtor，在ctor获取资源（所以叫RAII）， 在对象（可以是栈对象或堆对象）生命周期结束时会自动执行dtor实现释放资源，可以避免泄露和简化编程操作。<br>网上相关的内容已经很多了，很容易理解，这里不扩展。</p>
+<hr>
+<h1 id="Resource-Return-易"><a href="#Resource-Return-易" class="headerlink" title="Resource Return [易]"></a>Resource Return [易]</h1><p>在工厂函数返回时明确返回资源的所有权特征。在工厂返回对象时有时候会返回指针，此时可能会不知道是由工厂管理对象的生存周期还是此时转交给用户管理，这样会造成对象所有权不明确，此时用智能指针返回就行了（这也提醒我们在编写工厂的时候不要只是返回一个对象指针，因为使用者不知道该由谁管理其生存期，除非写注释）。</p>
+<hr>
+<h1 id="Return-Type-Resolver"><a href="#Return-Type-Resolver" class="headerlink" title="Return Type Resolver"></a>Return Type Resolver</h1><p>推导被初始化或被赋值的对象的类型。又是一个使用operator Type特性的惯用法：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line">	<span class="function"><span class="keyword">operator</span> <span class="title">T</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> T();</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> x = MyClass();</div><div class="line">	<span class="keyword">void</span>* y = MyClass();</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>将operator Type声明为模板函数可以检测到赋值或者构造的类型。</p>
+<p>应用如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Range</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Range(<span class="keyword">int</span> begin, <span class="keyword">int</span> end, <span class="keyword">int</span> step = <span class="number">1</span>) :</div><div class="line">		begin_(begin),</div><div class="line">		end_(end),</div><div class="line">		step_(step)</div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 范围检查略</span></div><div class="line">	&#125;</div><div class="line">	Range(<span class="keyword">int</span> end) :</div><div class="line">		Range(<span class="number">0</span>, end, <span class="number">1</span>)</div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> TContainer&gt;</div><div class="line">	<span class="function"><span class="keyword">operator</span> <span class="title">TContainer</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		TContainer ret;</div><div class="line">		<span class="keyword">auto</span> inserter = <span class="built_in">std</span>::back_inserter(ret);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = begin_; i &lt; end_; i += step_)</div><div class="line">		&#123;</div><div class="line">			inserter = i;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> ret;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> begin_;</div><div class="line">	<span class="keyword">int</span> end_;</div><div class="line">	<span class="keyword">int</span> step_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = Range(<span class="number">10</span>);</div><div class="line">	<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">char</span>&gt; l = Range(<span class="number">5</span>, <span class="number">20</span>, <span class="number">2</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/08/03/学习笔记/C++/惯用法/61-70-Idioms/" title="[C++ Idioms] 61-70">/2017/08/03/学习笔记/C++/惯用法/61-70-Idioms/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" class="fa fa-tag" rel="tag"> C++</a>
+          
+            <a href="/tags/模板/" class="fa fa-tag" rel="tag"> 模板</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/02/学习笔记/C++/惯用法/51-60-Idioms/" rel="next" title="[C++ Idioms] 51-60">
+                <i class="fa fa-chevron-left"></i> [C++ Idioms] 51-60
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/04/学习笔记/C++/惯用法/71-80-Idioms/" rel="prev" title="[C++ Idioms] 71-80">
+                [C++ Idioms] 71-80 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pointer-To-Implementation（Pimpl）"><span class="nav-number">1.</span> <span class="nav-text">Pointer To Implementation（Pimpl）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Policy-Clone"><span class="nav-number">2.</span> <span class="nav-text">Policy Clone</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Policy-based-Design-补"><span class="nav-number">3.</span> <span class="nav-text">Policy-based Design [补]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Polymorphic-Exception-易"><span class="nav-number">4.</span> <span class="nav-text">Polymorphic Exception [易]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Polymorphic-Value-Types-补"><span class="nav-number">5.</span> <span class="nav-text">Polymorphic Value Types [补]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Recursive-Type-Composition-缺"><span class="nav-number">6.</span> <span class="nav-text">Recursive Type Composition [缺]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Requiring-or-Prohibiting-Heap-based-Objects-易"><span class="nav-number">7.</span> <span class="nav-text">Requiring or Prohibiting Heap-based Objects [易]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Resource-Acquisition-Is-Initialization-易"><span class="nav-number">8.</span> <span class="nav-text">Resource Acquisition Is Initialization [易]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Resource-Return-易"><span class="nav-number">9.</span> <span class="nav-text">Resource Return [易]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Return-Type-Resolver"><span class="nav-number">10.</span> <span class="nav-text">Return Type Resolver</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

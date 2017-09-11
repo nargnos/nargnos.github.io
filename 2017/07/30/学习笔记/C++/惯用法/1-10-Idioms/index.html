@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++,模板," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Address Of、Algebraic Hierarchy、Attorney Client、Barton-Nackman trick、Base from Member、Mutant、Calling Virtuals During Initialization、Capability Query、Checked delete">
+<meta name="keywords" content="C++,模板">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[C++ Idioms] 1-10">
+<meta property="og:url" content="/2017/07/30/学习笔记/C++/惯用法/1-10-Idioms/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="Address Of、Algebraic Hierarchy、Attorney Client、Barton-Nackman trick、Base from Member、Mutant、Calling Virtuals During Initialization、Capability Query、Checked delete">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-25T08:30:40.603Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[C++ Idioms] 1-10">
+<meta name="twitter:description" content="Address Of、Algebraic Hierarchy、Attorney Client、Barton-Nackman trick、Base from Member、Mutant、Calling Virtuals During Initialization、Capability Query、Checked delete">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/07/30/学习笔记/C++/惯用法/1-10-Idioms/"/>
+
+
+
+
+
+  <title>[C++ Idioms] 1-10 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/07/30/学习笔记/C++/惯用法/1-10-Idioms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[C++ Idioms] 1-10</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T11:07:09+08:00">
+                2017-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
+                    <span itemprop="name">C++ Idioms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Address Of、Algebraic Hierarchy、Attorney Client、Barton-Nackman trick、Base from Member、Mutant、Calling Virtuals During Initialization、Capability Query、Checked delete
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>之前分开放文件太多，现十个一组合并。日期什么的就乱改一个（保证文档先后顺序）吧。</em></p>
+<h1 id="Address-Of-替"><a href="#Address-Of-替" class="headerlink" title="Address Of [替]"></a>Address Of [替]</h1><p>获取对象的真实地址，用在对象重载&amp;的情况。<br>STL、Boost使用现成的函数： addressof。  </p>
+<hr>
+<p>在如下情况，对该类型对象取地址会导致编译失败，此时可以用addressof获取地址。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">nonaddressable</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">typedef</span> <span class="keyword">double</span> useless_type;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	useless_type <span class="keyword">operator</span>&amp;() <span class="keyword">const</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>addressof的stl源码如下，<strong>核心就是那句转换</strong>。<br>添加const volatile的原因是在转换用const或volatile修饰的引用时，如果不加上这个标识，用<code>reinterpret_cast</code>是无法通过编译的（转换操作的特性）。<br>所以这里先转为cv引用，再去掉cv标识（因为应该按模板参数捕获到的类型返回，而<code>reinterpret_cast</code>是可以添加cv修饰的），然后再取地址转换为对应返回类型指针（此时返回类型如果有带cv修饰会再被加上去）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">*  @brief Same as C++11 std::addressof</div><div class="line">*  @ingroup utilities</div><div class="line">*/</div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt;</div><div class="line"><span class="keyword">inline</span> _Tp*</div><div class="line">__addressof(_Tp&amp; __r) _GLIBCXX_NOEXCEPT</div><div class="line">&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;_Tp*&gt;</div><div class="line">		(&amp;<span class="keyword">const_cast</span>&lt;<span class="keyword">char</span>&amp;&gt;(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">const</span> <span class="keyword">volatile</span> <span class="keyword">char</span>&amp;&gt;(__r)));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">*  @brief Returns the actual address of the object or function</div><div class="line">*         referenced by r, even in the presence of an overloaded</div><div class="line">*         operator&amp;.</div><div class="line">*  @param  __r  Reference to an object or function.</div><div class="line">*  @return   The actual address.</div><div class="line">*/</div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt;</div><div class="line"><span class="keyword">inline</span> _<span class="function">Tp*</span></div><div class="line"><span class="title">addressof</span><span class="params">(_Tp&amp; __r)</span> <span class="keyword">noexcept</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">return</span> <span class="built_in">std</span>::__addressof(__r);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另一处的源码，添加了对于函数类型的判断，但可从源码看出有builtin的函数可用，修饰也添加了constexpr。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// TEMPLATE FUNCTION addressof</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __EDG__ <span class="comment">/* TRANSITION, VSO#200707 */</span></span></div><div class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty</span>&gt; <span class="title">inline</span></span></div><div class="line">_<span class="title">Ty</span> *_<span class="title">Addressof</span>(_<span class="title">Ty</span>&amp; _<span class="title">Val</span>, <span class="title">true_type</span>) _<span class="title">NOEXCEPT</span></div><div class="line">&#123;	<span class="comment">// return address of function _Val</span></div><div class="line">	<span class="keyword">return</span> (_Val);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty</span>&gt; <span class="title">inline</span></span></div><div class="line">_<span class="title">Ty</span> *_<span class="title">Addressof</span>(_<span class="title">Ty</span>&amp; _<span class="title">Val</span>, <span class="title">false_type</span>) _<span class="title">NOEXCEPT</span></div><div class="line">&#123;	<span class="comment">// return address of object _Val</span></div><div class="line">	<span class="keyword">return</span> (<span class="keyword">reinterpret_cast</span>&lt;_Ty *&gt;(</div><div class="line">		&amp;<span class="keyword">const_cast</span>&lt;<span class="keyword">char</span>&amp;&gt;(</div><div class="line">			<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">const</span> <span class="keyword">volatile</span> <span class="keyword">char</span>&amp;&gt;(_Val))));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty</span>&gt; <span class="title">inline</span></span></div><div class="line">_<span class="title">Ty</span> *<span class="title">addressof</span>(_<span class="title">Ty</span>&amp; _<span class="title">Val</span>) _<span class="title">NOEXCEPT</span></div><div class="line">&#123;	<span class="comment">// return address of _Val</span></div><div class="line">	<span class="keyword">return</span> (_Addressof(_Val, is_function&lt;_Ty&gt;()));</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">else</span> <span class="comment">/* __EDG__ */</span></span></div><div class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty</span>&gt; <span class="title">inline</span></span></div><div class="line"><span class="title">constexpr</span> _<span class="title">Ty</span> *<span class="title">addressof</span>(_<span class="title">Ty</span>&amp; _<span class="title">Val</span>) _<span class="title">NOEXCEPT</span></div><div class="line">&#123;	<span class="comment">// return address of _Val</span></div><div class="line">	<span class="keyword">return</span> (__builtin_addressof(_Val));</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* __EDG__ */</span></span></div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Algebraic-Hierarchy-易"><a href="#Algebraic-Hierarchy-易" class="headerlink" title="Algebraic Hierarchy [易]"></a>Algebraic Hierarchy [易]</h1><p>目的是隐藏对象操作细节，可以通过一些简单的接口调用。<br>比如<code>complex</code>复数库（高中内容i^2=-1的复数），<strong>重载运算符</strong>使之能通过这些运算符完成一些比较复杂的操作。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">complex</span>&lt;<span class="keyword">int</span>&gt; i(<span class="number">0</span>, <span class="number">1</span>);</div><div class="line"><span class="keyword">auto</span> res = i * i; <span class="comment">// res == complex&lt;int&gt;(-1)</span></div></pre></td></tr></table></figure></p>
+<p>其它的一些库多多少少都有一些应用，比如stream、string等。  </p>
+<hr>
+<h1 id="Attach-by-Initialization"><a href="#Attach-by-Initialization" class="headerlink" title="Attach by Initialization"></a>Attach by Initialization</h1><p>当框架需要在程序启动时初始化，由于框架细节不便提供给用户修改，就将用户自定义的初始化内容“延迟”到子对象实现（模板方法）。<br>注意在使用时如果跨编译单元引用静态对象的内容，结果是不确定的，因为对于不同编译单元静态对象的初始化顺序，标准里并没有明确。   </p>
+<p>例：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Framework</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Framework()</div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 向某对象注册</span></div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Init</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 框架初始化代码</span></div><div class="line">		<span class="comment">// ...</span></div><div class="line">		DoUserInit();</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">DoUserInit</span><span class="params">()</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> :</span></div><div class="line">	<span class="keyword">public</span> Framework</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">DoUserInit</span><span class="params">()</span> override</span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// init</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 全局对象</span></div><div class="line">User user;</div><div class="line"><span class="comment">// 这样在程序启动时，可以根据注册的对象调用到用户的初始化代码。</span></div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Attorney-Client"><a href="#Attorney-Client" class="headerlink" title="Attorney Client"></a>Attorney Client</h1><p>友元代理，限制友元的访问权限。<br>C++的friend给的权限过大，这个可以限制其权限。<br>或者可以在某个类需要设置多个友元对象时，可以简化设置操作。<br>其核心是<strong>用中间层来传递友元关系</strong>，同时控制访问权限。<br>Boost有例子，iterator_facade的相关操作就用到了这个惯用法。  </p>
+<p>例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 比如有一个类希望其友元只能访问varA</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Friend</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span>;</span></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> varA_;</div><div class="line">	<span class="keyword">int</span> varB_;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 但是此时这个友元类“越界”访问了，原始类对此无能为力</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">MyFriend</span><span class="params">(Friend&amp; f)</span></span></div><div class="line">	&#123;</div><div class="line">		f.varA_ = <span class="number">0</span>;</div><div class="line">		f.varB_ = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>通过这个惯用法，加入中间层：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Friend</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">Attorney</span>;</span></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> varA_;</div><div class="line">	<span class="keyword">int</span> varB_;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 使用这个类传递友元关系</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Attorney</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="comment">// 如果想在多个类中共享，可直接设置函数为public，然后取消设置这个类的友元</span></div><div class="line">	<span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span>;</span></div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SetVarA</span><span class="params">(Friend&amp; f, <span class="keyword">int</span> val)</span></span></div><div class="line">	&#123;</div><div class="line">		f.varA_ = val;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">GetVarA</span><span class="params">(Friend&amp; f)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> f.varA_;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">// 或者更直接的</span></div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">int</span>&amp; <span class="title">VarA</span><span class="params">(Friend&amp; f)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> f.varA_;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">MyFriend</span><span class="params">(Friend&amp; f)</span></span></div><div class="line">	&#123;</div><div class="line">		Attorney::SetVarA(f, <span class="number">0</span>);</div><div class="line">		<span class="keyword">auto</span> varA = Attorney::GetVarA(f);</div><div class="line">		<span class="keyword">auto</span> varARef = Attorney::VarA(f);</div><div class="line">		<span class="comment">// 无法访问varB</span></div><div class="line">		<span class="comment">// f.varB_ = 0;</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass2</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">MyFriend</span><span class="params">(Friend&amp; f)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 此时由于MyClass2不是Attorney的友元，便不具有访问权限</span></div><div class="line">		<span class="comment">// Attorney::SetVarA(f, 0);</span></div><div class="line">		<span class="comment">// auto varA = Attorney::GetVarA(f);</span></div><div class="line">		<span class="comment">// auto varARef = Attorney::VarA(f);</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在用CRTP（后面会说到）的时候，不方便设置父类友元或者父类的一些操作是由其它类配合完成的，这样在使用到的时候就不能单纯设置友元。这时候传递友元就需要一些技巧：<br>声明一个第三方类，子类设置其为友元，第三方类里声明模板函数（这样就可以接收所有子类），执行的是子类的一些私有函数（类似桥接），然后父类调用这个第三方类并传入子类指针（static_cast），就可以调用到子类的私有成员。  </p>
+<p>Boost源码中iterator_facade的使用方式就类似这样。  </p>
+<p>例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 假设crtp参数构成比较复杂</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TDerived, <span class="keyword">int</span>...&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DoSomething</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">auto</span> self = <span class="keyword">reinterpret_cast</span>&lt;TDerived*&gt;(<span class="keyword">this</span>);</div><div class="line">		<span class="comment">// 需要访问子类的私有函数</span></div><div class="line">		<span class="comment">// 但此时不设置Base为友元是无法访问这些函数的</span></div><div class="line">		<span class="comment">// self-&gt;DoA();</span></div><div class="line">		<span class="comment">// self-&gt;DoB();</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 第一层继承，负责根据TChild类型填充Base的参数</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TChild&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span></div><div class="line">	<span class="comment">// 这里参数只是例子</span></div><div class="line">	<span class="keyword">public</span> Base&lt;TChild, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&gt;</div><div class="line">&#123;</div><div class="line">	<span class="comment">// 此时在这里声明友元可以让父类访问Derived</span></div><div class="line">	<span class="comment">// 但是无法让父类访问下一级派生TChild的私有成员</span></div><div class="line">	<span class="comment">// friend Base&lt;TChild, 1, 2, 3&gt;;</span></div><div class="line"></div><div class="line">	<span class="comment">// 假设Base还调用到这个类的其它一些函数，这里略</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> :</span></div><div class="line">	<span class="keyword">public</span> Derived&lt;MyClass&gt;</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="comment">// friend Base&lt;MyClass, 1, 2, 3&gt;;</span></div><div class="line">	<span class="comment">// 可以在这一步写这个friend让Base访问到对应函数</span></div><div class="line">	<span class="comment">// 但是此时MyClass的编写者就要了解是什么类（Base）需要调用</span></div><div class="line">	<span class="comment">// 可能整个继承链的每一层都有一些函数要调用到自身的私有成员，这样就需要写很多friend</span></div><div class="line">	<span class="comment">// 此时还需要了解这个类需要哪些参数及这些参数如何生成，这样如果派生多了会很麻烦</span></div><div class="line">	<span class="comment">// 也就是说，会导致继承者需要了解父类的实现细节</span></div><div class="line">	</div><div class="line">	<span class="comment">// 此时无法通过使用 friend Base; 让使用各种模板参数的Base都具有友元效果	</span></div><div class="line">	<span class="comment">// 此时就只能使这些函数变public？</span></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DoA</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DoB</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>此时添加一个第三方类做友元传递。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Access</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">CallDoA</span><span class="params">(T* ptr)</span></span></div><div class="line">	&#123;</div><div class="line">		ptr-&gt;DoA();</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">CallDoB</span><span class="params">(T* ptr)</span></span></div><div class="line">	&#123;</div><div class="line">		ptr-&gt;DoB();</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TDerived, <span class="keyword">int</span>...&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DoSomething</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">auto</span> self = <span class="keyword">reinterpret_cast</span>&lt;TDerived*&gt;(<span class="keyword">this</span>);</div><div class="line">		<span class="comment">// 访问子类的私有函数</span></div><div class="line">		Access::CallDoA(self);</div><div class="line">		Access::CallDoB(self);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TChild&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span></div><div class="line">	<span class="keyword">public</span> Base&lt;TChild, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&gt;</div><div class="line">&#123;&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> :</span></div><div class="line">	<span class="keyword">public</span> Derived&lt;MyClass&gt;</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="comment">// 此时只需要设置Access为友元，Access中用隐式接口调用本类私有对象</span></div><div class="line">	<span class="comment">// 此时继承者不需要了解父类的任何实现细节</span></div><div class="line">	<span class="keyword">friend</span> Access;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DoA</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DoB</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="Barton-Nackman-trick-旧"><a href="#Barton-Nackman-trick-旧" class="headerlink" title="Barton-Nackman trick [旧]"></a>Barton-Nackman trick [旧]</h1><p>已过时<br>具体查看原链接<a href="https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Barton-Nackman_trick" target="_blank" rel="external">https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Barton-Nackman_trick</a><br>当时提出时不能声明函数模板，现在已经没有这问题。  </p>
+<hr>
+<h1 id="Base-from-Member"><a href="#Base-from-Member" class="headerlink" title="Base from Member"></a>Base from Member</h1><p>用派生类的成员初始化基类的成员。<br>基类初始化的参数需要由子类提供时，因为C++的初始化顺序是基类在子类前初始化， 在传入子类成员时，如果此时子类成员需要初始化而基类在构造函数中使用到它，就会引发错误。  </p>
+<p>情况如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Base(<span class="built_in">stringstream</span>&amp; s)</div><div class="line">	&#123;</div><div class="line">		s &lt;&lt; <span class="string">"text"</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> :</span></div><div class="line">	<span class="keyword">public</span> Base</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	MyClass() :</div><div class="line">		Base(var_)</div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 此时因为var_未初始化，在Base使用时会导致出错</span></div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="built_in">stringstream</span> var_;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>可以用多重继承解决这个问题。把基类需要的变量另外放到另一个类中，然后在基类之前继承这个类，这样这个变量就会在基类之前初始化完毕，基类就能使用了。<br>这个方法可以扩展为，在基类初始化前先用其它一些参数初始化子类成员再给基类使用。  </p>
+<p>例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">int</span> UniqueID = <span class="number">0</span>&gt;</div><div class="line">class BaseFromMember</div><div class="line">&#123;</div><div class="line"><span class="keyword">protected</span>:</div><div class="line">	<span class="keyword">explicit</span> BaseFromMember() &#123;&#125;</div><div class="line">	T member_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Base(<span class="built_in">stringstream</span>&amp; s)</div><div class="line">	&#123;</div><div class="line">		s &lt;&lt; <span class="string">"text"</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> :</span></div><div class="line">	<span class="keyword">public</span> BaseFromMember&lt;<span class="built_in">stringstream</span>&gt;,</div><div class="line">	<span class="keyword">public</span> Base</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	MyClass() :</div><div class="line">		Base(BaseFromMember&lt;<span class="built_in">stringstream</span>&gt;::member_)</div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>注意实现这个类时一般带一个UniqueID，因为当有多个同类型的成员时，如果不在模板做区分，将无法取得正确的成员（引用歧义）。  </p>
+<p>Boost可以用类库<code>base_from_member</code>，其源码跟例子的很像，就不贴了。</p>
+<hr>
+<h1 id="Mutant"><a href="#Mutant" class="headerlink" title="Mutant"></a>Mutant</h1><p>转置结构的顺序而不通过物理内存修改。<br>不修改内存左右翻转二叉树用的就是这个。就是重新定义一个结构，让左右变量定义交换；在转换时直接替换类型定义即可。<br>好像Boost有专门的库实现这个，Bimap库也有用到这个方法。有一定局限性，但是在某些情况使用可以有极大的性能提升。<br>很容易理解，不上例子了。 </p>
+<hr>
+<h1 id="Calling-Virtuals-During-Initialization"><a href="#Calling-Virtuals-During-Initialization" class="headerlink" title="Calling Virtuals During Initialization"></a>Calling Virtuals During Initialization</h1><p>在初始化时调用虚函数。<br>有时候初始化的一些操作要推迟到子类实现（模板方法），但是C++不像C#，它在执行基类构造函数时，子类的虚表并没有初始化，所以只能调用到基类自身的虚函数（在某些书中是建议不要使用这类用法的）。</p>
+<p>例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Base()</div><div class="line">	&#123;</div><div class="line">		Init();</div><div class="line">	&#125;</div><div class="line"><span class="keyword">protected</span>:</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Init</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Base"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	&#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span>:</span></div><div class="line">	<span class="keyword">public</span> Base</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line"><span class="keyword">protected</span>:</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Init</span><span class="params">()</span> override</span></div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"MyClass"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 此时实例化MyClass调用到的Init并不是子类的</span></div></pre></td></tr></table></figure></p>
+<p>这时候只能新建一个Create函数或者工厂，在实例化后通过显式调用Init函数实现初始化。  </p>
+<p>如果要实现在初始化时调用子类实现的Init，可以用CRTP（很多惯用法都用到这个思想）。<br>注意Init函数不能声明为虚函数，因为先初始化父类的关系，在调用时用的并不是子类的虚表。<br>还需要注意，在父类调用子类的Init时，要注意子类成员变量是未初始化的，需要酌情用BaseFromMember。<br>其实这就是一个CRTP的应用。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Base() &#123;&#125;</div><div class="line"><span class="keyword">protected</span>:</div><div class="line">	<span class="comment">//void Init()</span></div><div class="line">	<span class="comment">//&#123;</span></div><div class="line">	<span class="comment">//	cout &lt;&lt; "Base" &lt;&lt; endl;</span></div><div class="line">	<span class="comment">//&#125;;</span></div><div class="line">&#125;;</div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">InitCaller</span> :</span></div><div class="line">	<span class="keyword">public</span> Base</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	InitCaller()</div><div class="line">	&#123;</div><div class="line">		Self()-&gt;Init();</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="function">T* <span class="title">Self</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;T*&gt;(<span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> :</span></div><div class="line">	<span class="keyword">public</span> InitCaller&lt;MyClass&gt;</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">friend</span> InitCaller&lt;MyClass&gt;;</div><div class="line"><span class="keyword">protected</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Init</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"MyClass"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="Capability-Query"><a href="#Capability-Query" class="headerlink" title="Capability Query"></a>Capability Query</h1><p>在运行时检查对象是否支持某接口。<br>dynamic_cast的应用，用if判断就好了，入门内容。  </p>
+<hr>
+<h1 id="Checked-delete"><a href="#Checked-delete" class="headerlink" title="Checked delete"></a>Checked delete</h1><p>安全的delete对象。  </p>
+<p>不安全原因：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Object</span>;</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">DestoryObject</span><span class="params">(Object* obj)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">delete</span> obj;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Object</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	~Object()</div><div class="line">	&#123;</div><div class="line">        <span class="comment">// 此时如果用DestoryObject析构对象，是无法执行到这里的</span></div><div class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"dtor"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在使用delete之前，如果对象未完整声明，会调用到默认的析构函数而跳过之后声明的析构函数。  </p>
+<p>而如果在析构前加了一层模板函数：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Object</span>;</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Destory</span><span class="params">(T* ptr)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">delete</span> ptr;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">DestoryObject</span><span class="params">(Object* obj)</span></span></div><div class="line">&#123;</div><div class="line">	Destory(obj);</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Object</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	~Object()</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"dtor"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这时候是可以调用到自定义析构的。<br>在智能指针实现里就用到的这个方式（析构时）。比如STL里的源码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// TEMPLATE CLASS default_delete</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty</span>&gt;</span></div><div class="line"><span class="title">struct</span> <span class="title">default_delete</span></div><div class="line">&#123;	<span class="comment">// default deleter for unique_ptr</span></div><div class="line">	<span class="function"><span class="keyword">constexpr</span> <span class="title">default_delete</span><span class="params">()</span> _NOEXCEPT </span>= <span class="keyword">default</span>;</div><div class="line"></div><div class="line">	<span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty2</span>,</span></div><div class="line">		<span class="title">class</span> = <span class="title">typename</span> <span class="title">enable_if</span>&lt;is_convertible&lt;_Ty2 *, _Ty *&gt;::value,</div><div class="line">		void&gt;::type&gt;</div><div class="line">		default_delete(<span class="keyword">const</span> default_delete&lt;_Ty2&gt;&amp;) _NOEXCEPT</div><div class="line">	&#123;	<span class="comment">// construct from another default_delete</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">(_Ty *_Ptr)</span> <span class="keyword">const</span> _NOEXCEPT</span></div><div class="line">	&#123;	<span class="comment">// delete a pointer</span></div><div class="line">		<span class="keyword">static_assert</span>(<span class="number">0</span> &lt; <span class="keyword">sizeof</span>(_Ty),</div><div class="line">			<span class="string">"can't delete an incomplete type"</span>);</div><div class="line">		<span class="keyword">delete</span> _Ptr;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>此时static_assert是可以通过的，但有时候用智能指针时，后文没有把类型定义完整（有可能是未引用这个类型的头文件而只做了前置声明），还是会无法编译（即使没有自定义析构），因为它用了那句静态断言。<br>sizeof无法获取未定义类型的大小，此时会阻止编译（有些编译器会返回0，这样就会被断言阻断）。而已定义的类型返回总是大于0，所以会通过断言。<br>所以在delete前加上断言检查就可以安全的delete对象。  </p>
+<p>在Boost里提供的checked_delete函数就是用来干这事的。<br>不过它阻止编译的方法不是用静态断言，而是用：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">inline</span> <span class="title">void</span> <span class="title">checked_delete</span>(<span class="title">T</span> * <span class="title">x</span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">// intentionally complex - simplification causes regressions</span></div><div class="line">    <span class="keyword">typedef</span> <span class="keyword">char</span> type_must_be_complete[ <span class="keyword">sizeof</span>(T)? <span class="number">1</span>: <span class="number">-1</span> ];</div><div class="line">    (<span class="keyword">void</span>) <span class="keyword">sizeof</span>(type_must_be_complete);</div><div class="line">    <span class="keyword">delete</span> x;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果sizeof可以求值，那么它在类型未定义时创建一个大小为-1的数组，这个语句会引起编译失败。（可能为了兼容性问题或者历史原因，没有用static_assert，但是新版stl里已经在用了）  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/07/30/学习笔记/C++/惯用法/1-10-Idioms/" title="[C++ Idioms] 1-10">/2017/07/30/学习笔记/C++/惯用法/1-10-Idioms/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" class="fa fa-tag" rel="tag"> C++</a>
+          
+            <a href="/tags/模板/" class="fa fa-tag" rel="tag"> 模板</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/29/学习笔记/C++/惯用法/Readme/" rel="next" title="[C++ Idioms] 0. 前言">
+                <i class="fa fa-chevron-left"></i> [C++ Idioms] 0. 前言
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/30/学习笔记/C++/惯用法/11-20-Idioms/" rel="prev" title="[C++ Idioms] 11-20">
+                [C++ Idioms] 11-20 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Address-Of-替"><span class="nav-number">1.</span> <span class="nav-text">Address Of [替]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Algebraic-Hierarchy-易"><span class="nav-number">2.</span> <span class="nav-text">Algebraic Hierarchy [易]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Attach-by-Initialization"><span class="nav-number">3.</span> <span class="nav-text">Attach by Initialization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Attorney-Client"><span class="nav-number">4.</span> <span class="nav-text">Attorney Client</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Barton-Nackman-trick-旧"><span class="nav-number">5.</span> <span class="nav-text">Barton-Nackman trick [旧]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Base-from-Member"><span class="nav-number">6.</span> <span class="nav-text">Base from Member</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mutant"><span class="nav-number">7.</span> <span class="nav-text">Mutant</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Calling-Virtuals-During-Initialization"><span class="nav-number">8.</span> <span class="nav-text">Calling Virtuals During Initialization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Capability-Query"><span class="nav-number">9.</span> <span class="nav-text">Capability Query</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Checked-delete"><span class="nav-number">10.</span> <span class="nav-text">Checked delete</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

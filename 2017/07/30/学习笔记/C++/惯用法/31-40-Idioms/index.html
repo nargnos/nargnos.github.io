@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++,模板," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Final Class、Free Function Allocators、Function Object、Generic Container Idioms、Hierarchy Generation、Include Guard Macro、Inline Guard Macro、Inner Class、Int To Type、Interface Class">
+<meta name="keywords" content="C++,模板">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[C++ Idioms] 31-40">
+<meta property="og:url" content="/2017/07/30/学习笔记/C++/惯用法/31-40-Idioms/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="Final Class、Free Function Allocators、Function Object、Generic Container Idioms、Hierarchy Generation、Include Guard Macro、Inline Guard Macro、Inner Class、Int To Type、Interface Class">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-25T08:36:03.862Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[C++ Idioms] 31-40">
+<meta name="twitter:description" content="Final Class、Free Function Allocators、Function Object、Generic Container Idioms、Hierarchy Generation、Include Guard Macro、Inline Guard Macro、Inner Class、Int To Type、Interface Class">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/07/30/学习笔记/C++/惯用法/31-40-Idioms/"/>
+
+
+
+
+
+  <title>[C++ Idioms] 31-40 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/07/30/学习笔记/C++/惯用法/31-40-Idioms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[C++ Idioms] 31-40</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T12:14:17+08:00">
+                2017-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
+                    <span itemprop="name">C++ Idioms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Final Class、Free Function Allocators、Function Object、Generic Container Idioms、Hierarchy Generation、Include Guard Macro、Inline Guard Macro、Inner Class、Int To Type、Interface Class
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Final-Class-替"><a href="#Final-Class-替" class="headerlink" title="Final Class [替]"></a>Final Class [替]</h1><p>禁止继承类。<br>现在在声明后加final即可。<br>之前的方法是将父类构造函数声明为私有，设置要继承的类为友元即可。  </p>
+<hr>
+<h1 id="Free-Function-Allocators-旧"><a href="#Free-Function-Allocators-旧" class="headerlink" title="Free Function Allocators [旧]"></a>Free Function Allocators [旧]</h1><p>允许容器使用自定义分配器。<br>不理解这个意义何在，因为容器本来就允许自定义分配器啊。<br>原文里写因为标准分配器修改底层类型……好像没有啊。<br>只能把这个当过过时内容了。  </p>
+<hr>
+<h1 id="Function-Object-补"><a href="#Function-Object-补" class="headerlink" title="Function Object [补]"></a>Function Object [补]</h1><p>函数对象。<br>原文没内容，继续YY。这个标题可能指的是伪函数对象，重写operator()后就可以当作函数来用了，比如function，用得十分普遍，不再扩展。</p>
+<hr>
+<h1 id="Generic-Container-Idioms"><a href="#Generic-Container-Idioms" class="headerlink" title="Generic Container Idioms"></a>Generic Container Idioms</h1><p>创建通用容器类。<br>在创建通用容器类时，可能类型并没有默认的构造函数，或者类型不支持赋值或者有各种各样的问题。此时可以先分配空间，到添加对象时用<code>new (&amp;place) Type</code>（placement new）处理即可。  </p>
+<p>stl容器用到这个（部分源码）：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 前面还有蛮多代码，这里是关键的</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Objty</span>,</span></div><div class="line">	<span class="title">class</span>... _<span class="title">Types</span>&gt;</div><div class="line">	<span class="title">void</span> <span class="title">construct</span>(_<span class="title">Objty</span> *_<span class="title">Ptr</span>, _<span class="title">Types</span>&amp;&amp;... _<span class="title">Args</span>)</div><div class="line">&#123;	<span class="comment">// construct _Objty(_Types...) at _Ptr</span></div><div class="line">	::<span class="keyword">new</span> ((<span class="keyword">void</span> *)_Ptr) _Objty(_STD forward&lt;_Types&gt;(_Args)...);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Hierarchy-Generation"><a href="#Hierarchy-Generation" class="headerlink" title="Hierarchy Generation"></a>Hierarchy Generation</h1><p>将多个类组合成新类。<br>用组合模式时有时候需要组合多个类，或者需要某个机制能自如的为类增删功能（静态），可以用这个。  </p>
+<p>这其实是模板在多继承情况的一种用法，现代C++是可以完整继承模板参数的。原例子为了实现这个所以需要一层层解开参数继承，现在直接用就好。    </p>
+<p>原文例子旧了，现在不用这个语法了，现更新为新的例子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... TClasses&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hierarchy</span>:</span></div><div class="line">	<span class="keyword">public</span> TClasses...</div><div class="line">&#123;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Name</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">GetName</span><span class="params">()</span></span></div><div class="line">	&#123;&#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Do</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Dance</span><span class="params">()</span></span></div><div class="line">	&#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">(T&amp;&amp; obj)</span></span></div><div class="line">&#123;</div><div class="line">	obj.GetName();</div><div class="line">	obj.Dance();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	Func(Hierarchy&lt;Name, Do&gt;());</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Include-Guard-Macro-易"><a href="#Include-Guard-Macro-易" class="headerlink" title="Include Guard Macro [易]"></a>Include Guard Macro [易]</h1><p>顾名思义。<br>没什么需要扩展的，现在已替换成<code>#pragma once</code>，觉得某些编译器依然不支持的或者说某些书不提倡用的请更新你们的环境和把旧书丢掉，请更新你们的知识。<br>证据是 <a href="https://en.wikipedia.org/wiki/Pragma_once" target="_blank" rel="external">https://en.wikipedia.org/wiki/Pragma_once</a> 请看编译器支持列表。  </p>
+<hr>
+<h1 id="Inline-Guard-Macro-易"><a href="#Inline-Guard-Macro-易" class="headerlink" title="Inline Guard Macro [易]"></a>Inline Guard Macro [易]</h1><p>使用宏定义控制函数的内联。<br>就是定义一个inline的别名，用ifdef子类的做开关，然后在函数前用这个别名即可。<br>据原文说是用在调试的时候，这样可以快速的切换状态方便调试。  </p>
+<hr>
+<h1 id="Inner-Class"><a href="#Inner-Class" class="headerlink" title="Inner Class"></a>Inner Class</h1><p>不使用多继承为类提供多个接口，或在单个抽象中提供同一接口的多个实现。<br>其核心是在在其它类继承接口（并在其它类中提供操作自身的方法），然后在自身保存这些类的变量，并提供对相应接口的转换，这样使用时就可以当其它接口来用。  </p>
+<p>语言不好描述，看代码：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line">struct IWalk</div><div class="line">&#123;</div><div class="line">	virtual void Walk() = 0;</div><div class="line">&#125;;</div><div class="line">struct IRun</div><div class="line">&#123;</div><div class="line">	virtual void Run() = 0;</div><div class="line">&#125;;</div><div class="line">class Person;</div><div class="line">// 不一定是内嵌类</div><div class="line">class RunImpl :public IRun</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	explicit RunImpl(Person&amp; p);</div><div class="line">	virtual void Run() override;</div><div class="line">private:</div><div class="line">	Person&amp; p_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line">class Person</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	Person() :</div><div class="line">		r_(*this),</div><div class="line">		w_(*this)</div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	class WalkImpl :</div><div class="line">		public IWalk</div><div class="line">	&#123;</div><div class="line">	public:</div><div class="line">		explicit WalkImpl(Person&amp; p) :p_(p) &#123;&#125;</div><div class="line">		virtual void Walk() override</div><div class="line">		&#123;</div><div class="line">			p_.Do("Walk");</div><div class="line">		&#125;</div><div class="line">	private:</div><div class="line">		Person&amp; p_;</div><div class="line">	&#125;;</div><div class="line">	friend RunImpl;</div><div class="line">	operator IRun&amp;()</div><div class="line">	&#123;</div><div class="line">		return r_;</div><div class="line">	&#125;</div><div class="line">	operator IWalk&amp;()</div><div class="line">	&#123;</div><div class="line">		return w_;</div><div class="line">	&#125;</div><div class="line">private:</div><div class="line">	void Do(const string&amp; str)</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; str &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line">	RunImpl r_;</div><div class="line">	WalkImpl w_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">RunImpl::RunImpl(Person &amp; p) :p_(p)</div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line">void RunImpl::Run()</div><div class="line">&#123;</div><div class="line">	p_.Do("Run");</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">int main(void)</div><div class="line">&#123;</div><div class="line">	Person p;</div><div class="line">	IRun&amp; r = p;</div><div class="line">	r.Run();</div><div class="line">	IWalk&amp; w = p;</div><div class="line">	w.Walk();</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>关于同一对象提供多个同一接口的不同实现，就是多建几个类，用函数返回不同的实现就行了。  </p>
+<p>可以声明一个总接口，然后用map存储，这样便可以做动态接口扩展。这是对这个惯用法的举一反三。在某个类需要多个接口实现并且这些接口经常变化时可以使用。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Interface</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">virtual</span> ~Interface() = <span class="keyword">default</span>;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IWalk</span> :</span><span class="keyword">public</span> Interface</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Walk</span><span class="params">()</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IRun</span> :</span><span class="keyword">public</span> Interface</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Run</span><span class="params">()</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>;</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RunImpl</span> :</span><span class="keyword">public</span> IRun</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">explicit</span> <span class="title">RunImpl</span><span class="params">(Person&amp; p)</span></span>;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Run</span><span class="params">()</span> override</span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	Person&amp; p_;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WalkImpl</span> :</span></div><div class="line">	<span class="keyword">public</span> IWalk</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">explicit</span> <span class="title">WalkImpl</span><span class="params">(Person&amp; p)</span></span>;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Walk</span><span class="params">()</span> override</span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	Person&amp; p_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 只提供一些主要的代码，只为了表达我的意思，</span></div><div class="line"><span class="comment">// 没有做完备的检查，所以某些情况可能有BUG</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:	</div><div class="line">	<span class="comment">// 也可以用其它方式返回</span></div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line">	<span class="keyword">operator</span> T*()</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">auto</span> name = <span class="keyword">typeid</span>(T).name();</div><div class="line">		<span class="keyword">auto</span>&amp; ret = map_[name];		</div><div class="line">		<span class="keyword">return</span> <span class="keyword">dynamic_cast</span>&lt;T*&gt;(ret.get());</div><div class="line">	&#125;</div><div class="line">	<span class="comment">// 也可以提供删除接口的方法，这里略，要不代码太长了</span></div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> TInterface, <span class="keyword">typename</span> TImpl&gt;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">AddInterface</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">static_assert</span>(is_assignable&lt;TInterface, TImpl&gt;::value, <span class="string">""</span>);</div><div class="line">		<span class="comment">// 不一定用类型名，可用很多其它东西做key</span></div><div class="line">		<span class="keyword">auto</span> name = <span class="keyword">typeid</span>(TInterface).name();</div><div class="line">		map_[name] = make_unique&lt;TImpl&gt;(*<span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 为了实现方便，这函数用public</span></div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; str)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="built_in">unique_ptr</span>&lt;Interface&gt;&gt; map_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">RunImpl::RunImpl(Person &amp; p) :p_(p)</div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line"><span class="keyword">void</span> RunImpl::Run()</div><div class="line">&#123;</div><div class="line">	p_.Do(<span class="string">"Run"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">WalkImpl::WalkImpl(Person &amp; p) :p_(p) &#123;&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> WalkImpl::Walk()</div><div class="line">&#123;</div><div class="line">	p_.Do(<span class="string">"Walk"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	Person p;</div><div class="line">	<span class="comment">// 这样动态添加接口，类就可以向对应接口转换</span></div><div class="line">	p.AddInterface&lt;IRun, RunImpl&gt;();</div><div class="line">	IRun* r = p;</div><div class="line">	r-&gt;Run();</div><div class="line">	<span class="comment">// 此时未添加接口</span></div><div class="line">	IWalk* w = p;</div><div class="line">	assert(w == <span class="literal">nullptr</span>);</div><div class="line"></div><div class="line">	<span class="comment">// 添加接口</span></div><div class="line">	p.AddInterface&lt;IWalk, WalkImpl&gt;();</div><div class="line">	w = p;</div><div class="line">	assert(w != <span class="literal">nullptr</span>);</div><div class="line">	w-&gt;Walk();</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Int-To-Type-替"><a href="#Int-To-Type-替" class="headerlink" title="Int To Type [替]"></a>Int To Type [替]</h1><p>将具体数字变为类型。可用integral_constant实现，这是模板元编程的一个类。<br>比较常用的有<code>true_type</code>、<code>false_type</code>。一般配合模板来用，可用在函数参数中，使函数对不同参数的值产生重载。这样可以跳过if判断，让编译器直接优化代码。<br>还可以放在模板参数、返回类型里。相关的类还有integer_sequence（介绍在其它文档里），它存的是数列。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		Func(integral_constant&lt;<span class="keyword">int</span>, I&gt;());</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">(integral_constant&lt;<span class="keyword">int</span>, <span class="number">0</span>&gt;)</span></span></div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">(integral_constant&lt;<span class="keyword">int</span>, <span class="number">1</span>&gt;)</span></span></div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		Func(integral_constant&lt;<span class="keyword">bool</span>, is_pod&lt;T&gt;::value&gt;());</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">(true_type)</span></span></div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">(false_type)</span></span></div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>它的实现很简单，这里直接贴stl代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// TEMPLATE CLASS integral_constant</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty</span>,</span></div><div class="line">	_<span class="title">Ty</span> _<span class="title">Val</span>&gt;</div><div class="line">	<span class="title">struct</span> <span class="title">integral_constant</span></div><div class="line">&#123;	<span class="comment">// convenient template for integral constant types</span></div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> _Ty value = _Val;</div><div class="line"></div><div class="line">	<span class="keyword">typedef</span> _Ty value_type;</div><div class="line">	<span class="keyword">typedef</span> integral_constant&lt;_Ty, _Val&gt; type;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">constexpr</span> <span class="keyword">operator</span> <span class="title">value_type</span><span class="params">()</span> <span class="keyword">const</span> _NOEXCEPT</span></div><div class="line">	&#123;	<span class="comment">// return stored value</span></div><div class="line">		<span class="keyword">return</span> (value);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">constexpr</span> value_type <span class="title">operator</span><span class="params">()</span><span class="params">()</span> <span class="keyword">const</span> _NOEXCEPT</span></div><div class="line">	&#123;	<span class="comment">// return stored value</span></div><div class="line">		<span class="keyword">return</span> (value);</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在constexpr关键字没出现前使用enum定义value枚举。现在新的代码都改了。   </p>
+<hr>
+<h1 id="Interface-Class-易"><a href="#Interface-Class-易" class="headerlink" title="Interface Class [易]"></a>Interface Class [易]</h1><p>将类当作接口使用。这个用得很普遍，不再扩展。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/07/30/学习笔记/C++/惯用法/31-40-Idioms/" title="[C++ Idioms] 31-40">/2017/07/30/学习笔记/C++/惯用法/31-40-Idioms/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" class="fa fa-tag" rel="tag"> C++</a>
+          
+            <a href="/tags/模板/" class="fa fa-tag" rel="tag"> 模板</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/30/学习笔记/C++/惯用法/21-30-Idioms/" rel="next" title="[C++ Idioms] 21-30">
+                <i class="fa fa-chevron-left"></i> [C++ Idioms] 21-30
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/01/学习笔记/C++/惯用法/41-50-Idioms/" rel="prev" title="[C++ Idioms] 41-50">
+                [C++ Idioms] 41-50 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Final-Class-替"><span class="nav-number">1.</span> <span class="nav-text">Final Class [替]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Free-Function-Allocators-旧"><span class="nav-number">2.</span> <span class="nav-text">Free Function Allocators [旧]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Function-Object-补"><span class="nav-number">3.</span> <span class="nav-text">Function Object [补]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Generic-Container-Idioms"><span class="nav-number">4.</span> <span class="nav-text">Generic Container Idioms</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hierarchy-Generation"><span class="nav-number">5.</span> <span class="nav-text">Hierarchy Generation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Include-Guard-Macro-易"><span class="nav-number">6.</span> <span class="nav-text">Include Guard Macro [易]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inline-Guard-Macro-易"><span class="nav-number">7.</span> <span class="nav-text">Inline Guard Macro [易]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inner-Class"><span class="nav-number">8.</span> <span class="nav-text">Inner Class</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Int-To-Type-替"><span class="nav-number">9.</span> <span class="nav-text">Int To Type [替]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Interface-Class-易"><span class="nav-number">10.</span> <span class="nav-text">Interface Class [易]</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

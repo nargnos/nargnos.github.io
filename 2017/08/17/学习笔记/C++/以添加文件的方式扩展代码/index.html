@@ -51,32 +51,6 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
@@ -109,7 +83,7 @@
 <meta property="og:site_name" content="{S}">
 <meta property="og:description" content="这里的意思是：只通过添加文件的形式（不修改到任何已有代码）不使用继承给类添加新的接口实现，并可直接通过删除文件来删除相应的接口。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-19T11:30:25.567Z">
+<meta property="og:updated_time" content="2017-09-03T13:50:17.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以添加文件的方式扩展代码">
 <meta name="twitter:description" content="这里的意思是：只通过添加文件的形式（不修改到任何已有代码）不使用继承给类添加新的接口实现，并可直接通过删除文件来删除相应的接口。">
@@ -377,7 +351,8 @@
 <h2 id="访问者"><a href="#访问者" class="headerlink" title="访问者"></a>访问者</h2><p>这个设计模式用在这可能不太合适，这里主要是讨论可能的解决方案。  </p>
 <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IDo</span>;</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IBird</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Do</span><span class="params">(IDo&amp; iDo)</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IDo</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">DoIt</span><span class="params">(IBird&amp; bird)</span> </span>= <span class="number">0</span>;</div><div class="line">	<span class="keyword">virtual</span> ~IDo() = <span class="keyword">default</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Bird</span> :</span></div><div class="line">	<span class="keyword">public</span> IBird</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">(IDo&amp; iDo)</span></span></div><div class="line">	&#123;</div><div class="line">		iDo.DoIt(*<span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>这个结构可以完成多文件扩展代码的功能（有新功能就添加新类即可），并且解决了类的功能扩展问题。</p>
-<h3 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h3><p>添加了新类型（新类型也需要某些接口）之后，可能会变成：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IDo</span>;</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IBird</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Do</span><span class="params">(IDo&amp; iDo)</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ICat</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Do</span><span class="params">(IDo&amp; iDo)</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IDo</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">DoIt</span><span class="params">(ICat&amp; cat)</span> </span>= <span class="number">0</span>;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">DoIt</span><span class="params">(IBird&amp; bird)</span> </span>= <span class="number">0</span>;</div><div class="line">	<span class="keyword">virtual</span> ~IDo() = <span class="keyword">default</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Bird</span> :</span></div><div class="line">	<span class="keyword">public</span> IBird</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">(IDo&amp; iDo)</span></span></div><div class="line">	&#123;</div><div class="line">		iDo.DoIt(*<span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Bird</span> :</span></div><div class="line">	<span class="keyword">public</span> ICat</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">(IDo&amp; iDo)</span></span></div><div class="line">	&#123;</div><div class="line">		iDo.DoIt(*<span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h3><p>添加了新类型（新类型也需要某些接口）之后，可能会变成：  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IDo</span>;</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IBird</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Do</span><span class="params">(IDo&amp; iDo)</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ICat</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Do</span><span class="params">(IDo&amp; iDo)</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IDo</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">DoIt</span><span class="params">(ICat&amp; cat)</span> </span>= <span class="number">0</span>;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">DoIt</span><span class="params">(IBird&amp; bird)</span> </span>= <span class="number">0</span>;</div><div class="line">	<span class="keyword">virtual</span> ~IDo() = <span class="keyword">default</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Bird</span> :</span></div><div class="line">	<span class="keyword">public</span> IBird</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">(IDo&amp; iDo)</span></span></div><div class="line">	&#123;</div><div class="line">		iDo.DoIt(*<span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Bird</span> :</span></div><div class="line">	<span class="keyword">public</span> ICat</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">(IDo&amp; iDo)</span></span></div><div class="line">	&#123;</div><div class="line">		iDo.DoIt(*<span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>此时访问者接口需要扩展，并且需要修改所有的Eat、Fly实现（这里略），但是Cat不能用Fly（逻辑错误），虽然Fly中对应Cat的代码可以不执行任何操作，但是这个结构对于一直变化的动物种类是无能为力的（添加一次新类型就要修改一次接口和相应实现）。  </p>
 <h3 id="模板实现"><a href="#模板实现" class="headerlink" title="模板实现"></a>模板实现</h3><p>此时可以用隐式接口实现访问者：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bird</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>&gt; <span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></div><div class="line">	<span class="title">void</span> <span class="title">Do</span>()</div><div class="line">	&#123;</div><div class="line">		T&lt;Bird&gt;::DoIt(*<span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>&gt; <span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></div><div class="line">	<span class="title">void</span> <span class="title">Do</span>()</div><div class="line">	&#123;</div><div class="line">		T&lt;Cat&gt;::DoIt(*<span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 为了实现分文件存储，需要用这个方式</span></div><div class="line"><span class="comment">// 可以定义默认动作简化操作</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fly</span>;</span></div><div class="line"></div><div class="line"><span class="comment">// 这个定义可以分到其它文件中</span></div><div class="line"><span class="keyword">template</span>&lt;&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fly</span>&lt;Bird&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">DoIt</span><span class="params">(Bird&amp; obj)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 扑棱</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Eat</span>;</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Eat</span>&lt;Cat&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">DoIt</span><span class="params">(Cat&amp; obj)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 喵呜</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">template</span>&lt;&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Eat</span>&lt;Bird&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">DoIt</span><span class="params">(Bird&amp; obj)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 吧唧</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	Bird bird;</div><div class="line">	bird.Do&lt;Eat&gt;();</div><div class="line">	bird.Do&lt;Fly&gt;();</div><div class="line">	Cat cat;</div><div class="line">	cat.Do&lt;Eat&gt;();</div><div class="line">	<span class="comment">// cat.Do&lt;Fly&gt;(); 无法编译</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>为了防止出现新类型就要修改类代码，使用把模板具体化分到不同文件的做法，这样在添加新类型或新功能的时候便可以通过添加新文件解决。（如果不需要添加新类型，这是一种解决方案）  </p>
@@ -547,7 +522,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -558,7 +533,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -569,7 +544,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -661,15 +636,15 @@
   
 
 
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
   
-
-
-
-
-
-
-
-
 
 
 
@@ -692,7 +667,7 @@
   <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
   
-  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js" color="54,66,81" opacity='0.3' zIndex="-2" count="40"></script>
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
 
 
   

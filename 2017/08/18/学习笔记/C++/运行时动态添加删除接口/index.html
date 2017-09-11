@@ -51,32 +51,6 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
@@ -109,7 +83,7 @@
 <meta property="og:site_name" content="{S}">
 <meta property="og:description" content="之前惯用法写过的，这里再补一点。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-18T12:18:16.198Z">
+<meta property="og:updated_time" content="2017-09-03T13:50:10.325Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="运行时动态添加删除接口">
 <meta name="twitter:description" content="之前惯用法写过的，这里再补一点。">
@@ -373,7 +347,7 @@
 
       
         <p>这里只是把之前的例子（在其它文档）丰富了一些，思想基本都差不多。<br>先上代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 需要统一管理，所以接口类型需要共同的父类</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Interface</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">virtual</span> ~Interface() = <span class="keyword">default</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TInterface&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">InterfaceTrait</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">// using Impl=	</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DynamicClass</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">virtual</span> ~DynamicClass() = <span class="keyword">default</span>;</div><div class="line"></div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line">	<span class="keyword">operator</span> T*()</div><div class="line">	&#123;</div><div class="line">		assert(Is&lt;T&gt;());</div><div class="line">		<span class="keyword">auto</span> t = &amp;<span class="keyword">typeid</span>(T);</div><div class="line">		<span class="keyword">auto</span>&amp; ret = map_[t];</div><div class="line">		<span class="keyword">auto</span> ptr = <span class="keyword">dynamic_cast</span>&lt;T*&gt;(ret.get());</div><div class="line">		assert(ptr != <span class="literal">nullptr</span>);</div><div class="line">		<span class="keyword">return</span> ptr;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line">	<span class="keyword">operator</span> T&amp;()</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>-&gt;<span class="keyword">operator</span> T *();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Is</span><span class="params">()</span> <span class="keyword">const</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">auto</span> t = &amp;<span class="keyword">typeid</span>(T);</div><div class="line">		<span class="keyword">auto</span> f = map_.find(t);</div><div class="line">		<span class="keyword">return</span> f != map_.end();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> TInterface, <span class="keyword">typename</span>... TArgs&gt;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">AddInterface</span><span class="params">(TArgs&amp;&amp;... args)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 不一定用类型名，可用很多其它东西做key，比如给类型加个ID什么的</span></div><div class="line">		<span class="keyword">auto</span> t = &amp;<span class="keyword">typeid</span>(TInterface);</div><div class="line">		<span class="keyword">using</span> InterfaceType = <span class="keyword">typename</span> InterfaceTrait&lt;TInterface&gt;::Impl;</div><div class="line">		map_[t] = make_unique&lt;InterfaceType&gt;(</div><div class="line">			*<span class="keyword">this</span>, forward&lt;TArgs&gt;(args)...);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> TInterface&gt;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DelInterface</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		map_.erase(&amp;<span class="keyword">typeid</span>(TInterface));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Equal</span><span class="params">(DynamicClass&amp; obj)</span> <span class="keyword">const</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 比如简单的比较</span></div><div class="line">		<span class="keyword">return</span> obj.map_ == map_;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">TypeEqual</span><span class="params">(DynamicClass&amp; obj)</span> <span class="keyword">const</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">auto</span> ssize = map_.size();</div><div class="line">		<span class="keyword">auto</span> osize = obj.map_.size();</div><div class="line">		<span class="comment">// 需要比较两个map的key是否完全相等，这里略，不是讨论重点</span></div><div class="line">		<span class="keyword">return</span> ssize == osize;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="built_in">unordered_map</span>&lt;<span class="keyword">const</span> <span class="built_in">std</span>::type_info*, <span class="built_in">unique_ptr</span>&lt;Interface&gt;&gt; map_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IStr</span> :</span><span class="keyword">public</span> Interface</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="built_in">string</span>&amp; <span class="title">Str</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrImpl</span> :</span><span class="keyword">public</span> IStr</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	StrImpl(DynamicClass&amp; dc, <span class="keyword">const</span> <span class="built_in">string</span>&amp; str) :</div><div class="line">		dc_(dc),</div><div class="line">		str_(str)</div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="built_in">string</span>&amp; <span class="title">Str</span><span class="params">()</span> <span class="keyword">const</span> override</span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> str_;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	DynamicClass&amp; dc_;</div><div class="line">	<span class="built_in">string</span> str_;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">template</span>&lt;&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">InterfaceTrait</span>&lt;IStr&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> Impl = StrImpl;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IPrint</span> :</span><span class="keyword">public</span> Interface</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PrintImpl</span> :</span><span class="keyword">public</span> IPrint</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	PrintImpl(DynamicClass&amp; dc) :dc_(dc)</div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> <span class="keyword">const</span> override</span></div><div class="line">	&#123;</div><div class="line">		<span class="built_in">string</span> str;</div><div class="line">		<span class="keyword">if</span> (dc_.Is&lt;IStr&gt;())</div><div class="line">		&#123;</div><div class="line">			str = <span class="keyword">static_cast</span>&lt;IStr&amp;&gt;(dc_).Str();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			str = <span class="string">"none"</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	DynamicClass&amp; dc_;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">template</span>&lt;&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">InterfaceTrait</span>&lt;IPrint&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> Impl = PrintImpl;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	DynamicClass dc;</div><div class="line">	dc.AddInterface&lt;IPrint&gt;();</div><div class="line">	<span class="keyword">static_cast</span>&lt;IPrint&amp;&gt;(dc).Print();</div><div class="line">	dc.AddInterface&lt;IStr&gt;(<span class="string">"hello world"</span>);</div><div class="line">	<span class="keyword">static_cast</span>&lt;IPrint&amp;&gt;(dc).Print();</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>基本上要说的已经写在注释里了。这个用法不够完善，这只是初步想法，以后可能会优化。<br>这里可能有问题的是，typeid是否永远对同一类型返回同一个type_info指针，如果不是，就要改成用类型名字来做key。  </p>
+<p>基本上要说的已经写在注释里了。这个用法不够完善，这只是初步想法，以后可能会优化（类似COM那样搜索接口也可以）。<br>这里可能有问题的是，typeid是否永远对同一类型返回同一个type_info指针，如果不是，就要改成用类型名字来做key。  </p>
 <p>关于派生子类，感觉不太需要，因为添加各种接口和相关实现就已经做了类型区分，加个类型比较函数就行了。  </p>
 <p>性能方面感觉还好，就是查个map。<br>多线程情况需要添加锁机制，两三条代码基本就可以搞定。  </p>
 
@@ -506,7 +480,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -517,7 +491,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -528,7 +502,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -604,15 +578,15 @@
   
 
 
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
   
-
-
-
-
-
-
-
-
 
 
 
@@ -635,7 +609,7 @@
   <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
   
-  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js" color="54,66,81" opacity='0.3' zIndex="-2" count="40"></script>
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
 
 
   

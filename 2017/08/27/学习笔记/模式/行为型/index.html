@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="模式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="行为型设计模式">
+<meta name="keywords" content="模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[模式] 行为型">
+<meta property="og:url" content="/2017/08/27/学习笔记/模式/行为型/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="行为型设计模式">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-11T12:27:41.849Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[模式] 行为型">
+<meta name="twitter:description" content="行为型设计模式">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/08/27/学习笔记/模式/行为型/"/>
+
+
+
+
+
+  <title>[模式] 行为型 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/08/27/学习笔记/模式/行为型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[模式] 行为型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T15:36:58+08:00">
+                2017-08-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/模式/" itemprop="url" rel="index">
+                    <span itemprop="name">模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  行为型设计模式
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="解释器（Interpreter）"><a href="#解释器（Interpreter）" class="headerlink" title="解释器（Interpreter）"></a>解释器（Interpreter）</h1><h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>给定一个语言, 定义它的文法的一种表示，并定义一个解释器, 该解释器使用该表示来解释语言中的句子。<br>其实就是<strong>读取某种命令集合以实现某种功能</strong>。  </p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>需要用到编译原理、正则表达式什么的。<br>例子如xml、lua、json、sql等。  </p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>对于复杂文法难以维护，不过一般复杂的直接用一些现成类库就好了。  </p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>使某些功能（及其组合）的实现更加简便</p>
+<hr>
+<h1 id="模板方法（TemplateMethod）"><a href="#模板方法（TemplateMethod）" class="headerlink" title="模板方法（TemplateMethod）"></a>模板方法（TemplateMethod）</h1><h2 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h2><p>定义算法框架，将一些步骤在子类中实现，使得子类可以在不改变算法结构时重定义算法的某些特定步骤。  </p>
+<h2 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h2><p>一次性实现一个算法的不变的部分，并将可变的行为留给子类来实现。<br>各子类中公共的行为应被提取出来并集中到一个公共父类中以避免代码重复。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DoSth</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// ...</span></div><div class="line">		DoSthElse();</div><div class="line">		<span class="comment">// ...</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">DoSthElse</span><span class="params">()</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span><span class="keyword">public</span> Base</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">DoSthElse</span><span class="params">()</span> override</span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// ...</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>可以用作钩子机制，父类函数前实现一个空的函数，然后子类覆盖的话就可以相当于钩子了。<br>C++中可以用crtp和隐式接口实现，这样可以避免虚函数的使用。</p>
+<h2 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h2><p>推迟实现</p>
+<hr>
+<h1 id="责任链（Chain-of-Responsibility）"><a href="#责任链（Chain-of-Responsibility）" class="headerlink" title="责任链（Chain of Responsibility）"></a>责任链（Chain of Responsibility）</h1><p>异常的处理用的是责任链。  </p>
+<h2 id="作用-2"><a href="#作用-2" class="headerlink" title="作用"></a>作用</h2><p>使多个对象都有机会处理请求，从而<strong>避免请求的发送者和接收者之间的耦合关系</strong>；将这些对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。<br>如果一个逻辑的处理由不同责任对象完成，客户端希望能自定义这个处理流程并且不希望直接和多个责任对象发生耦合的时候可以考虑责任链模式。<br><strong>简单来说就是用一个容器装接受者，当请求来的时候遍历接受者，处理不了就继续遍历，到请求被处理</strong></p>
+<h2 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h2><p>各具体责任类型根据待处理对象的状态结合自己的责任范围来判断是否能处理对象，<br>如果不能处理提交给上级责任人处理（也就是纯的责任模式，要么自己处理要么提交给别人）。<br>当然，也可以在进行部分处理后再提交给上级处理（也就是不纯的责任链模式）。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">interface</span> <span class="title">ICatcher</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">// 假设返回true是对象被处理</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">Catch</span>(<span class="params">Exception e</span>)</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">ArgumentExceptionCatcher</span> : <span class="title">ICatcher</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">bool</span> <span class="title">Catch</span>(<span class="params">Exception e</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (e <span class="keyword">is</span> ArgumentException)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">// ... 假设这里是做一些其它操作</span></div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// ... 如果不能处理就让别人处理</span></div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">NullReferenceCatcher</span> : <span class="title">ICatcher</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">bool</span> <span class="title">Catch</span>(<span class="params">Exception e</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (e <span class="keyword">is</span> NullReferenceException)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">// ...</span></div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// ...</span></div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Chain</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> List&lt;ICatcher&gt; Cathers &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span> List&lt;ICatcher&gt;();</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Catch</span>(<span class="params">Exception e</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// 简化操作不做判断</span></div><div class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> Cathers)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">// 当对象被处理时就终止（也可继续，看实现方式）</span></div><div class="line">            <span class="keyword">if</span> (item.Catch(e))</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Program</span></div><div class="line">&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// 只是演示责任链，异常处理不要真的这样用</span></div><div class="line">        Chain chain = <span class="keyword">new</span> Chain();</div><div class="line">        chain.Cathers.Add(<span class="keyword">new</span> NullReferenceCatcher());</div><div class="line">        chain.Cathers.Add(<span class="keyword">new</span> ArgumentExceptionCatcher());</div><div class="line">        <span class="keyword">try</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentNullException();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (Exception e)</div><div class="line">        &#123;</div><div class="line">            chain.Catch(e);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>只处理部分的责任链例子略。  </p>
+<h3 id="扩展-1"><a href="#扩展-1" class="headerlink" title="扩展"></a>扩展</h3><p>各节点可以定义一些判断操作，如果在自己能处理的范围就处理该对象，否则交给其它对象处理。<br>不一定用list管理，可配合组合或装饰器使用；其结构也不一定是链，也可以是树，此时如果不符合操作范围可以转交给同级对象或上层对象处理，或者从根开始判断，依次选择能够处理的节点。<br>处理的节点可以用访问者实现，这样这个链就不用像例子那样判断类型。  </p>
+<p>链可以有产出（返回值或对象），一般用inout参数来处理，在实现只修改部分的链时，C#参数可适时用ref。</p>
+<h2 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h2><p>扩展对象处理者</p>
+<hr>
+<h1 id="命令（Command）"><a href="#命令（Command）" class="headerlink" title="命令（Command）"></a>命令（Command）</h1><h2 id="作用-3"><a href="#作用-3" class="headerlink" title="作用"></a>作用</h2><p>将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；<br>将命令请求入队或记录日志，就可以具有取消操作的功能。  </p>
+<p>简单来说就是<strong>把调用函数（或其它调用请求）封装成一个对象</strong>然后<strong>存储</strong>（日志，如果不需要回滚可以不记日志）起来，这样就可以对操作进行<strong>回滚</strong>。<br>将函数封装成命令还有的好处是<strong>执行类不需要知道有什么函数</strong>，传入对象执行就可以了。</p>
+<p>可以将请求封装后发送给远程对象处理，这并不要求发送者和接收者具有同样的生存期。</p>
+<h2 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h2><p>如果想防止生成对象过多可以用内存池稍微改善一些。<br>如果对象只包含简单的一些变量，其开销也跟直接传参调用函数差不多。</p>
+<p>命令模式的主要思想就是把方法提升到类型的层次，这样对方法的执行有更多的控制力，<br>这个控制力表现在对时间的控制力、对撤销的控制力以及对组合行为的控制力。<br>当提升到类型的层次后，可以配合其它一些模式（比如创建型、结构型）使用。</p>
+<p>类型中需要<strong>定制接口Execute、Unexecute来处理执行和回滚操作</strong>，然后由外部的类处理判断是否应该执行或回滚。<br>外部控制类接收命令，在执行前可以判断时间是否正确等信息，如果保存了之前的命令，就可以用命令的回滚操作进行回滚。</p>
+<p>命令在提交时可以放在优先队列里，根据优先级执行命令。  </p>
+<p>注意，这个例子并不是标准实现，而是扩展的使用方法：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> Recever = System.Drawing.Point;</div><div class="line"><span class="keyword">interface</span> <span class="title">ICommand</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>(<span class="params"><span class="keyword">ref</span> Recever recever</span>)</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">MoveLeftConcreteCommand</span> : <span class="title">ICommand</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>(<span class="params"><span class="keyword">ref</span> Recever recever</span>)</span></div><div class="line">    &#123;</div><div class="line">        recever.X += <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">MoveDownConcreteCommand</span> : <span class="title">ICommand</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>(<span class="params"><span class="keyword">ref</span> Recever recever</span>)</span></div><div class="line">    &#123;</div><div class="line">        recever.Y += <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Invoker</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Invoker</span>(<span class="params">Recever recv</span>)</span></div><div class="line">    &#123;</div><div class="line">        recv_ = recv;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Do</span>(<span class="params">ICommand cmd</span>)</span></div><div class="line">    &#123;</div><div class="line">        history_.Add(cmd);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> Recever Result</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">get</span></div><div class="line">        &#123;</div><div class="line">            Recever recv = recv_;</div><div class="line">            history_.ForEach((cmd) =&gt; cmd.Execute(<span class="keyword">ref</span> recv));</div><div class="line">            <span class="keyword">return</span> recv;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        history_.RemoveAt(history_.Count - <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> List&lt;ICommand&gt; history_ = <span class="keyword">new</span> List&lt;ICommand&gt;();</div><div class="line">    <span class="keyword">private</span> Recever recv_;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">Program</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        Invoker ivk = <span class="keyword">new</span> Invoker(<span class="keyword">new</span> Recever() &#123; X = <span class="number">0</span>, Y = <span class="number">0</span> &#125;);</div><div class="line">        <span class="keyword">var</span> moveLeft = <span class="keyword">new</span> MoveLeftConcreteCommand();</div><div class="line">        ivk.Do(moveLeft);</div><div class="line">        ivk.Do(moveLeft);</div><div class="line">        <span class="keyword">var</span> moveDown = <span class="keyword">new</span> MoveDownConcreteCommand();</div><div class="line">        ivk.Do(moveDown);</div><div class="line">        ivk.Do(moveDown);</div><div class="line">        <span class="keyword">var</span> ret = ivk.Result;</div><div class="line">        ivk.Undo();</div><div class="line">        <span class="keyword">var</span> ret2 = ivk.Result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一般会在Command的Unexecute里写Execute的逆操作，Undo就执行逆操作，但是并不是所有操作都是可逆的，可以通过删除以前的步骤来实现撤销操作。（这也是我写的例子想表达的，类似的C++例子在之前写的惯用法里提到了）<br>还可以<strong>保存原先的状态</strong>，undo了再设置回去，不过这个方式在有很多命令时会造成极大的空间损耗。  </p>
+<p>Command对象是可以获取到就执行的，例子只是一种使用这个模式的情况，还有其它很多的情况。  </p>
+<h3 id="扩展-2"><a href="#扩展-2" class="headerlink" title="扩展"></a>扩展</h3><p>例子中在每次获取结果时都会计算一次，解决方式是在执行一定数量的命令后，将当前对象状态（计算的结果）保存成一个新的记录，这样再计算时就以这个新结果为基础计算，撤销到比这个结果之前的操作时就换成之前的状态即可。<br>如果需要重做功能，就设置一个数组下标，以下标来决定哪个是当前的状态。  </p>
+<p>可以用这个结构实现命令队列（此时不要写撤销功能了）在线程池中（或其它需要的地方，也可发给远程对象）使用。  </p>
+<h2 id="特点-3"><a href="#特点-3" class="headerlink" title="特点"></a>特点</h2><p>封装请求</p>
+<hr>
+<h1 id="迭代器（Interator）"><a href="#迭代器（Interator）" class="headerlink" title="迭代器（Interator）"></a>迭代器（Interator）</h1><h2 id="作用-4"><a href="#作用-4" class="headerlink" title="作用"></a>作用</h2><p>提供一种方法顺序访问一个聚合对象中各个元素, 而又不需暴露该对象的内部表示。<br>访问一个聚合对象的内容而无需暴露它的内部表示。<br>支持对聚合对象的多种遍历。<br>为遍历不同的聚合结构提供一个统一的接口（即, 支持多态迭代）。</p>
+<h2 id="实现-4"><a href="#实现-4" class="headerlink" title="实现"></a>实现</h2><p>迭代器的每个中间步骤产生的对象应该是不影响到其它对象的。<br>迭代过程中应禁止修改或检测修改集合结构。  </p>
+<p>基本上语言中的容器都会有相应的迭代器，所以例子略。  </p>
+<h2 id="特点-4"><a href="#特点-4" class="headerlink" title="特点"></a>特点</h2><p>方便遍历对象</p>
+<hr>
+<h1 id="中介者（Mediator）"><a href="#中介者（Mediator）" class="headerlink" title="中介者（Mediator）"></a>中介者（Mediator）</h1><h2 id="作用-5"><a href="#作用-5" class="headerlink" title="作用"></a>作用</h2><p>用一个中介对象来封装<strong>一系列对象的交互</strong>。中介者使各对象不需要显式地相互引用，<br>从而<strong>使其耦合松散</strong>，而且可以<strong>独立地改变它们之间的交互</strong>。<br>这里的交互是对象与对象之间的通信等，对象与对象之间不需要相互知道对方存在。  </p>
+<p>如果一组<strong>接口相对稳定</strong>的对象之间的依赖关系错综复杂，依赖关系难以维护，或者会发生变动可以考虑引入中介者模式。</p>
+<p>简单来说就是之前对象之间相互通信时是直接通信，会把关系弄得很复杂，在这堆对象之间添加一个传递者，处理它们之间的交互，从而减少了通信对象间的相互依赖关系，这就是中介者。 </p>
+<h2 id="实现-5"><a href="#实现-5" class="headerlink" title="实现"></a>实现</h2><p>在C#中可以用事件来处理各对象间的交互行为，这不是观察者，中介者是多向通信（处理多对象通信），观察者是单向。<br>如果关联清晰就没必要用中介者。<br>在使用中介者的时候需要配合一些其它的模式使用。  </p>
+<p>例子可能不太好（而且这里没写Unreg），以后想到好的再换<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">enum</span> MsgType</div><div class="line">&#123;</div><div class="line">    A,</div><div class="line">    B,</div><div class="line">    C,</div><div class="line">    All</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">Mediator</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Register</span>(<span class="params">MsgType msg, Action&lt;MsgType, <span class="keyword">string</span>&gt; onMsg</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (chanels.ContainsKey(msg))</div><div class="line">        &#123;</div><div class="line">            chanels[msg] += onMsg;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        chanels.Add(msg, <span class="keyword">new</span> Action&lt;MsgType, <span class="keyword">string</span>&gt;(onMsg));</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Send</span>(<span class="params">MsgType id, <span class="keyword">string</span> str</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (id == MsgType.All)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> chanels)</div><div class="line">            &#123;</div><div class="line">                item.Value(id, str);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        Action&lt;MsgType, <span class="keyword">string</span>&gt; dlg;</div><div class="line">        <span class="keyword">if</span> (chanels.TryGetValue(id, <span class="keyword">out</span> dlg))</div><div class="line">        &#123;</div><div class="line">            dlg(id, str);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> Dictionary&lt;MsgType, Action&lt;MsgType, <span class="keyword">string</span>&gt;&gt; chanels =</div><div class="line">        <span class="keyword">new</span> Dictionary&lt;MsgType, Action&lt;MsgType, <span class="keyword">string</span>&gt;&gt;();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 假设有一堆没有关联的对象（这里只是把函数名改了），这些类型可以不需要知道其它类型的存在</span></div><div class="line"><span class="keyword">class</span> <span class="title">ChanelA</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ChanelA</span>(<span class="params">Mediator mdt, <span class="keyword">string</span> name</span>)</span></div><div class="line">    &#123;</div><div class="line">        mdt_ = mdt;</div><div class="line">        name_ = name;</div><div class="line">        mdt_.Register(MsgType.A, OnMsg);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnMsg</span>(<span class="params">MsgType type, <span class="keyword">string</span> msg</span>)</span></div><div class="line">    &#123;</div><div class="line">        Console.WriteLine(<span class="string">$"<span class="subst">&#123;name_&#125;</span>(A): <span class="subst">&#123;type&#125;</span>-<span class="subst">&#123;msg&#125;</span>"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Send</span>(<span class="params">MsgType type, <span class="keyword">string</span> msg</span>)</span></div><div class="line">    &#123;</div><div class="line">        mdt_.Send(type, msg);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> Mediator mdt_;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">string</span> name_;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">ChanelB</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ChanelB</span>(<span class="params">Mediator mdt, <span class="keyword">string</span> name</span>)</span></div><div class="line">    &#123;</div><div class="line">        mdt_ = mdt;</div><div class="line">        name_ = name;</div><div class="line">        mdt_.Register(MsgType.B, OnRecv);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnRecv</span>(<span class="params">MsgType type, <span class="keyword">string</span> msg</span>)</span></div><div class="line">    &#123;</div><div class="line">        Console.WriteLine(<span class="string">$"<span class="subst">&#123;name_&#125;</span>(B): <span class="subst">&#123;type&#125;</span>-<span class="subst">&#123;msg&#125;</span>"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Notify</span>(<span class="params">MsgType type, <span class="keyword">string</span> msg</span>)</span></div><div class="line">    &#123;</div><div class="line">        mdt_.Send(type, msg);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> Mediator mdt_;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">string</span> name_;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Program</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> m = <span class="keyword">new</span> Mediator();</div><div class="line">        <span class="keyword">var</span> a1 = <span class="keyword">new</span> ChanelA(m, <span class="string">"N1"</span>);</div><div class="line">        <span class="keyword">var</span> a2 = <span class="keyword">new</span> ChanelA(m, <span class="string">"N2"</span>);</div><div class="line">        <span class="keyword">var</span> b1 = <span class="keyword">new</span> ChanelB(m, <span class="string">"N3"</span>);</div><div class="line">        <span class="keyword">var</span> b2 = <span class="keyword">new</span> ChanelB(m, <span class="string">"N4"</span>);</div><div class="line">        a1.Send(MsgType.C, <span class="string">"test1"</span>);</div><div class="line">        a2.Send(MsgType.B, <span class="string">"test2"</span>);</div><div class="line">        b1.Notify(MsgType.A, <span class="string">"test3"</span>);</div><div class="line">        b2.Notify(MsgType.All, <span class="string">"test4"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以通过判断消息的某些特征来给符合特征的对象发送（例子为了简便就直接用enum了），或者提供若干接口，使用不同接口可以给不同对象发送消息。  </p>
+<p>中介者可作为构造参数传入，作为成员变量使用，或者作为策略传参。  </p>
+<h3 id="扩展-3"><a href="#扩展-3" class="headerlink" title="扩展"></a>扩展</h3><p>可以用key来索引需要中介的对象，中介的对象可以提供某种服务，这样可以通过中介来发现和访问资源，要注意的是返回的类型需要用智能指针，否则当对象从中介解消注册时，使用者会发生错误。  </p>
+<h2 id="特点-5"><a href="#特点-5" class="headerlink" title="特点"></a>特点</h2><p>解耦多对象</p>
+<hr>
+<h1 id="备忘录（Memento）"><a href="#备忘录（Memento）" class="headerlink" title="备忘录（Memento）"></a>备忘录（Memento）</h1><h2 id="作用-6"><a href="#作用-6" class="headerlink" title="作用"></a>作用</h2><p>在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可将该对象恢复到保存的状态。<br><strong>备忘录对象需要生成载入状态数据，保存在对象外部</strong></p>
+<p>必须保存一个对象在某一个时刻的(部分)状态, 这样以后需要时它才能恢复到先前的状态。<br>如果一个用接口来让其它对象直接得到这些状态，将会暴露对象的实现细节并破坏对象的封装性。</p>
+<h2 id="实现-6"><a href="#实现-6" class="headerlink" title="实现"></a>实现</h2><p>这个例子可能不是很好</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ISaveData</span> &#123; &#125;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SaveData</span> : <span class="title">ISaveData</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">internal</span> <span class="keyword">int</span> Data &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Game</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> ISaveData <span class="title">Save</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SaveData() &#123; Data = state &#125;;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">bool</span> <span class="title">Load</span>(<span class="params">ISaveData data</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// 省略一些判断</span></div><div class="line">        state = ((SaveData)data).Data;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        state = <span class="keyword">new</span> Random().Next();</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 假设这是内部状态</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> state;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Program</span></div><div class="line">&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        Game game = <span class="keyword">new</span> Game();</div><div class="line">        game.Run();</div><div class="line">        <span class="keyword">var</span> data = game.Save();</div><div class="line">        game.Run();</div><div class="line">        game.Load(data);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>例子感觉不太清楚，这里附带说明涉及角色：</p>
+<ol>
+<li>Originator(发起人)：负责创建一个备忘录Memento，用以记录当前时刻自身的内部状态，<br> 并可使用备忘录恢复内部状态。Originator可以根据需要决定Memento存储自己的哪些内部状态。</li>
+<li>Memento(备忘录)：负责存储Originator对象的内部状态，并可以防止Originator以外的其他对象访问备忘录。<br> 备忘录有两个接口：Caretaker只能看到备忘录的窄接口，他只能将备忘录传递给其他对象。<br> Originator却可看到备忘录的宽接口，允许它访问返回到先前状态所需要的所有数据。</li>
+<li>Caretaker(管理者):负责备忘录Memento，不能对Memento的内容进行访问或者操作。</li>
+</ol>
+<p>类似游戏保存进度，备忘录就是存档，<br>发起人就是游戏，可以读取存档细则载入内部状态（宽接口）；<br>管理者就是玩家，只能查看管理备份的东西（窄接口）。</p>
+<h2 id="特点-6"><a href="#特点-6" class="headerlink" title="特点"></a>特点</h2><p>存储、载入</p>
+<hr>
+<h1 id="观察者（Observer）"><a href="#观察者（Observer）" class="headerlink" title="观察者（Observer）"></a>观察者（Observer）</h1><p>C#已经有内建机制支持了。  </p>
+<h2 id="作用-7"><a href="#作用-7" class="headerlink" title="作用"></a>作用</h2><p>定义对象间的一种<strong>一对多</strong>的依赖关系，当一个对象的状态<strong>发生改变</strong>时,所有<strong>依赖于它</strong>的对象（可以是多个）都得到<strong>通知</strong>并被<strong>自动更新</strong>。  </p>
+<p>为了降低耦合，不希望主体直接调用观察者的方法，而是采用动态订阅主体事件的方式来进行自动的连锁响应行为。<br>为了增加灵活性，希望动态调整订阅主体事件的观察者，或者希望动态调整观察者订阅主体的事件。</p>
+<h2 id="实现-7"><a href="#实现-7" class="headerlink" title="实现"></a>实现</h2><p>这个类似于修改一件东西，引发一堆东西的改变，<strong>类似事件多播</strong>（在C#中直接用多播更方便）<br>可以把这些关联封装成一个类，由该类来控制事件和存储状态</p>
+<p>抽象主体角色需要公开自身的事件，给任意观察者订阅。<br>如果观察者很多时用这个并不适合，会造成性能问题。  </p>
+<p>实现方式有推模型和拉模型的区别：<br><strong>推模型</strong>注册事件，到事件到来时提醒对应对象执行。<br><strong>拉模型</strong>需要有一个事件流，然后一堆对象读取流中内容执行操作（有点命令模式）。  </p>
+<p>推模型：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> <span class="title">Num</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Num</span>(<span class="params"><span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        val_ = val;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Num <span class="keyword">operator</span> +(Num num, <span class="keyword">int</span> val)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (val &gt; <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            num.Add(val);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (val &lt; <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            num.Sub(-val);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> num;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Num <span class="keyword">operator</span> -(Num num, <span class="keyword">int</span> val)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> num + -val;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 这里需要做范围检查，略，下同</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params"><span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        val_ += val;</div><div class="line">        Increase?.Invoke(val);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Sub</span>(<span class="params"><span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        val_ -= val;</div><div class="line">        Decrease?.Invoke(val);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">event</span> Action&lt;<span class="keyword">int</span>&gt; Increase;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">event</span> Action&lt;<span class="keyword">int</span>&gt; Decrease;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> val_;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Program</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> num = <span class="keyword">new</span> Num(<span class="number">0</span>);</div><div class="line">        num += <span class="number">1</span>;</div><div class="line">        num -= <span class="number">1</span>;</div><div class="line">        num.Increase += (<span class="keyword">int</span> val) =&gt; Console.WriteLine(<span class="string">$"Increase <span class="subst">&#123;val&#125;</span>"</span>);</div><div class="line">        num.Decrease += (<span class="keyword">int</span> val) =&gt; Console.WriteLine(<span class="string">$"Decrease <span class="subst">&#123;val&#125;</span>"</span>);</div><div class="line">        num += <span class="number">1</span>;</div><div class="line">        num -= <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>拉模型：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">enum</span> EventType</div><div class="line">&#123;</div><div class="line">    Increase,</div><div class="line">    Decrease</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">Num</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Num</span>(<span class="params"><span class="keyword">int</span> val, Queue&lt;Tuple&lt;EventType, <span class="keyword">int</span>&gt;&gt; eventQueue</span>)</span></div><div class="line">    &#123;</div><div class="line">        val_ = val;</div><div class="line">        queue_ = eventQueue;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Num <span class="keyword">operator</span> +(Num num, <span class="keyword">int</span> val)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (val &gt; <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            num.Add(val);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (val &lt; <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            num.Sub(-val);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> num;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Num <span class="keyword">operator</span> -(Num num, <span class="keyword">int</span> val)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> num + -val;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 这里需要做范围检查，略，下同</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params"><span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        val_ += val;</div><div class="line">        queue_.Enqueue(<span class="keyword">new</span> Tuple&lt;EventType, <span class="keyword">int</span>&gt;(EventType.Increase, val));</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Sub</span>(<span class="params"><span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        val_ -= val;</div><div class="line">        queue_.Enqueue(<span class="keyword">new</span> Tuple&lt;EventType, <span class="keyword">int</span>&gt;(EventType.Decrease, val));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> Queue&lt;Tuple&lt;EventType, <span class="keyword">int</span>&gt;&gt; queue_;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> val_;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Program</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> eventQueue = <span class="keyword">new</span> Queue&lt;Tuple&lt;EventType, <span class="keyword">int</span>&gt;&gt;();</div><div class="line">        <span class="keyword">var</span> num = <span class="keyword">new</span> Num(<span class="number">0</span>, eventQueue);</div><div class="line">        num += <span class="number">1</span>;</div><div class="line">        num -= <span class="number">1</span>;</div><div class="line">        <span class="comment">// 这里是放在其它地方（其它线程），用同步机制处理</span></div><div class="line">        <span class="keyword">while</span> (eventQueue.Count &gt; <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">var</span> item = eventQueue.Dequeue();</div><div class="line">            Console.WriteLine(<span class="string">$"<span class="subst">&#123;item.Item1&#125;</span> <span class="subst">&#123;item.Item2&#125;</span>"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有时候观察者需要一直扩展事件，这样如果有多个不同对象时，对类的修改会变得频繁，或者当事件很多时就需要很多链接对象来存储对应关系。<br>（前提是当很多对象都观察同一个事件）这时候可以把事件独立出来，对象用事件对象注册对事件的观察，发送者直接调用对应事件的函数引发事件，这样就可以减少链接对象。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> <span class="title">IncreaseEvent</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">event</span> Action&lt;Num, <span class="keyword">int</span>&gt; Event;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnEvent</span>(<span class="params">Num num, <span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        Event?.Invoke(num, val);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">DecreaseEvent</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">event</span> Action&lt;Num, <span class="keyword">int</span>&gt; Event;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnEvent</span>(<span class="params">Num num, <span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        Event?.Invoke(num, val);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">Num</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Num</span>(<span class="params"><span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        val_ = val;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Num <span class="keyword">operator</span> +(Num num, <span class="keyword">int</span> val)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (val &gt; <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            num.Add(val);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (val &lt; <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            num.Sub(-val);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> num;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Num <span class="keyword">operator</span> -(Num num, <span class="keyword">int</span> val)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> num + -val;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 这里需要做范围检查，略，下同</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params"><span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        val_ += val;</div><div class="line">        Increase?.Invoke(<span class="keyword">this</span>, val);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Sub</span>(<span class="params"><span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        val_ -= val;</div><div class="line">        Decrease?.Invoke(<span class="keyword">this</span>, val);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">event</span> Action&lt;Num, <span class="keyword">int</span>&gt; Increase;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">event</span> Action&lt;Num, <span class="keyword">int</span>&gt; Decrease;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> val_;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Program</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> incEve = <span class="keyword">new</span> IncreaseEvent();</div><div class="line">        <span class="keyword">var</span> decEve = <span class="keyword">new</span> DecreaseEvent();</div><div class="line">        <span class="comment">// 其它对象在这里注册观察事件</span></div><div class="line">        incEve.Event += (Num n, <span class="keyword">int</span> val) =&gt; Console.WriteLine(<span class="string">$"Increase <span class="subst">&#123;val&#125;</span>"</span>);</div><div class="line">        decEve.Event += (Num n, <span class="keyword">int</span> val) =&gt; Console.WriteLine(<span class="string">$"Decrease <span class="subst">&#123;val&#125;</span>"</span>);</div><div class="line"></div><div class="line">        <span class="keyword">var</span> num = <span class="keyword">new</span> Num(<span class="number">0</span>);</div><div class="line">        <span class="comment">// 发生事件时通知事件管理器</span></div><div class="line">        num.Increase += (Num n, <span class="keyword">int</span> val) =&gt; incEve.OnEvent(n, val);</div><div class="line">        num.Decrease += (Num n, <span class="keyword">int</span> val) =&gt; decEve.OnEvent(n, val);</div><div class="line">        num += <span class="number">1</span>;</div><div class="line">        num -= <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面例子因为简化的关系对边界值未作判断。<br>在C++中事件机制的实现可以用顺序容器+function实现，这里略。  </p>
+<h2 id="特点-7"><a href="#特点-7" class="headerlink" title="特点"></a>特点</h2><p>向依赖关系通知状态改变</p>
+<hr>
+<h1 id="状态（State）"><a href="#状态（State）" class="headerlink" title="状态（State）"></a>状态（State）</h1><p>以面向对象的方式实现状态机的行为。</p>
+<h2 id="作用-8"><a href="#作用-8" class="headerlink" title="作用"></a>作用</h2><p>允许一个对象在其内部状态改变时改变它的行为（在运行时），使对象看起来似乎修改了它的类。</p>
+<h2 id="实现-8"><a href="#实现-8" class="headerlink" title="实现"></a>实现</h2><p>如果一个类有多种状态，可以用枚举表示，也可以把这些行为单独封装为状态类。<br>可以用继承来实现，比如要处理某个输入时传给某个状态对象，如果这个状态不能处理这个输入，就调用父类的处理函数，可以用类似职责链的方式处理状态。</p>
+<p>如果需要多个状态（状态间无关联）时可以弄个并发状态机。<br>如果状态有子状态并且状态间需要交互时可以用分层状态机。<br>可以用栈来处理状态，这样当进入子状态时入栈，处理完后出栈，就又回到了之前的状态。</p>
+<p><em>个人觉得用状态表好编一些，用状态对象好改一些。</em>  </p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 简化的例子，有一些问题，无视就好</span></div><div class="line"></div><div class="line"><span class="keyword">enum</span> Condition</div><div class="line">&#123;</div><div class="line">    Walk,</div><div class="line">    Jump</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">interface</span> <span class="title">IState</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Do</span>(<span class="params"></span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Next</span>(<span class="params">Stack&lt;IState&gt; stack, Condition cdt</span>)</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Walk</span> : <span class="title">IState</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Do</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        Console.WriteLine(<span class="string">$"Walk <span class="subst">&#123;<span class="number">1</span> + (val_++ % <span class="number">4</span>)&#125;</span>"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Next</span>(<span class="params">Stack&lt;IState&gt; stack, Condition cdt</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">switch</span> (cdt)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">case</span> Condition.Jump:</div><div class="line">                <span class="keyword">var</span> jmp = <span class="keyword">new</span> Jump();</div><div class="line">                jmp.EndJump += () =&gt; stack.Pop();</div><div class="line">                stack.Push(jmp);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> val_ = <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">Jump</span> : <span class="title">IState</span></div><div class="line">&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Next</span>(<span class="params">Stack&lt;IState&gt; stack, Condition cdt</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// 假设在空中不能进行任何操作</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">event</span> Action EndJump;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Do</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (isInTheSky_)</div><div class="line">        &#123;</div><div class="line">            Console.WriteLine(<span class="string">"Begin Jump"</span>);</div><div class="line">            isInTheSky_ = <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            Console.WriteLine(<span class="string">"End Jump"</span>);</div><div class="line">            EndJump?.Invoke();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">bool</span> isInTheSky_ = <span class="literal">true</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">Player</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Do</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        state_.Peek().Do();</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Next</span>(<span class="params">Condition cdt</span>)</span></div><div class="line">    &#123;</div><div class="line">        state_.Peek().Next(state_, cdt);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Player</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        state_ = <span class="keyword">new</span> Stack&lt;IState&gt;();</div><div class="line">        state_.Push(<span class="keyword">new</span> Walk());</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> Stack&lt;IState&gt; state_;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Program</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> player = <span class="keyword">new</span> Player();</div><div class="line">        player.Do();</div><div class="line">        player.Next(Condition.Walk);</div><div class="line">        player.Do();</div><div class="line">        player.Do();</div><div class="line">        player.Next(Condition.Jump);</div><div class="line">        player.Do();</div><div class="line">        player.Do();</div><div class="line">        player.Do();</div><div class="line">        player.Do();</div><div class="line">        player.Do();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果状态不需要保存自身特征，可以将它们声明成静态对象，或者用享元在多对象间共享。<br>当状态没有数据成员的时候，可以将它表示为委托或函数指针，这样就不需要创建实例。<br>可以为状态建立进入和退出行为，这样可以更加细化的管理状态。  </p>
+<h2 id="特点-8"><a href="#特点-8" class="headerlink" title="特点"></a>特点</h2><p>状态</p>
+<hr>
+<h1 id="策略（Policy-Strategy）"><a href="#策略（Policy-Strategy）" class="headerlink" title="策略（Policy/Strategy）"></a>策略（Policy/Strategy）</h1><h2 id="作用-9"><a href="#作用-9" class="headerlink" title="作用"></a>作用</h2><p>定义一系列的<strong>算法</strong>，把它们一个个<strong>封装</strong>起来, 并且使它们<strong>可相互替换</strong>。<br>使得算法可独立于使用它的客户而变化。<br>定义一系列算法，将它们封装起来，使之可以互相替换，就是<strong>封装函数给类使用</strong><br>如果一个类有多种行为，并且在类内部通过条件判断语句（比如switch判断enum选择不同的代码执行）来实现不同的行为的时候可以把这些行为单独封装为策略类。</p>
+<p>根据设计规则，不应该暴露类内部的变量，在c#中有属性可以严格控制，但是c++中即使const还是可访问，这时候<strong>可以传入策略或者访问者去处理之前暴露的部分，这样可以隐藏内部变量</strong>。  </p>
+<h2 id="实现-9"><a href="#实现-9" class="headerlink" title="实现"></a>实现</h2><p>可以用传入函数委托（函数对象）来做，如果在编译期可定的话可以把它弄成模板Policy（C++)。  </p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">interface</span> <span class="title">IOperator</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">Calc</span>(<span class="params"><span class="keyword">int</span> old, <span class="keyword">int</span> val</span>)</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Num</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Num</span>(<span class="params"><span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        Value = val;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Calc</span>(<span class="params">IOperator op, <span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// 省掉判断null</span></div><div class="line">        <span class="comment">// 这里如果不用策略就需要用switch op...case add...case multi</span></div><div class="line">        <span class="comment">// 使用后就会变得十分灵活</span></div><div class="line">        Value = op.Calc(Value, val);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Value &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="title">Add</span> : <span class="title">IOperator</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Calc</span>(<span class="params"><span class="keyword">int</span> old, <span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> old + val;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">Multi</span> : <span class="title">IOperator</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Calc</span>(<span class="params"><span class="keyword">int</span> old, <span class="keyword">int</span> val</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> old * val;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">[<span class="meta">TestClass</span>]</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Pattern</span></div><div class="line">&#123;</div><div class="line">    [<span class="meta">TestMethod</span>]</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Test</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> num = <span class="keyword">new</span> Num(<span class="number">0</span>);</div><div class="line">        num.Calc(<span class="keyword">new</span> Add(), <span class="number">2</span>);</div><div class="line">        Assert.IsTrue(num.Value == <span class="number">2</span>);</div><div class="line">        num.Calc(<span class="keyword">new</span> Multi(), <span class="number">5</span>);</div><div class="line">        Assert.IsTrue(num.Value == <span class="number">2</span> * <span class="number">5</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样相关算法就可以独立于使用它的类独自变化。<br>可以看情况用单例存储策略对象。  </p>
+<h2 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h2><p>用户必须知道各个不同的策略的区别</p>
+<h2 id="特点-9"><a href="#特点-9" class="headerlink" title="特点"></a>特点</h2><p>封装函数，取消条件判断</p>
+<hr>
+<h1 id="访问者（Visitor）"><a href="#访问者（Visitor）" class="headerlink" title="访问者（Visitor）"></a>访问者（Visitor）</h1><p>关键是识别子类类型。<br>如果被访问对象经常会增加，就不推荐使用。  </p>
+<h2 id="作用-10"><a href="#作用-10" class="headerlink" title="作用"></a>作用</h2><p>实现通过统一的接口访问不同类型元素的操作，并且通过这个接口可以<strong>增加新的操作</strong>而<strong>不改变元素的类</strong>。</p>
+<p><strong>被访问者如果表示不欢迎，访问者就不能访问</strong>。</p>
+<p>可以在visitor的实现函数中用不同类型区分各个函数（执行不同的内容），这样在传入对象时（即使引用接口）就可以根据对象的不同类型执行不同的东西。<br>在数据结构稳定的情况下使用，可以对一系列对象使用并可对各个对象执行不同的内容。</p>
+<p>多类型间没有统一的接口，而又希望使对象的操作统一（将对多类型对象的操作集中到一个类里）。</p>
+<p>希望为对象结构类型新增操作，并且不希望改变原有代码。<br>对象结构中的一些类型之间发生耦合，而它们的实现又经常会发生变动<br>针对结构中同一层次的不同类型甚至是不同层次的类型进行迭代。</p>
+<p>实现的重载参数可以是同源（有共同父类）或不同源类型，在被子类调用时会选择正确的分类（可达到识别子类目的），可以做统一或者不统一的操作。</p>
+<p>只适用子类稳定但是功能操作不稳定的情况。</p>
+<h2 id="实现-10"><a href="#实现-10" class="headerlink" title="实现"></a>实现</h2><p>需要理解双分派（双重分发）的概念：<br>访问者模式允许不改变类即可有效地增加其上的操作，为达到这一效果使用了双分派技术。<br>在单分派语言中，选择由哪个操作实现一个请求取决于请求名和接收者类型（就是对象和函数名）<br>在双分派中，取决于两个接收者的类型，这就是这个模式的<strong>关键</strong>所在：<strong>得到执行的操作不仅取决于访问者类型还取决于它访问元素的类型</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">interface</span> <span class="title">IAcceptor</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Accept</span>(<span class="params">IVisitor vst</span>)</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="comment">// 这里假设要访问的对象是固定的将来不会扩展</span></div><div class="line"><span class="comment">// 可以不用继承IAcceptor，不过继承会方便些（能统一处理）</span></div><div class="line"><span class="keyword">class</span> <span class="title">Al</span> : <span class="title">IAcceptor</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Accept</span>(<span class="params">IVisitor vst</span>)</span></div><div class="line">    &#123;</div><div class="line">        vst.Visit(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">Al2O3</span> : <span class="title">IAcceptor</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Accept</span>(<span class="params">IVisitor vst</span>)</span></div><div class="line">    &#123;</div><div class="line">        vst.Visit(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">interface</span> <span class="title">IVisitor</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">// 可以用接口处理相似类型，但是会优先选择更具体类型</span></div><div class="line">    <span class="comment">// 可以写实际类型</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Visit</span>(<span class="params">Al obj</span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Visit</span>(<span class="params">Al2O3 obj</span>)</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 不同的Visitor表示不同的功能，扩展功能通过编写不同的访问者实现</span></div><div class="line"><span class="keyword">class</span> <span class="title">HCl</span> : <span class="title">IVisitor</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Visit</span>(<span class="params">Al2O3 obj</span>)</span></div><div class="line">    &#123;</div><div class="line">        Console.WriteLine(<span class="string">"Al2O3 + 6HCl = 2AlCl3 + 3H2O"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Visit</span>(<span class="params">Al obj</span>)</span></div><div class="line">    &#123;</div><div class="line">        Console.WriteLine(<span class="string">"2Al＋6HCl＝AlCl3＋3H2"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> <span class="title">NaOH</span> : <span class="title">IVisitor</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Visit</span>(<span class="params">Al2O3 obj</span>)</span></div><div class="line">    &#123;</div><div class="line">        Console.WriteLine(<span class="string">"Al2O3 + 2NaOH = 2NaAlO2 + H2O"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Visit</span>(<span class="params">Al obj</span>)</span></div><div class="line">    &#123;</div><div class="line">        Console.WriteLine(<span class="string">"2Al + 2NaOH + 2H2O = 2NaAlO2 + 3H2"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 居然还记得化学学过的东西……</span></div><div class="line"><span class="keyword">class</span> <span class="title">Program</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        List&lt;IAcceptor&gt; acts = <span class="keyword">new</span> List&lt;IAcceptor&gt;();</div><div class="line">        acts.Add(<span class="keyword">new</span> Al());</div><div class="line">        acts.Add(<span class="keyword">new</span> Al2O3());</div><div class="line">        <span class="keyword">var</span> hcl = <span class="keyword">new</span> HCl();</div><div class="line">        acts.ForEach((item) =&gt; item.Accept(hcl));</div><div class="line">        <span class="keyword">var</span> naoh = <span class="keyword">new</span> NaOH();</div><div class="line">        acts.ForEach((item) =&gt; item.Accept(naoh));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>不只是访问list，还可访问其它容器（比如树）中的节点。  </p>
+<h2 id="扩展-4"><a href="#扩展-4" class="headerlink" title="扩展"></a>扩展</h2><p>访问者可以保存一些自身状态，比如处理树时进入和离开某（类型）节点时可以标记，这样就可以得到其结构（比如输出文档标题的缩进什么的）。  </p>
+<h2 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h2><p>难以扩展，需要配合其它模式<br>需要过多暴露对象内部元素，否则难以进行操作<br>需要提前考虑到需求才能提前设置接受访问者的方法（Accept）<br>如果有新增元素的话要修改所有访问者，这时即使选择继承来扩展也会有很多问题</p>
+<h2 id="特点-10"><a href="#特点-10" class="headerlink" title="特点"></a>特点</h2><p>识别子类、扩展功能<br>统一操作</p>
+<hr>
+<h1 id="属性绑定（Binding-Properties）"><a href="#属性绑定（Binding-Properties）" class="headerlink" title="属性绑定（Binding Properties）"></a>属性绑定（Binding Properties）</h1><p>WPF中（或其它涉及到界面的地方）经常会用到。  </p>
+<h2 id="作用-11"><a href="#作用-11" class="headerlink" title="作用"></a>作用</h2><p>使多个对象的属性保持同步。</p>
+<h2 id="实现-11"><a href="#实现-11" class="headerlink" title="实现"></a>实现</h2><p>有单向（One-way）和双向（Two-way）的区分。<br>使用观察者实现，向要同步的对象注册事件，当属性值改变时就修改自身属性与之相等，但是这样在某些情况（双向绑定或单向绑定但是产生了循环绑定）会产生无限循环，处理方式是在设置值时，如果值已经相等就不引发事件，或者新建其它事件用于绑定操作，绑定触发的事件跟值改变的事件（比如onChanged）不一样，这样也能消除循环问题。如果是在界面中使用，还可以在引起属性改变的事件之后进行同步（比如onKeyDown、onClicked什么的）。<br>多用在界面编程中，但是在其它情况可能也适用，不过我觉得在普通对象中用时可以使用享元来实现，这样就不需要在多个对象间处理事件。  </p>
+<h2 id="特点-11"><a href="#特点-11" class="headerlink" title="特点"></a>特点</h2><p>同步属性</p>
+<hr>
+<h1 id="空对象（Null-Object）"><a href="#空对象（Null-Object）" class="headerlink" title="空对象（Null Object）"></a>空对象（Null Object）</h1><h2 id="作用-12"><a href="#作用-12" class="headerlink" title="作用"></a>作用</h2><p>避免在程序中传递null</p>
+<h2 id="实现-12"><a href="#实现-12" class="headerlink" title="实现"></a>实现</h2><p>在函数执行失败时要么异常要么可以返回空，这样就需要显式的去测试这个返回值；但是有时候并不关心返回的东西是否为空（比如在链式访问时），这时可以返回一个空对象，函数跟正常返回的对象一样，只是不执行任何东西（函数体不写内容）。  </p>
+<p>传递参数时也可以这么做，比如策略模式中，传递的策略可以是空对象，不做任何处理。在作为模板参数的时候，也可以使用空对象，比如可以自定义对象的锁类型，如果不需要锁，可以传入空对象让锁操作不执行任何语句。</p>
+<p>空对象可以用单例来管理。</p>
+<hr>
+<h1 id="管理者（Manager）"><a href="#管理者（Manager）" class="headerlink" title="管理者（Manager）"></a>管理者（Manager）</h1><h2 id="作用-13"><a href="#作用-13" class="headerlink" title="作用"></a>作用</h2><p>负责管理相关类实例并提供统一全局访问点。<br>一般配合单例使用。  </p>
+<h2 id="实现-13"><a href="#实现-13" class="headerlink" title="实现"></a>实现</h2><p>一般会用key-value形式来管理相关类实例，当需要某个实例时，需要提供该实例的关联key（ID或字符串）来得到这个实例，或者可以通过一些统一的接口来访问这些实例。</p>
+<p>它可以用来缓存一些创建开销大又需要重复使用的对象，这样可以提升性能。<br>或者在需要某个服务时，这个模式可以提供固定访问点，这样就可以通过直接替换内部对象来实现替换服务。  </p>
+<hr>
+<h1 id="缓冲（Caching）"><a href="#缓冲（Caching）" class="headerlink" title="缓冲（Caching）"></a>缓冲（Caching）</h1><h2 id="作用-14"><a href="#作用-14" class="headerlink" title="作用"></a>作用</h2><p>在使用完资源后不立即释放资源，而是将它缓存；等再次使用时直接重用，避免资源重新获取。</p>
+<h2 id="实现-14"><a href="#实现-14" class="headerlink" title="实现"></a>实现</h2><p>存储容器可以用数组、list、map、队列、栈等。需要某种机制保证重用时能找到相应资源即可。<br>没什么可说的……</p>
+<h3 id="扩展-5"><a href="#扩展-5" class="headerlink" title="扩展"></a>扩展</h3><p>可以配合池来使用，弄个队列或栈，分配时检查是否有内容，没有就创建，用完后再将对象插入容器，此时可以调用其析构函数但是保留内存指针（如果对象状态无关紧要或想要重用对象时可以直接存储对象指针），这样在再次创建时直接placement new即可。</p>
+<h2 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h2><p>注意有空间开销，如果创建对象的开销不大就不需要使用</p>
+<hr>
+<h1 id="双缓冲（Double-Buffer）"><a href="#双缓冲（Double-Buffer）" class="headerlink" title="双缓冲（Double Buffer）"></a>双缓冲（Double Buffer）</h1><h2 id="作用-15"><a href="#作用-15" class="headerlink" title="作用"></a>作用</h2><p>当需要连续一直读取某个缓冲区时，有可能缓冲区正在写，导致读取结果出错，这时候就需要双缓冲。<br>当不便用同步、不想阻塞流程或者访问时需要将缓冲区整个读取时可以使用。  </p>
+<h2 id="实现-15"><a href="#实现-15" class="headerlink" title="实现"></a>实现</h2><p>在另一个缓冲区写，写完后提示可以读这个缓冲区，然后再写另一个缓冲区。<br>在缓冲区被修改完成后需要有一个原子的swap行为（或者用锁，此时只保护一个swap操作，时间很短），与取缓冲区的当前对象交换，这样可以保证在缓冲区被读取时是修改完毕的状态。</p>
+<h3 id="扩展-6"><a href="#扩展-6" class="headerlink" title="扩展"></a>扩展</h3><p>如果双缓冲不能满足于缓冲速度，可以扩展为多缓冲。<br>不一定是缓冲区，可以是对象，比如对容器操作时，读取和插入可以分别是两个容器，等到了某个关键点，比如读完数据，就同步swap，这样再读到时就读到了有数据的容器，省掉了很多同步开销。  </p>
+<hr>
+<h1 id="数据区域化（Data-Locality）"><a href="#数据区域化（Data-Locality）" class="headerlink" title="数据区域化（Data Locality）"></a>数据区域化（Data Locality）</h1><p>这可能更多的算作技巧而不是模式</p>
+<h2 id="作用-16"><a href="#作用-16" class="headerlink" title="作用"></a>作用</h2><p>将冷数据和热数据分开，这样在访问时能提升速度。</p>
+<h2 id="实现-16"><a href="#实现-16" class="headerlink" title="实现"></a>实现</h2><p>尽量把常用数据（但不是不同线程管理的数据）放在一起，减少指针寻址，这样可以提高命中率；对于不需要频繁用到的数据，可以放到一边，用指针访问它。<br>注意不要把经常修改的多线程都需要的数据放到一起，原因之前写过了，略。  </p>
+<hr>
+<h1 id="发布者-订阅者（Publisher-Subscriber）"><a href="#发布者-订阅者（Publisher-Subscriber）" class="headerlink" title="发布者-订阅者（Publisher-Subscriber）"></a>发布者-订阅者（Publisher-Subscriber）</h1><h2 id="作用-17"><a href="#作用-17" class="headerlink" title="作用"></a>作用</h2><p>改变组件内部状态可能会引入合作组件之间的不一致性，为重建一致性，需要一种机制来交换这种组件间的数据或状态信息。</p>
+<h2 id="实现-17"><a href="#实现-17" class="headerlink" title="实现"></a>实现</h2><p>组件间应该松散耦合，信息提供者不应该依赖协作者的细节，并且信息提供者的组件并不是预知的。<br>订阅者和发布者不直接耦合，发布者和订阅者能够相互独立地运行。<br>发布者将消息发送到一个中介者（用来调度，跟观察者不同的是需要一个调度器，这个调度器不一定跟发布者接收者同一个进程），订阅者向这个中介订阅（可设置订阅规则如过滤某些消息），消息的传递由中介者调度，这样发布者和订阅者之间就不存在依赖关系。<br>观察者的推拉模型也是可以应用到这里来的。</p>
+<hr>
+<h1 id="主-从（Master-Slave）"><a href="#主-从（Master-Slave）" class="headerlink" title="主-从（Master-Slave）"></a>主-从（Master-Slave）</h1><h2 id="作用-18"><a href="#作用-18" class="headerlink" title="作用"></a>作用</h2><p>主控组件将工作分配给相同的从属组件并用从属组件返回的结果计算出最终结果。它支持容错性、并行计算以及计算准确性。</p>
+<h2 id="实现-18"><a href="#实现-18" class="headerlink" title="实现"></a>实现</h2><p>其实就是分治法。用户用主控组件进行操控，而不需要知道分治细节。主控组件将工作划分为几个同等的子任务，并委派给从属组件处理，最后再处理返回的结果。<br>可以并行执行任务；如果把多个同样的数据分配给从属组件，可以检测并处理失败的结果；如果任务被委派给多个不同的实现，可以检测并处理不精确的结果。</p>
+<hr>
+<h1 id="视图处理程序（View-Handler）"><a href="#视图处理程序（View-Handler）" class="headerlink" title="视图处理程序（View Handler）"></a>视图处理程序（View Handler）</h1><h2 id="作用-19"><a href="#作用-19" class="headerlink" title="作用"></a>作用</h2><p><strong>管理</strong>软件系统提供的<strong>所有视图</strong>，使用户可以打开、使用和关闭视图。它还可以协调视图间的依赖关系并组织它们更新（指的是当一个视图更新时能自动传播给相关的视图，让它们同时更新）。  </p>
+<h2 id="实现-19"><a href="#实现-19" class="headerlink" title="实现"></a>实现</h2><p>可以把<strong>视图处理程序</strong>看作是抽象工厂+中介者。<br>客户向它请求需要的视图，处理程序管理相应视图的抽象，它维护这些视图的初始化、显示、关闭等；它可以快速的对特定视图进行操作。<br>视图创建后会向数据<strong>供应者</strong>注册，并取得数据用于显示，当相关数据修改时，数据供应者通知视图进行更新。  </p>
+<hr>
+<h1 id="转发者-接收器（Forwarder-Receiver）"><a href="#转发者-接收器（Forwarder-Receiver）" class="headerlink" title="转发者-接收器（Forwarder-Receiver）"></a>转发者-接收器（Forwarder-Receiver）</h1><h2 id="作用-20"><a href="#作用-20" class="headerlink" title="作用"></a>作用</h2><p>为对等交互模型系统提供透明的进程间通信机制。</p>
+<h2 id="实现-20"><a href="#实现-20" class="headerlink" title="实现"></a>实现</h2><p>其实就是添加一个中间层处理进程间发送/接收消息。<br>这个中间层就是转发器和接收器。对等体（Peer）通过转发器发送消息，转发器知道远程接收器的物理位置，它将消息序列化后发给远程接收器；接收器接到信息就解析并分发消息。</p>
+<hr>
+<h1 id="客户机-分配器-服务器（Client-Dispatcher-Server）"><a href="#客户机-分配器-服务器（Client-Dispatcher-Server）" class="headerlink" title="客户机-分配器-服务器（Client-Dispatcher-Server）"></a>客户机-分配器-服务器（Client-Dispatcher-Server）</h1><h2 id="作用-21"><a href="#作用-21" class="headerlink" title="作用"></a>作用</h2><p>在客户机与服务器之间引入一个分配器组件，借助名字（解析）服务实现位置透明性，并隐藏客户机与服务器间建立通信连接的细节。</p>
+<h2 id="实现-21"><a href="#实现-21" class="headerlink" title="实现"></a>实现</h2><p>引入一个分配器充当客户机与服务器的中间层，服务器可以向分配器注册，它可以允许用户通过名字来指定服务器而不需要提供物理位置，由此实现位置透明性。另外，分配器还需要负责建立客户与服务器间的通信信道（可以由客户机自己负责，不过有可能服务器会采用其它通信方式）。 </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/08/27/学习笔记/模式/行为型/" title="[模式] 行为型">/2017/08/27/学习笔记/模式/行为型/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/模式/" class="fa fa-tag" rel="tag"> 模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/26/学习笔记/模式/结构型/" rel="next" title="[模式] 结构型">
+                <i class="fa fa-chevron-left"></i> [模式] 结构型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/28/学习笔记/模式/并发型/" rel="prev" title="[模式] 并发型">
+                [模式] 并发型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#解释器（Interpreter）"><span class="nav-number">1.</span> <span class="nav-text">解释器（Interpreter）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用"><span class="nav-number">1.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">1.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">1.3.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">1.4.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板方法（TemplateMethod）"><span class="nav-number">2.</span> <span class="nav-text">模板方法（TemplateMethod）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-1"><span class="nav-number">2.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-1"><span class="nav-number">2.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展"><span class="nav-number">2.2.1.</span> <span class="nav-text">扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-1"><span class="nav-number">2.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#责任链（Chain-of-Responsibility）"><span class="nav-number">3.</span> <span class="nav-text">责任链（Chain of Responsibility）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-2"><span class="nav-number">3.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-2"><span class="nav-number">3.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-2"><span class="nav-number">3.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令（Command）"><span class="nav-number">4.</span> <span class="nav-text">命令（Command）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-3"><span class="nav-number">4.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-3"><span class="nav-number">4.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展-2"><span class="nav-number">4.2.1.</span> <span class="nav-text">扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-3"><span class="nav-number">4.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器（Interator）"><span class="nav-number">5.</span> <span class="nav-text">迭代器（Interator）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-4"><span class="nav-number">5.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-4"><span class="nav-number">5.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-4"><span class="nav-number">5.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中介者（Mediator）"><span class="nav-number">6.</span> <span class="nav-text">中介者（Mediator）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-5"><span class="nav-number">6.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-5"><span class="nav-number">6.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展-3"><span class="nav-number">6.2.1.</span> <span class="nav-text">扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-5"><span class="nav-number">6.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#备忘录（Memento）"><span class="nav-number">7.</span> <span class="nav-text">备忘录（Memento）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-6"><span class="nav-number">7.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-6"><span class="nav-number">7.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-6"><span class="nav-number">7.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者（Observer）"><span class="nav-number">8.</span> <span class="nav-text">观察者（Observer）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-7"><span class="nav-number">8.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-7"><span class="nav-number">8.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-7"><span class="nav-number">8.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态（State）"><span class="nav-number">9.</span> <span class="nav-text">状态（State）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-8"><span class="nav-number">9.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-8"><span class="nav-number">9.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-8"><span class="nav-number">9.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#策略（Policy-Strategy）"><span class="nav-number">10.</span> <span class="nav-text">策略（Policy/Strategy）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-9"><span class="nav-number">10.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-9"><span class="nav-number">10.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点-1"><span class="nav-number">10.3.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-9"><span class="nav-number">10.4.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#访问者（Visitor）"><span class="nav-number">11.</span> <span class="nav-text">访问者（Visitor）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-10"><span class="nav-number">11.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-10"><span class="nav-number">11.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展-4"><span class="nav-number">11.3.</span> <span class="nav-text">扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点-2"><span class="nav-number">11.4.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-10"><span class="nav-number">11.5.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#属性绑定（Binding-Properties）"><span class="nav-number">12.</span> <span class="nav-text">属性绑定（Binding Properties）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-11"><span class="nav-number">12.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-11"><span class="nav-number">12.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点-11"><span class="nav-number">12.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#空对象（Null-Object）"><span class="nav-number">13.</span> <span class="nav-text">空对象（Null Object）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-12"><span class="nav-number">13.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-12"><span class="nav-number">13.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管理者（Manager）"><span class="nav-number">14.</span> <span class="nav-text">管理者（Manager）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-13"><span class="nav-number">14.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-13"><span class="nav-number">14.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓冲（Caching）"><span class="nav-number">15.</span> <span class="nav-text">缓冲（Caching）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-14"><span class="nav-number">15.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-14"><span class="nav-number">15.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展-5"><span class="nav-number">15.2.1.</span> <span class="nav-text">扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点-3"><span class="nav-number">15.3.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#双缓冲（Double-Buffer）"><span class="nav-number">16.</span> <span class="nav-text">双缓冲（Double Buffer）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-15"><span class="nav-number">16.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-15"><span class="nav-number">16.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展-6"><span class="nav-number">16.2.1.</span> <span class="nav-text">扩展</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据区域化（Data-Locality）"><span class="nav-number">17.</span> <span class="nav-text">数据区域化（Data Locality）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-16"><span class="nav-number">17.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-16"><span class="nav-number">17.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发布者-订阅者（Publisher-Subscriber）"><span class="nav-number">18.</span> <span class="nav-text">发布者-订阅者（Publisher-Subscriber）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-17"><span class="nav-number">18.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-17"><span class="nav-number">18.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主-从（Master-Slave）"><span class="nav-number">19.</span> <span class="nav-text">主-从（Master-Slave）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-18"><span class="nav-number">19.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-18"><span class="nav-number">19.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图处理程序（View-Handler）"><span class="nav-number">20.</span> <span class="nav-text">视图处理程序（View Handler）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-19"><span class="nav-number">20.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-19"><span class="nav-number">20.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#转发者-接收器（Forwarder-Receiver）"><span class="nav-number">21.</span> <span class="nav-text">转发者-接收器（Forwarder-Receiver）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-20"><span class="nav-number">21.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-20"><span class="nav-number">21.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户机-分配器-服务器（Client-Dispatcher-Server）"><span class="nav-number">22.</span> <span class="nav-text">客户机-分配器-服务器（Client-Dispatcher-Server）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-21"><span class="nav-number">22.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-21"><span class="nav-number">22.2.</span> <span class="nav-text">实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1849,7 +1849,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffa258;
+  background: #b3f0ec;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2938,8 +2938,35 @@ hr {
 .pace .pace-progress {
   background-color: #101010;
 }
-body {
-  -webkit-font-smoothing: auto;
+canvas,
+.logo-font,
+.menu-item-icon,
+.post-title-link,
+.post-block .post-button .btn,
+.post-nav-item a,
+.pagination,
+.sidebar a,
+.pagination .prev,
+.pagination .next,
+.pagination .page-number,
+.posts-expand .post-tags a {
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+canvas {
+  filter: drop-shadow(0px 7px 4px rgba(0,0,0,0.2));
+  -ms-filter: drop-shadow(0px 7px 4px rgba(0,0,0,0.2));
+  -webkit-filter: drop-shadow(0px 7px 4px rgba(0,0,0,0.2));
+}
+main .post-block:hover .post-button {
+  opacity: 1;
+}
+main .post-block .post-button {
+  opacity: 0;
+  -webkit-transition: opacity 500ms ease 100ms;
+  -moz-transition: opacity 500ms ease 100ms;
+  transition: opacity 500ms ease 100ms;
 }
 .button-style:hover {
   text-shadow: 0px 0px 5px rgba(20,20,20,0.5), 0px 0px 8px rgba(20,20,20,0.4);
@@ -2955,7 +2982,10 @@ blockquote {
   border-radius: 3px !important;
   -moz-box-shadow: 0px 0px 3px rgba(80,80,80,0.1), 0px 0px 7px rgba(80,80,80,0.1);
   -webkit-box-shadow: 0px 0px 3px rgba(80,80,80,0.1), 0px 0px 7px rgba(80,80,80,0.1);
-  box-shadow: 0px 0px 3px rgba(80,80,80,0.1), 0px 0px 7px rgba(80,80,80,0.1);
+  box-shadow: 0px 0px 3px rgba(80,80,80,0.1), 0px 0px 7px rgba(126,120,120,0.1);
+}
+.posts-expand .post-body img {
+  border-width: 0px;
 }
 hr {
   background-color: #ddd;
@@ -2968,4 +2998,17 @@ hr {
 }
 .post-body >p> a:hover {
   text-shadow: 0 0 5px rgba(26,174,255,0.5), 0 0 2px rgba(26,174,255,0.3);
+}
+.posts-expand .post-body {
+  text-align: left;
+}
+p {
+  margin: 0 0 15px 0;
+}
+ul {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.post-button {
+  margin-top: 0px;
 }

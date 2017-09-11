@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="TODO,Redis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="redis笔记">
+<meta name="keywords" content="TODO,Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis笔记">
+<meta property="og:url" content="/2017/08/23/学习笔记/数据库/redis笔记/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="redis笔记">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-24T14:50:23.916Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis笔记">
+<meta name="twitter:description" content="redis笔记">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/08/23/学习笔记/数据库/redis笔记/"/>
+
+
+
+
+
+  <title>redis笔记 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/08/23/学习笔记/数据库/redis笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-23T15:57:56+08:00">
+                2017-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  redis笔记
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>这里记录一些基本用法用于速查。命令列表摘自网络（之前记笔记时没记录出处）。</em><br>命令完整列表在<a href="https://redis.io/commands" target="_blank" rel="external">https://redis.io/commands</a>，这里只是一部分命令。  </p>
+<h1 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h1><p>Redis是单线程处理所有客户端请求的，数据库里每一个键值对都是由对象组成的，键总是为一个字符串对象（二进制安全），值可以是字符串对象（二进制安全）、列表对象、哈希对象、集合对象、有序集合对象、位数组等。  </p>
+<p>默认有16个库，可以用select切换，但是并没有查询当前库的功能，所以对指定库操作前需要先select确保在正确位置。  </p>
+<h2 id="键值对"><a href="#键值对" class="headerlink" title="键值对"></a>键值对</h2><p>键和值是二进制安全的，这样就可以用任何二进制序列做key，空也是一个有效的key。<br>不推荐用很长的key，如果必须用长的，可以用哈希处理再用。不推荐太短的key，因为降低可读性。<br>官方例子中一般用的是类似命名空间的方式：<code>A:B:C</code>。<br>最大key或value大小为512MB。</p>
+<h2 id="生存期"><a href="#生存期" class="headerlink" title="生存期"></a>生存期</h2><p>可以给key设置生存时间（不设置就是永久），时间分辨率为1ms，到期自动销毁。<br>注意使用的是系统时间判断，修改系统时间会影响到存活时间。<br>删除的时机是在客户端尝试访问时，并且系统每10秒会随机检查20个key，过期就删除，如果有多于1/4过期，就再检查。</p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>二进制安全，最大512MB。<br>除了一般字符串操作以外，可以对该类型执行原子增减操作和位操作。<br>进行位操作时这个结构就相当于bitset。</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>append key value</td>
+<td>如果 key 已经存在并且是一个字符串， APPEND 命令将 value 追加到 key 原来的值的末尾。</td>
+</tr>
+<tr>
+<td>decr key</td>
+<td>将 key 中储存的数字值减一。</td>
+</tr>
+<tr>
+<td>decrby key decrement</td>
+<td>key 所储存的值减去给定的减量值（decrement） 。</td>
+</tr>
+<tr>
+<td>get key</td>
+<td>获取指定 key 的值。</td>
+</tr>
+<tr>
+<td>getbit key offset</td>
+<td>对 key 所储存的字符串值，获取指定偏移量上的位(bit)。</td>
+</tr>
+<tr>
+<td>getrange key start end</td>
+<td>返回 key 中字符串值的子字符</td>
+</tr>
+<tr>
+<td>getset key value</td>
+<td>将给定 key 的值设为 value ，并返回 key 的旧值(old value)。</td>
+</tr>
+<tr>
+<td>incr key</td>
+<td>将 key 中储存的数字值增一。</td>
+</tr>
+<tr>
+<td>incrby key increment</td>
+<td>将 key 所储存的值加上给定的增量值（increment） 。</td>
+</tr>
+<tr>
+<td>incrbyfloat key increment</td>
+<td>将 key 所储存的值加上给定的浮点增量值（increment） 。</td>
+</tr>
+<tr>
+<td>mget key1 [key2..]</td>
+<td>获取所有(一个或多个)给定 key 的值。</td>
+</tr>
+<tr>
+<td>mset key value [key value …]</td>
+<td>同时设置一个或多个 key-value 对。</td>
+</tr>
+<tr>
+<td>msetnx key value [key value …]</td>
+<td>同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。</td>
+</tr>
+<tr>
+<td>psetex key milliseconds value</td>
+<td>这个命令和 SETEX 命令相似，但它以毫秒为单位设置 key 的生存时间，而不是像 SETEX 命令那样，以秒为单位。</td>
+</tr>
+<tr>
+<td>set key value</td>
+<td>设置指定 key 的值</td>
+</tr>
+<tr>
+<td>setbit key offset value</td>
+<td>对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)。</td>
+</tr>
+<tr>
+<td>setex key seconds value</td>
+<td>将值 value 关联到 key ，并将 key 的过期时间设为 seconds (以秒为单位)。</td>
+</tr>
+<tr>
+<td>setnx key value</td>
+<td>只有在 key 不存在时设置 key 的值。</td>
+</tr>
+<tr>
+<td>setrange key offset value</td>
+<td>用 value 参数覆写给定 key 所储存的字符串值，从偏移量 offset 开始。</td>
+</tr>
+<tr>
+<td>strlen key</td>
+<td>返回 key 所储存的字符串值的长度。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>内部是双链表。可以对左右元素操作，可以用来做栈队。可以用相关操作限制元素个数。  </p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blpop key1 [key2 ] timeout</td>
+<td>移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</td>
+</tr>
+<tr>
+<td>brpop key1 [key2 ] timeout</td>
+<td>移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</td>
+</tr>
+<tr>
+<td>brpoplpush source destination timeout</td>
+<td>从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</td>
+</tr>
+<tr>
+<td>lindex key index</td>
+<td>通过索引获取列表中的元素</td>
+</tr>
+<tr>
+<td>linsert key before/after pivot value</td>
+<td>在列表的元素前或者后插入元素</td>
+</tr>
+<tr>
+<td>llen key</td>
+<td>获取列表长度</td>
+</tr>
+<tr>
+<td>lpop key</td>
+<td>移出并获取列表的第一个元素</td>
+</tr>
+<tr>
+<td>lpush key value1 [value2]</td>
+<td>将一个或多个值插入到列表头部</td>
+</tr>
+<tr>
+<td>lpushx key value</td>
+<td>将一个或多个值插入到已存在的列表头部</td>
+</tr>
+<tr>
+<td>lrange key start stop</td>
+<td>获取列表指定范围内的元素</td>
+</tr>
+<tr>
+<td>lrem key count value</td>
+<td>移除列表元素</td>
+</tr>
+<tr>
+<td>lset key index value</td>
+<td>通过索引设置列表元素的值</td>
+</tr>
+<tr>
+<td>ltrim key start stop</td>
+<td>对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除。</td>
+</tr>
+<tr>
+<td>rpop key</td>
+<td>移除并获取列表最后一个元素</td>
+</tr>
+<tr>
+<td>rpoplpush source destination</td>
+<td>移除列表的最后一个元素，并将该元素添加到另一个列表并返回</td>
+</tr>
+<tr>
+<td>rpush key value1 [value2]</td>
+<td>在列表中添加一个或多个值</td>
+</tr>
+<tr>
+<td>rpushx key value</td>
+<td>为已存在的列表添加值</td>
+</tr>
+</tbody>
+</table>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p>无序集，支持交并差等操作。</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sadd key member1 [member2]</td>
+<td>向集合添加一个或多个成员</td>
+</tr>
+<tr>
+<td>scard key</td>
+<td>获取集合的成员数</td>
+</tr>
+<tr>
+<td>sdiff key1 [key2]</td>
+<td>返回给定所有集合的差集</td>
+</tr>
+<tr>
+<td>sdiffstore destination key1 [key2]</td>
+<td>返回给定所有集合的差集并存储在 destination 中</td>
+</tr>
+<tr>
+<td>sinter key1 [key2]</td>
+<td>返回给定所有集合的交集</td>
+</tr>
+<tr>
+<td>sinterstore destination key1 [key2]</td>
+<td>返回给定所有集合的交集并存储在 destination 中</td>
+</tr>
+<tr>
+<td>sismember key member</td>
+<td>判断 member 元素是否是集合 key 的成员</td>
+</tr>
+<tr>
+<td>smembers key</td>
+<td>返回集合中的所有成员</td>
+</tr>
+<tr>
+<td>smove source destination member</td>
+<td>将 member 元素从 source 集合移动到 destination 集合</td>
+</tr>
+<tr>
+<td>spop key</td>
+<td>移除并返回集合中的一个随机元素</td>
+</tr>
+<tr>
+<td>srandmember key [count]</td>
+<td>返回集合中一个或多个随机数</td>
+</tr>
+<tr>
+<td>srem key member1 [member2]</td>
+<td>移除集合中一个或多个成员</td>
+</tr>
+<tr>
+<td>sunion key1 [key2]</td>
+<td>返回所有给定集合的并集</td>
+</tr>
+<tr>
+<td>sunionstore destination key1 [key2]</td>
+<td>所有给定集合的并集存储在 destination 集合中</td>
+</tr>
+<tr>
+<td>sscan key cursor [match pattern] [count count]</td>
+<td>迭代集合中的元素</td>
+</tr>
+</tbody>
+</table>
+<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p>是一个k-v表，类似unordered_map。</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hdel key field2 [field2]</td>
+<td>删除一个或多个哈希表字段</td>
+</tr>
+<tr>
+<td>hexists key field</td>
+<td>查看哈希表 key 中，指定的字段是否存在。</td>
+</tr>
+<tr>
+<td>hget key field</td>
+<td>获取存储在哈希表中指定字段的值。</td>
+</tr>
+<tr>
+<td>hgetall key</td>
+<td>获取在哈希表中指定 key 的所有字段和值</td>
+</tr>
+<tr>
+<td>hincrby key field increment</td>
+<td>为哈希表 key 中的指定字段的整数值加上增量 increment 。</td>
+</tr>
+<tr>
+<td>hincrbyfloat key field increment</td>
+<td>为哈希表 key 中的指定字段的浮点数值加上增量 increment 。</td>
+</tr>
+<tr>
+<td>hkeys key</td>
+<td>获取所有哈希表中的字段</td>
+</tr>
+<tr>
+<td>hlen key</td>
+<td>获取哈希表中字段的数量</td>
+</tr>
+<tr>
+<td>hmget key field1 [field2]</td>
+<td>获取所有给定字段的值</td>
+</tr>
+<tr>
+<td>hmset key field1 value1 [field2 value2 ]</td>
+<td>同时将多个 field-value (域-值)对设置到哈希表 key 中。</td>
+</tr>
+<tr>
+<td>hset key field value</td>
+<td>将哈希表 key 中的字段 field 的值设为 value 。</td>
+</tr>
+<tr>
+<td>hsetnx key field value</td>
+<td>只有在字段 field 不存在时，设置哈希表字段的值。</td>
+</tr>
+<tr>
+<td>hvals key</td>
+<td>获取哈希表中所有值</td>
+</tr>
+<tr>
+<td>hscan key cursor [match pattern] [count count]</td>
+<td>迭代哈希表中的键值对。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="有序集"><a href="#有序集" class="headerlink" title="有序集"></a>有序集</h2><p>某些书写内部用跳表和字典实现。类似集合，但是是有序的。<br>插入数据时要附带score用于排序。如果score相同，会以字典序排序数据。<br>如果内容重复，以最后一次为准。<br>用zincrby可以修改排序权值。</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>zadd key score1 member1 [score2 member2]</td>
+<td>向有序集合添加一个或多个成员，或者更新已存在成员的分数</td>
+</tr>
+<tr>
+<td>zcard key</td>
+<td>获取有序集合的成员数</td>
+</tr>
+<tr>
+<td>zcount key min max</td>
+<td>计算在有序集合中指定区间分数的成员数</td>
+</tr>
+<tr>
+<td>zincrby key increment member</td>
+<td>有序集合中对指定成员的分数加上增量 increment</td>
+</tr>
+<tr>
+<td>zinterstore destination numkeys key [key …]</td>
+<td>计算给定的一个或多个有序集的交集并将结果集存储在新的有序集合 key 中</td>
+</tr>
+<tr>
+<td>zlexcount key min max</td>
+<td>在有序集合中计算指定字典区间内成员数量</td>
+</tr>
+<tr>
+<td>zrange key start stop [withscores]</td>
+<td>通过索引区间返回有序集合成指定区间内的成员</td>
+</tr>
+<tr>
+<td>zrangebylex key min max [limit offset count]</td>
+<td>通过字典区间返回有序集合的成员</td>
+</tr>
+<tr>
+<td>zrangebyscore key min max [withscores] [limit]</td>
+<td>通过分数返回有序集合指定区间内的成员</td>
+</tr>
+<tr>
+<td>zrank key member</td>
+<td>返回有序集合中指定成员的索引</td>
+</tr>
+<tr>
+<td>zrem key member [member …]</td>
+<td>移除有序集合中的一个或多个成员</td>
+</tr>
+<tr>
+<td>zremrangebylex key min max</td>
+<td>移除有序集合中给定的字典区间的所有成员</td>
+</tr>
+<tr>
+<td>zremrangebyrank key start stop</td>
+<td>移除有序集合中给定的排名区间的所有成员</td>
+</tr>
+<tr>
+<td>zremrangebyscore key min max</td>
+<td>移除有序集合中给定的分数区间的所有成员</td>
+</tr>
+<tr>
+<td>zrevrange key start stop [withscores]</td>
+<td>返回有序集中指定区间内的成员，通过索引，分数从高到底</td>
+</tr>
+<tr>
+<td>zrevrangebyscore key max min [withscores]</td>
+<td>返回有序集中指定分数区间内的成员，分数从高到低排序</td>
+</tr>
+<tr>
+<td>zrevrank key member</td>
+<td>返回有序集合中指定成员的排名，有序集成员按分数值递减(从大到小)排序</td>
+</tr>
+<tr>
+<td>zscore key member</td>
+<td>返回有序集中，成员的分数值</td>
+</tr>
+<tr>
+<td>zunionstore destination numkeys key [key …]</td>
+<td>计算给定的一个或多个有序集的并集，并存储在新的 key 中</td>
+</tr>
+<tr>
+<td>zscan key cursor [match pattern] [count count]</td>
+<td>迭代有序集合中的元素（包括元素成员和元素分值）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="HyperLogLog"><a href="#HyperLogLog" class="headerlink" title="HyperLogLog"></a>HyperLogLog</h2><p>好像是统计不相同元素个数的。<br>貌似会比其它方法更优。  </p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pfadd key element [element …]</td>
+<td>添加指定元素到 HyperLogLog 中。</td>
+</tr>
+<tr>
+<td>pfcount key [key …]</td>
+<td>返回给定 HyperLogLog 的基数估算值。</td>
+</tr>
+<tr>
+<td>pfmerge destkey sourcekey [sourcekey …]</td>
+<td>将多个 HyperLogLog 合并为一个 HyperLogLog</td>
+</tr>
+</tbody>
+</table>
+<h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><p>可以用管道给redis发送命令，或直接发命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cat data.txt | redis-cli --pipe</div><div class="line">echo get test|nc localhost 6379</div></pre></td></tr></table></figure></p>
+<p>或者使用下面的格式发送：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">*&lt;args&gt;&lt;cr&gt;&lt;lf&gt;</div><div class="line">$&lt;len&gt;&lt;cr&gt;&lt;lf&gt;</div><div class="line">&lt;arg0&gt;&lt;cr&gt;&lt;lf&gt;</div><div class="line">&lt;arg1&gt;&lt;cr&gt;&lt;lf&gt;</div><div class="line">...</div><div class="line">&lt;argN&gt;&lt;cr&gt;&lt;lf&gt;</div></pre></td></tr></table></figure></p>
+<p>如果一次需要发送多条命令，可以合并到一起发送，redis也会把结果合并到一起发回去。<br>但是最好分批次提交命令，否则服务器会占用很多内存。  </p>
+<p>答复格式如下（用第一个字节区分类型，每部分用CRLF（\r\n）结束）：</p>
+<ul>
+<li><code>+</code> 单行回复</li>
+<li><code>-</code> 错误消息<br>  到第一个空格或换行的部分是错误前缀</li>
+<li><code>:</code> 整型数字</li>
+<li><code>$</code> 字符串<br>  格式为 <code>$字符串长度\r\n字符串\r\n</code>。<br>  空字符串表示为 <code>$0\r\n\r\n</code>，null为 <code>$-1\r\n</code>。</li>
+<li><code>*</code> 数组<br>  类似于发送格式。<br>  空数组为 <code>*0\r\n</code>或<code>*-1\r\n</code>。<br>  内容的类型不一定都要相同，比如<code>*2\r\n:1\r\n$3\r\nabc\r\n</code>。<br>  数组类型是可以嵌套的，比如可以定义数组的数组 <code>*2\r\n*3\r\n:1\r\n:2\r\n:3\r\n*2\r\n+Foo\r\n-Bar\r\n</code>。<br>  如果数组里有空元素，就用 <code>$-1\r\n</code> 表示。</li>
+</ul>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>A 原子性，要么全部执行要么全不执行<br>C 一致性，开始和完成时，数据必须保持一致状态<br>I 隔离性，在不受并发操作影响的独立环境执行，中间状态不可见<br>D 持久性，完成后，对数据的修改是永久性的，即使系统故障也能保持</p>
+<p>使用Multi开启事务，将命令入队后，调用Exec执行事务。可以一次将整个事务提交给服务器。<br>放弃事务用Discard。<br>在命令入队时，返回QUEUED表示入队成功，否则为失败（比如语法错误）。<br>如果在执行中某些命令发生错误，其他命令仍继续执行。  </p>
+<p><strong>回滚</strong><br>不支持回滚操作，因为命令只是因为编程错误才会失败。</p>
+<p><strong>乐观锁</strong></p>
+<blockquote>
+<p>大多数是基于数据版本（version）的记录机制实现的。何谓数据版本？即为数据增加一个版本标识，在基于数据库表的版本解决方案中，一般是通过为数据库表添加一个“version”字段来实现读取出数据时，将此版本号一同读出，之后更新时，对此版本号加 1。<br>此时，将提交数据的版本号与数据库表对应记录的当前版本号进行比对，如果提交的数据版本号大于数据库表当前版本号，则予以更新，否则认为是过期数据。 </p>
+</blockquote>
+<p>用Watch监视key，此时进入事务，如果key被修改，则提交失败，此时程序需要重复这个操作直到成功。<br>可以在Watch中同时监视多个key，并且这个命令可以被调用多次，在执行Watch后开始生效（在进入事务前使用），直到调用Exec为止，不管是否成功执行事务，所有监视都会取消，断开连接也会取消。<br>Unwatch用于取消监视。  </p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>discard</td>
+<td>取消事务，放弃执行事务块内的所有命令。</td>
+</tr>
+<tr>
+<td>exec</td>
+<td>执行所有事务块内的命令。</td>
+</tr>
+<tr>
+<td>multi</td>
+<td>标记一个事务块的开始。</td>
+</tr>
+<tr>
+<td>unwatch</td>
+<td>取消 WATCH 命令对所有 key 的监视。</td>
+</tr>
+<tr>
+<td>watch key [key …]</td>
+<td>监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h1><p>可以使用lua做脚本让redis执行。<br>redis保证以原子方式执行脚本，可以用来代替事务。<br>一般脚本执行后不用删除服务器的脚本缓存，因为比较少也消耗不了多少。<br>脚本中不允许创建全局变量，如果需要保存就存到key里。<br>更多信息在<a href="https://redis.io/commands/eval" target="_blank" rel="external">https://redis.io/commands/eval</a></p>
+<p>命令格式为<br><code>eval script numkeys key [key ...] arg [arg ...]</code><br>script 一段lua5.1脚本，不需要定义函数。<br>numkeys 参数个数<br>key 参数（在redis中用到的键名），可在脚本中用KEYS[n]访问（下标从1开始）<br>arg 附加参数，在脚本中用ARGV[n]访问</p>
+<p>脚本中的key都应该由KEYS传递（不要直接写到脚本里），因为在命令执行前Redis会分析命令，能保证命令正确执行。</p>
+<p>在脚本中如果需要调用相关命令，用<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 当发生错误时将执行结果返回给调用者</span></div><div class="line">redis.call()</div><div class="line"><span class="comment">-- 捕获错误用Table形式返回</span></div><div class="line">redis.<span class="built_in">pcall</span>()</div></pre></td></tr></table></figure></p>
+<p>脚本和Redis中类型的对应</p>
+<blockquote>
+<p><strong>Redis to Lua</strong> conversion table.</p>
+<ul>
+<li>Redis integer reply -&gt; Lua number</li>
+<li>Redis bulk reply -&gt; Lua string</li>
+<li>Redis multi bulk reply -&gt; Lua table (may have other Redis data types nested)</li>
+<li>Redis status reply -&gt; Lua table with a single ok field containing the status</li>
+<li>Redis error reply -&gt; Lua table with a single err field containing the error</li>
+<li>Redis Nil bulk reply and Nil multi bulk reply -&gt; Lua false boolean type</li>
+</ul>
+<p><strong>Lua to Redis</strong> conversion table.</p>
+<ul>
+<li>Lua number -&gt; Redis integer reply (the number is converted into an integer)</li>
+<li>Lua string -&gt; Redis bulk reply</li>
+<li>Lua table (array) -&gt; Redis multi bulk reply (truncated to the first nil inside the Lua array if any)</li>
+<li>Lua table with a single ok field -&gt; Redis status reply</li>
+<li>Lua table with a single err field -&gt; Redis error reply</li>
+<li>Lua boolean false -&gt; Redis Nil bulk reply.</li>
+</ul>
+</blockquote>
+<p>如果需要返回错误信息<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> &#123;err=<span class="string">"My Error"</span>&#125;</div><div class="line"><span class="keyword">return</span> redis.error_reply(<span class="string">"My Error"</span>)</div><div class="line"></div><div class="line"><span class="keyword">return</span> &#123;ok=<span class="string">"Status"</span>&#125;</div><div class="line"><span class="keyword">return</span> redis.status_reply(<span class="string">"Status"</span>)</div></pre></td></tr></table></figure></p>
+<p>如果需要节约发送脚本的带宽消耗，需要使用evalsha发送脚本的sha给服务器，如果查得到（之前在服务器执行过相同操作）就会执行，查不到就返回错误。  </p>
+<p>脚本中可以加载这些库</p>
+<ul>
+<li>baselib</li>
+<li>tablelib</li>
+<li>stringlib</li>
+<li>mathlib</li>
+<li>structlib</li>
+<li>cjsonlib</li>
+<li>cmsgpacklib</li>
+<li>bitoplib</li>
+<li>redis.sha1hex 函数</li>
+<li>redis.breakpoint and redis.debug 在Redis的Lua调试器的上下文中的函数</li>
+</ul>
+<p>脚本日志<br><code>redis.log()</code><br>可以设置日志等级</p>
+<p>脚本调试见 <a href="https://redis.io/topics/ldb" target="_blank" rel="external">https://redis.io/topics/ldb</a></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>eval script numkeys key [key …] arg [arg …]</td>
+<td>执行 Lua 脚本。</td>
+</tr>
+<tr>
+<td>evalsha sha1 numkeys key [key …] arg [arg …]</td>
+<td>执行 Lua 脚本。</td>
+</tr>
+<tr>
+<td>script exists script [script …]</td>
+<td>查看指定的脚本是否已经被保存在缓存当中。</td>
+</tr>
+<tr>
+<td>script flush</td>
+<td>从脚本缓存中移除所有脚本。</td>
+</tr>
+<tr>
+<td>script kill</td>
+<td>杀死当前正在运行的 Lua 脚本。</td>
+</tr>
+<tr>
+<td>script load script</td>
+<td>将脚本 script 添加到脚本缓存中，但并不立即执行这个脚本。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="发布订阅消息"><a href="#发布订阅消息" class="headerlink" title="发布订阅消息"></a>发布订阅消息</h1><p>Redis 发布订阅(pub/sub)是一种消息通信模式：发送者(pub)发送消息，订阅者(sub)接收消息。<br>客户端可以订阅任意数量的频道，当其它客户端发送消息给频道时，消息会被发送给订阅的客户端。</p>
+<p>可以用subscribe订阅频道，之后可以用publish向指定频道发送信息，注意这个频道是全局的跟key无关跟在哪个数据库无关。  </p>
+<p>消息有3个元素，返回时也是用前面的协议返回，第一个元素表示消息类型，在订阅时会返回subscribe消息。</p>
+<table>
+<thead>
+<tr>
+<th>元素1</th>
+<th>元素2</th>
+<th>元素3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> subscribe</td>
+<td>频道名</td>
+<td>当前订阅数量</td>
+</tr>
+<tr>
+<td> unsubscribe</td>
+<td>频道名</td>
+<td>当前订阅数量，0表示当前未订阅任何频道</td>
+</tr>
+<tr>
+<td> message</td>
+<td>消息来源频道名</td>
+<td>消息内容</td>
+</tr>
+</tbody>
+</table>
+<p>可以用模式匹配来表示多个消息名，比如：<code>psubscribe news.*</code><br>如果同时用模式匹配和直接匹配了同一个频道，则会接收到多条消息。  </p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>psubscribe pattern [pattern …]</td>
+<td>订阅一个或多个符合给定模式的频道。</td>
+</tr>
+<tr>
+<td>pubsub subcommand [argument [argument …]]</td>
+<td>查看订阅与发布系统状态。</td>
+</tr>
+<tr>
+<td>publish channel message</td>
+<td>将信息<strong>发送</strong>到指定的频道。</td>
+</tr>
+<tr>
+<td>punsubscribe [pattern [pattern …]]</td>
+<td>退订所有给定模式的频道。</td>
+</tr>
+<tr>
+<td>subscribe channel [channel …]</td>
+<td><strong>订阅</strong>给定的一个或多个频道的信息。</td>
+</tr>
+<tr>
+<td>unsubscribe [channel [channel …]]</td>
+<td>指<strong>退订</strong>给定的频道。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="管理"><a href="#管理" class="headerlink" title="管理"></a>管理</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><p>redis-cli<br>-h 主机地址<br>-p 端口号<br>-a 密码<br>-n 选择db<br>-r 运行次数<br>-i 运行多次的间隔<br>–csv 输出csv<br>–eval 执行脚本<br>–stat 统计模式<br>–bigkeys 大键扫描<br>–scan 获取键列表，可用–pattern设置匹配模式<br>psubscribe 订阅模式<br>monitor 监视并输出执行的命令</p>
+<p>运行一条命令可用 <code>redis-cli command arg</code> 的形式。<br>从其它程序获取输入可用 <code>redis-cli -x set foo &lt; /etc/services</code>。</p>
+<p>在交互模式中可以用connect连接到其它主机。<br>可在命令前加数字前缀指定要执行的次数。<br>help command 可输出帮助。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>使用 redis.conf 配置redis，文档内对于每一个选项都有详细描述。<br>在测试时可用命令行传参配置（传参时在对应选项前加–），如<code>./redis-server --port 6380 --slaveof 127.0.0.1 6379</code><br>可以在运行中用config rewrite载入最新的配置设置。  </p>
+<p>可以配置：<br>后台运行、绑定地址、绑定端口、超时、log等级、数据库个数、保存频率、是否压缩、主从数据库、密码验证、操作密码、连接数量、最大能用内存、异步备份选项、异步备份同步频率、开启虚拟内存、最大物理内存大小、虚拟内存页大小、交换文件page数量、线程数、输出缓存、hash编码方式、重新hash释放内存等<br>配置路径：pid文件、log文件、镜像及备份路径、虚拟内存交换文件路径等</p>
+<p><strong>LRU</strong><br>可以设置<br>maxmemory 2mb<br>maxmemory-policy allkeys-lru<br>这样就可以用redis来当lru缓存，相关信息在 <a href="https://redis.io/topics/lru-cache" target="_blank" rel="external">https://redis.io/topics/lru-cache</a></p>
+<h2 id="待续"><a href="#待续" class="headerlink" title="待续"></a>待续</h2><p>之前有一些内容没看完，笔记没记这部分内容，以后看了再补充。<br>TODO</p>
+<h1 id="其它命令"><a href="#其它命令" class="headerlink" title="其它命令"></a>其它命令</h1><p><em>这里只用作速查，因为在客户端输入时会有相关语法提示，官方文档也很详细</em><br><em>这里是我从其它地方贴来的，不一定正确。</em>  </p>
+<h2 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>del key</td>
+<td>删除键，不存在则忽略</td>
+</tr>
+<tr>
+<td>dump key</td>
+<td>序列化指定的键，并返回被序列化的值</td>
+</tr>
+<tr>
+<td>exists</td>
+<td>判断key是否存在</td>
+</tr>
+<tr>
+<td>expire key seconds</td>
+<td>设置key的过期时间</td>
+</tr>
+<tr>
+<td>expireat key timestamp</td>
+<td>EXPIREAT 的作用和 EXPIRE 类似，都用于为 key 设置过期时间。 不同在于 EXPIREAT 命令接受的时间参数是 UNIX 时间戳(unix timestamp)</td>
+</tr>
+<tr>
+<td>get key</td>
+<td>取得数据</td>
+</tr>
+<tr>
+<td>keys pattern</td>
+<td>查找所有符合给定模式(pattern)的 key ，像正则选择key列表，*表示所有</td>
+</tr>
+<tr>
+<td>move key db</td>
+<td>将当前数据库的 key 移动到给定的数据库 db 当中</td>
+</tr>
+<tr>
+<td>persist key</td>
+<td>移除 key 的过期时间，key 将持久保持</td>
+</tr>
+<tr>
+<td>pexpire key milliseconds</td>
+<td>设置 key 的过期时间以毫秒计</td>
+</tr>
+<tr>
+<td>pexpireat key milliseconds-timestamp</td>
+<td>设置 key 过期时间的时间戳(unix timestamp) 以毫秒计</td>
+</tr>
+<tr>
+<td>pttl key</td>
+<td>以毫秒为单位返回 key 的剩余的过期时间</td>
+</tr>
+<tr>
+<td>randomkey</td>
+<td>从当前数据库中随机返回一个 key</td>
+</tr>
+<tr>
+<td>rename key newkey</td>
+<td>修改 key 的名称</td>
+</tr>
+<tr>
+<td>renamenx key newkey</td>
+<td>仅当 newkey 不存在时，将 key 改名为 newkey</td>
+</tr>
+<tr>
+<td>select</td>
+<td>选择当前数据库（不需要预先创建）</td>
+</tr>
+<tr>
+<td>set key value</td>
+<td>存储数据</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>可对list、set、sorted set排序</td>
+</tr>
+<tr>
+<td>ttl</td>
+<td>以秒为单位，返回给定 key 的剩余生存时间(TTL, time to live)，-1表示已过期（测试时是-2的返回，反正小于0）</td>
+</tr>
+<tr>
+<td>type key</td>
+<td>返回 key 所储存的值的类型</td>
+</tr>
+</tbody>
+</table>
+<h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><p>Redis 连接命令主要是用于连接 redis 服务</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>auth password</td>
+<td>验证密码是否正确</td>
+</tr>
+<tr>
+<td>echo message</td>
+<td>打印字符串</td>
+</tr>
+<tr>
+<td>ping</td>
+<td>查看服务是否运行</td>
+</tr>
+<tr>
+<td>quit</td>
+<td>关闭当前连接</td>
+</tr>
+<tr>
+<td>select index</td>
+<td>切换到指定的数据库，默认16个，从0开始</td>
+</tr>
+</tbody>
+</table>
+<h2 id="服务器命令"><a href="#服务器命令" class="headerlink" title="服务器命令"></a>服务器命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bgrewriteaof</td>
+<td>异步执行一个 AOF（AppendOnly File） 文件重写操作</td>
+</tr>
+<tr>
+<td>bgsave</td>
+<td>在后台异步保存当前数据库的数据到磁盘</td>
+</tr>
+<tr>
+<td>client kill [ip:port] [id client-id]</td>
+<td>关闭客户端连接</td>
+</tr>
+<tr>
+<td>client list</td>
+<td>获取连接到服务器的客户端连接列表</td>
+</tr>
+<tr>
+<td>client getname</td>
+<td>获取连接的名称</td>
+</tr>
+<tr>
+<td>client pause timeout</td>
+<td>在指定时间内终止运行来自客户端的命令</td>
+</tr>
+<tr>
+<td>client setname connection-name</td>
+<td>设置当前连接的名称</td>
+</tr>
+<tr>
+<td>cluster slots</td>
+<td>获取集群节点的映射数组</td>
+</tr>
+<tr>
+<td>command</td>
+<td>获取 Redis 命令详情数组</td>
+</tr>
+<tr>
+<td>command count</td>
+<td>获取 Redis 命令总数</td>
+</tr>
+<tr>
+<td>command getkeys</td>
+<td>获取给定命令的所有键</td>
+</tr>
+<tr>
+<td>time</td>
+<td>返回当前服务器时间</td>
+</tr>
+<tr>
+<td>command info command-name [command-name …]</td>
+<td>获取指定 Redis 命令描述的数组</td>
+</tr>
+<tr>
+<td>config get parameter</td>
+<td>获取指定配置参数的值</td>
+</tr>
+<tr>
+<td>config rewrite</td>
+<td>对启动 Redis 服务器时所指定的 redis.conf 配置文件进行改写</td>
+</tr>
+<tr>
+<td>config set parameter value</td>
+<td>修改 redis 配置参数，无需重启</td>
+</tr>
+<tr>
+<td>config resetstat</td>
+<td>重置 INFO 命令中的某些统计数据</td>
+</tr>
+<tr>
+<td>dbsize</td>
+<td>返回当前数据库的 key 的数量</td>
+</tr>
+<tr>
+<td>debug object key</td>
+<td>获取 key 的调试信息</td>
+</tr>
+<tr>
+<td>debug segfault</td>
+<td>让 Redis 服务崩溃</td>
+</tr>
+<tr>
+<td>flushall</td>
+<td>删除所有数据库的所有key</td>
+</tr>
+<tr>
+<td>flushdb</td>
+<td>删除当前数据库的所有key</td>
+</tr>
+<tr>
+<td>info [section]</td>
+<td>获取 Redis 服务器的各种信息和统计数值</td>
+</tr>
+<tr>
+<td>lastsave</td>
+<td>返回最近一次 Redis 成功将数据保存到磁盘上的时间，以 UNIX 时间戳格式表示</td>
+</tr>
+<tr>
+<td>monitor</td>
+<td>实时打印出 Redis 服务器接收到的命令，调试用</td>
+</tr>
+<tr>
+<td>role</td>
+<td>返回主从实例所属的角色</td>
+</tr>
+<tr>
+<td>save</td>
+<td>异步保存数据到硬盘</td>
+</tr>
+<tr>
+<td>shutdown [nosave] [save]</td>
+<td>异步保存数据到硬盘，并关闭服务器</td>
+</tr>
+<tr>
+<td>slaveof host port</td>
+<td>将当前服务器转变为指定服务器的从属服务器(slave server)</td>
+</tr>
+<tr>
+<td>slowlog subcommand [argument]</td>
+<td>管理 redis 的慢日志</td>
+</tr>
+<tr>
+<td>sync</td>
+<td>用于复制功能(replication)的内部命令。主从复制，建立连接后可以用它同步数据</td>
+</tr>
+</tbody>
+</table>
+<p>save 将内存数据以bin方式写入文件（默认dump.db）<br>相关设置在文档开头写有</p>
+<p>保存过程是用fork，此时fork后有跟父进程一样的内容（父进程修改不会影响到子），然后在子进程保存</p>
+<p>注意如果从客户端通知做save或bdsave会阻塞所有客户端请求（教程的解释我不信服）</p>
+<p>如果要实时保存（以防快照前崩溃丢失数据），要用aof持久化方式<br>每次操作都会写文件，可设置flush频率</p>
+<h1 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h1><p>一些实现细节，相关内容没看完，以后再补充。<br>内部保存数据用的都是SDS（简单动态字符串）类型。其存储数据的尾字节必为’\0’。<br>定义为：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> len; <span class="comment">// 已使用长度</span></div><div class="line">    <span class="keyword">int</span> <span class="built_in">free</span>; <span class="comment">// 未使用长度</span></div><div class="line">    <span class="keyword">char</span> buf[]; <span class="comment">// 字节数据</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>内部函数对它操作时会自动扩展它的可用空间，策略为：当修改后长度小于1MB，分配未使用空间长度为数据的1倍，当修改后长度大于1MB时，总是分配1MB未使用空间。<br>当缩短数据时，会在未使用长度标明，不重新分配空间。  </p>
+<p>内部的各数据结构都比较常见，有序集会用跳表和字典实现。在保存对象时会保存对象类型、编码和指针。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/08/23/学习笔记/数据库/redis笔记/" title="redis笔记">/2017/08/23/学习笔记/数据库/redis笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TODO/" class="fa fa-tag" rel="tag"> TODO</a>
+          
+            <a href="/tags/Redis/" class="fa fa-tag" rel="tag"> Redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/22/其它/电脑出了点问题/" rel="next" title="电脑出了点问题">
+                <i class="fa fa-chevron-left"></i> 电脑出了点问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/25/学习笔记/模式/Readme/" rel="prev" title="[模式] 前言">
+                [模式] 前言 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本介绍"><span class="nav-number">1.</span> <span class="nav-text">基本介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#键值对"><span class="nav-number">1.1.</span> <span class="nav-text">键值对</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生存期"><span class="nav-number">1.2.</span> <span class="nav-text">生存期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据类型"><span class="nav-number">2.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">2.1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">2.2.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合"><span class="nav-number">2.3.</span> <span class="nav-text">集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希表"><span class="nav-number">2.4.</span> <span class="nav-text">哈希表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有序集"><span class="nav-number">2.5.</span> <span class="nav-text">有序集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HyperLogLog"><span class="nav-number">2.6.</span> <span class="nav-text">HyperLogLog</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协议"><span class="nav-number">3.</span> <span class="nav-text">协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">4.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#脚本"><span class="nav-number">5.</span> <span class="nav-text">脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发布订阅消息"><span class="nav-number">6.</span> <span class="nav-text">发布订阅消息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管理"><span class="nav-number">7.</span> <span class="nav-text">管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行"><span class="nav-number">7.1.</span> <span class="nav-text">命令行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">7.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#待续"><span class="nav-number">7.3.</span> <span class="nav-text">待续</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其它命令"><span class="nav-number">8.</span> <span class="nav-text">其它命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用"><span class="nav-number">8.1.</span> <span class="nav-text">常用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接"><span class="nav-number">8.2.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器命令"><span class="nav-number">8.3.</span> <span class="nav-text">服务器命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其它"><span class="nav-number">9.</span> <span class="nav-text">其它</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

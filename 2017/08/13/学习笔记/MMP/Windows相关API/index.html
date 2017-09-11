@@ -51,32 +51,6 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
@@ -85,7 +59,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="MMP," />
+  <meta name="keywords" content="MMP,TODO," />
 
 
 
@@ -102,14 +76,14 @@
 
 
 <meta name="description" content="这里只是记录一部分（之前笔记记的（从其它地方复制来的，做了一些修改），整理放在这），不全。现在新（指的是xp以上）系统里有线程池的API，而且添加了很多有用的函数，可以去找官方文档。">
-<meta name="keywords" content="MMP">
+<meta name="keywords" content="MMP,TODO">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[MMP] Windows相关API">
 <meta property="og:url" content="/2017/08/13/学习笔记/MMP/Windows相关API/index.html">
 <meta property="og:site_name" content="{S}">
 <meta property="og:description" content="这里只是记录一部分（之前笔记记的（从其它地方复制来的，做了一些修改），整理放在这），不全。现在新（指的是xp以上）系统里有线程池的API，而且添加了很多有用的函数，可以去找官方文档。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-13T09:20:08.000Z">
+<meta property="og:updated_time" content="2017-08-24T14:51:58.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[MMP] Windows相关API">
 <meta name="twitter:description" content="这里只是记录一部分（之前笔记记的（从其它地方复制来的，做了一些修改），整理放在这），不全。现在新（指的是xp以上）系统里有线程池的API，而且添加了很多有用的函数，可以去找官方文档。">
@@ -368,7 +342,7 @@
       
 
       
-        <p>这里只是记录一部分（之前笔记记的（从其它地方复制来的，做了一些修改），整理放在这），不全。现在新（指的是xp以上）系统里有线程池的API，而且添加了很多有用的函数，可以去找官方文档。  <a id="more"></a><br>MMP这部分剩下还有将近2000行的笔记要整理，就先不整这里了，因为一般不直接用WinAPI。  </p>
+        <p>这里只是记录一部分（之前笔记记的（从其它地方复制来的，做了一些修改），整理放在这），不全。现在新（指的是xp以上）系统里有线程池的API，而且添加了很多有用的函数，可以去找官方文档。  <a id="more"></a><br>MMP这部分剩下还有将近2000行的笔记要整理，就先不整这里了，因为一般不直接用WinAPI。<br>TODO</p>
 <p><strong>@ CreateThread</strong></p>
 <p>创建线程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">WINBASEAPI</div><div class="line">_Ret_maybenull_</div><div class="line">HANDLE</div><div class="line">WINAPI</div><div class="line">CreateThread(</div><div class="line">    _In_opt_ LPSECURITY_ATTRIBUTES lpThreadAttributes,</div><div class="line">    _In_ SIZE_T dwStackSize,</div><div class="line">    _In_ LPTHREAD_START_ROUTINE lpStartAddress,</div><div class="line">    _In_opt_ __drv_aliasesMem LPVOID lpParameter,</div><div class="line">    _In_ DWORD dwCreationFlags,</div><div class="line">    _Out_opt_ LPDWORD lpThreadId</div><div class="line">    );</div></pre></td></tr></table></figure></p>
 <p>函数说明：<br>@lpThreadAttributes 线程内核对象的安全属性，一般传入NULL表示使用默认设置。<br>@dwStackSize 线程栈空间大小。传入0表示使用默认大小（1MB）。<br>@lpStartAddress 新线程所执行的线程函数地址，多个线程可以使用同一个函数地址。<br>@lpParameter 传给线程函数的参数。<br>@dwCreationFlags 指定额外的标志来控制线程的创建，为0表示线程创建之后立即就可以进行调度，如果为CREATE_SUSPENDED则表示线程创建后暂停运行，这样它就无法调度，直到调用ResumeThread()。<br>@lpThreadId 返回线程的ID号，传入NULL表示不需要返回该线程ID号。</p>
@@ -445,6 +419,8 @@
         <div class="post-tags">
           
             <a href="/tags/MMP/" class="fa fa-tag" rel="tag"> MMP</a>
+          
+            <a href="/tags/TODO/" class="fa fa-tag" rel="tag"> TODO</a>
           
         </div>
       
@@ -537,7 +513,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -548,7 +524,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -559,7 +535,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -635,15 +611,15 @@
   
 
 
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
   
-
-
-
-
-
-
-
-
 
 
 
@@ -666,7 +642,7 @@
   <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
   
-  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js" color="54,66,81" opacity='0.3' zIndex="-2" count="40"></script>
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
 
 
   

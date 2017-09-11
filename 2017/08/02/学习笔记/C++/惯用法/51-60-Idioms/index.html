@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++,模板," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Named Template Parameters、Nifty Counter、Non-copyable Mixin、Non-member Non-friend Function、Non-throwing swap、Non-Virtual Interface、Nullptr、Object Generator、Object Template、Parameterized Base Class">
+<meta name="keywords" content="C++,模板">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[C++ Idioms] 51-60">
+<meta property="og:url" content="/2017/08/02/学习笔记/C++/惯用法/51-60-Idioms/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="Named Template Parameters、Nifty Counter、Non-copyable Mixin、Non-member Non-friend Function、Non-throwing swap、Non-Virtual Interface、Nullptr、Object Generator、Object Template、Parameterized Base Class">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-11T12:34:04.009Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[C++ Idioms] 51-60">
+<meta name="twitter:description" content="Named Template Parameters、Nifty Counter、Non-copyable Mixin、Non-member Non-friend Function、Non-throwing swap、Non-Virtual Interface、Nullptr、Object Generator、Object Template、Parameterized Base Class">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/08/02/学习笔记/C++/惯用法/51-60-Idioms/"/>
+
+
+
+
+
+  <title>[C++ Idioms] 51-60 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/08/02/学习笔记/C++/惯用法/51-60-Idioms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[C++ Idioms] 51-60</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-02T22:52:42+08:00">
+                2017-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/C-Idioms/" itemprop="url" rel="index">
+                    <span itemprop="name">C++ Idioms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Named Template Parameters、Nifty Counter、Non-copyable Mixin、Non-member Non-friend Function、Non-throwing swap、Non-Virtual Interface、Nullptr、Object Generator、Object Template、Parameterized Base Class
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Named-Template-Parameters-缺"><a href="#Named-Template-Parameters-缺" class="headerlink" title="Named Template Parameters [缺]"></a>Named Template Parameters [缺]</h1><hr>
+<h1 id="Nifty-Counter"><a href="#Nifty-Counter" class="headerlink" title="Nifty Counter"></a>Nifty Counter</h1><p>确保非本地静态对象能够在使用前初始化并在最后才析构。<br>设置一个counter，用一个类来管理，跟shared_ptr一样，只不过初始化的时候用placement new的方式。<br>据原文说cout、cin、cerr、clog使用，但是查看stl没找到（这部分没有源码只有定义）。</p>
+<hr>
+<h1 id="Non-copyable-Mixin-易"><a href="#Non-copyable-Mixin-易" class="headerlink" title="Non-copyable Mixin [易]"></a>Non-copyable Mixin [易]</h1><p>不可拷贝。boost有类库，就是把拷贝相关删掉或者私有。</p>
+<hr>
+<h1 id="Non-member-Non-friend-Function-缺"><a href="#Non-member-Non-friend-Function-缺" class="headerlink" title="Non-member Non-friend Function [缺]"></a>Non-member Non-friend Function [缺]</h1><hr>
+<h1 id="Non-throwing-swap-易"><a href="#Non-throwing-swap-易" class="headerlink" title="Non-throwing swap [易]"></a>Non-throwing swap [易]</h1><p>无异常swap。类内部用一个指针管理相关内容，swap时交换指针就行。</p>
+<hr>
+<h1 id="Non-Virtual-Interface"><a href="#Non-Virtual-Interface" class="headerlink" title="Non-Virtual Interface"></a>Non-Virtual Interface</h1><p>非虚接口(NVI)。不是指不用虚表的接口，而是指将需要多态实现的一些步骤声明为protected或private的虚函数，并在子类实现（模板方法），而基类对外提供的接口是非虚的。<br>一些书里有讨论到这个用法，使不使用看个人喜好。可以视为模板方法的一个实现方式，由于提取了一些公有代码，在某些情况可以减少代码编译的大小。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="comment">// 对外提供这个接口</span></div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// do ...</span></div><div class="line">		Do2();</div><div class="line">		<span class="comment">// do ...</span></div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Do2</span><span class="params">()</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> :</span><span class="keyword">public</span> Base</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Do2</span><span class="params">()</span> override</span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// do ...</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Nullptr-替"><a href="#Nullptr-替" class="headerlink" title="Nullptr [替]"></a>Nullptr [替]</h1><p>空指针。现在已用nullptr替换。<br>在C中有些地方会用<code>((void *)0)</code>，但是赋值的时候会有问题（如<code>char* p=((void *)0);</code>）；如果使用0，在重载时便无法区分是数字0还是空指针。</p>
+<p>以前没有这个关键字时，为了强调空指针的特性，会用：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="comment">// It is a const object...</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">nullptr_t</span> </span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">public</span>:</div><div class="line">    <span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></div><div class="line">    <span class="title">inline</span> <span class="title">operator</span> <span class="title">T</span>*() <span class="title">const</span> // <span class="title">convertible</span> <span class="title">to</span> <span class="title">any</span> <span class="title">type</span> <span class="title">of</span> <span class="title">null</span> <span class="title">non</span>-<span class="title">member</span> <span class="title">pointer</span>...</div><div class="line">    &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</div><div class="line"></div><div class="line">    <span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">C</span>, <span class="title">class</span> <span class="title">T</span>&gt;</span></div><div class="line">    <span class="title">inline</span> <span class="title">operator</span> <span class="title">T</span> <span class="title">C</span>::*() <span class="keyword">const</span>   <span class="comment">// or any type of null member pointer...</span></div><div class="line">    &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</div><div class="line"></div><div class="line">  <span class="keyword">private</span>:</div><div class="line">    <span class="keyword">void</span> <span class="keyword">operator</span>&amp;() <span class="keyword">const</span>;  <span class="comment">// Can't take address of nullptr</span></div><div class="line"></div><div class="line">&#125; <span class="literal">nullptr</span> = &#123;&#125;;</div></pre></td></tr></table></figure></p>
+<p>现在可以这样用（这里为空指针参数做了一个重载）：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">MyStruct</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">(<span class="keyword">nullptr_t</span>)</span></span>&#123;&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">(<span class="keyword">int</span>)</span> </span>&#123;&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Do</span><span class="params">(<span class="keyword">void</span>*)</span> </span>&#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	MyStruct x;</div><div class="line">	x.Do(<span class="literal">nullptr</span>);</div><div class="line">	x.Do(<span class="number">0</span>);</div><div class="line">	x.Do(&amp;x);</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Object-Generator"><a href="#Object-Generator" class="headerlink" title="Object Generator"></a>Object Generator</h1><p>简化对象创建而不需要指定其类型（模板参数）。在某些时候定义类时会设置很多复杂的模板参数，这时候实例化类就要填很多参数来指定其类型，如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	MyClass(T val) &#123;&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		obj_();</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	T obj_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">// 这时候要填写详细的参数类型</span></div><div class="line">	<span class="keyword">auto</span> obj = <span class="keyword">new</span> MyClass&lt;<span class="keyword">void</span>()&gt;(&amp;Func);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果此时创建一个函数用来识别参数并实例化类，这样创建该对象就会很方便：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line">MyClass&lt;T&gt;* Create(T val)</div><div class="line">&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> MyClass&lt;T&gt;(val);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Func2</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">auto</span> obj = Create(&amp;Func);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>stl里很多类都会用，其目的就是为了方便生成对象。</p>
+<hr>
+<h1 id="Object-Template-缺"><a href="#Object-Template-缺" class="headerlink" title="Object Template [缺]"></a>Object Template [缺]</h1><hr>
+<h1 id="Parameterized-Base-Class"><a href="#Parameterized-Base-Class" class="headerlink" title="Parameterized Base Class"></a>Parameterized Base Class</h1><p>给类添加特性。把一些公有的代码提取出来，并且使用继承模板参数类型的方式封装成类，这样可以给类添加新特性。说不清楚，上代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GetName</span> :</span></div><div class="line">	<span class="keyword">public</span> T</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">const</span> <span class="keyword">char</span>* <span class="title">Name</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">typeid</span>(T).name();</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GetSize</span> :</span></div><div class="line">	<span class="keyword">public</span> T</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">size_t</span> Size()</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">sizeof</span>(T);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></div><div class="line">&#123;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	GetName&lt;MyClass&gt; obj;</div><div class="line">	<span class="keyword">auto</span> name = obj.Name();</div><div class="line">	GetSize&lt;GetName&lt;MyClass&gt;&gt; obj2;</div><div class="line">	obj2.Name();</div><div class="line">	obj2.Size();</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个例子为类添加获取名字、大小的特性，还可以像原文例子那样，给类添加可序列化特性。<br>使用继承可以保留基类类型，可以向原类型转换。可以在特性类中附加接口继承什么的，这样就可以方便的转换类为其它接口类型。  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/08/02/学习笔记/C++/惯用法/51-60-Idioms/" title="[C++ Idioms] 51-60">/2017/08/02/学习笔记/C++/惯用法/51-60-Idioms/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" class="fa fa-tag" rel="tag"> C++</a>
+          
+            <a href="/tags/模板/" class="fa fa-tag" rel="tag"> 模板</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/01/学习笔记/C++/惯用法/41-50-Idioms/" rel="next" title="[C++ Idioms] 41-50">
+                <i class="fa fa-chevron-left"></i> [C++ Idioms] 41-50
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/03/学习笔记/C++/惯用法/61-70-Idioms/" rel="prev" title="[C++ Idioms] 61-70">
+                [C++ Idioms] 61-70 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Named-Template-Parameters-缺"><span class="nav-number">1.</span> <span class="nav-text">Named Template Parameters [缺]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nifty-Counter"><span class="nav-number">2.</span> <span class="nav-text">Nifty Counter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Non-copyable-Mixin-易"><span class="nav-number">3.</span> <span class="nav-text">Non-copyable Mixin [易]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Non-member-Non-friend-Function-缺"><span class="nav-number">4.</span> <span class="nav-text">Non-member Non-friend Function [缺]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Non-throwing-swap-易"><span class="nav-number">5.</span> <span class="nav-text">Non-throwing swap [易]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Non-Virtual-Interface"><span class="nav-number">6.</span> <span class="nav-text">Non-Virtual Interface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nullptr-替"><span class="nav-number">7.</span> <span class="nav-text">Nullptr [替]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Object-Generator"><span class="nav-number">8.</span> <span class="nav-text">Object Generator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Object-Template-缺"><span class="nav-number">9.</span> <span class="nav-text">Object Template [缺]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Parameterized-Base-Class"><span class="nav-number">10.</span> <span class="nav-text">Parameterized Base Class</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
