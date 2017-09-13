@@ -83,7 +83,7 @@
 <meta property="og:site_name" content="{S}">
 <meta property="og:description" content="Iterator Pair、Making New Friends、Metafunction、Move Constructor、Multi-statement Macro、Member Detector、Named Constructor、Named External Argument、Named Loop、Named Parameter">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-25T08:36:35.787Z">
+<meta property="og:updated_time" content="2017-09-13T13:19:35.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[C++ Idioms] 41-50">
 <meta name="twitter:description" content="Iterator Pair、Making New Friends、Metafunction、Move Constructor、Multi-statement Macro、Member Detector、Named Constructor、Named External Argument、Named Loop、Named Parameter">
@@ -351,7 +351,7 @@
 <h1 id="Making-New-Friends-易"><a href="#Making-New-Friends-易" class="headerlink" title="Making New Friends [易]"></a>Making New Friends [易]</h1><p>简化模板类友元函数的创建。<br>就是直接在模板里声明friend函数。原文大概说的就是这意思。</p>
 <hr>
 <h1 id="Metafunction"><a href="#Metafunction" class="headerlink" title="Metafunction"></a>Metafunction</h1><p>元函数。元编程一般用于编译时选择类型或在编译期计算或构造一些数据；元函数是编写这类算法的主要方式。Stl提供的比较少（好像只有conditional，可以用来应付一些简单的元编程），Boost的MPL库提供了很多用于元编程的类、函数、容器。  </p>
-<p>只会一些简单的元编程，<strong>现在会的技术东西不足以解读MPL库</strong>，很大一个原因是不知道宏定义怎么和模板配合在一起，而且因为无法调试，所以比较难分析，待之后有能力再补充。</p>
+<p>只会一些简单的元编程，<strong>现在会的技术不足以解读MPL库</strong>，很大一个原因是不知道宏定义怎么和模板配合在一起，而且因为无法调试，所以比较难分析，待之后有能力再补充。</p>
 <p>这是简单的使用例子：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">struct value_printer</div><div class="line">&#123;</div><div class="line">	template&lt; typename U &gt; void operator()(U x)</div><div class="line">	&#123;</div><div class="line">		std::cout &lt;&lt; x &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	using hello = mpl::string&lt;'Hel', 'lo!'&gt;;</div><div class="line">	cout &lt;&lt; mpl::c_str&lt;hello&gt;::value &lt;&lt; endl;</div><div class="line">	using vec = mpl::vector_c&lt;int, 1, 9, 2, 8, 3, 7, 4, 6, 5&gt;;</div><div class="line">	using res = mpl::sort&lt;vec&gt;::type;</div><div class="line">	mpl::for_each&lt;res&gt;(value_printer());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <hr>
 <h1 id="Move-Constructor-替"><a href="#Move-Constructor-替" class="headerlink" title="Move Constructor [替]"></a>Move Constructor [替]</h1><p>移动构造。原文内容是在没有移动语义时如何实现移动，现在已经有相关支持。  </p>
