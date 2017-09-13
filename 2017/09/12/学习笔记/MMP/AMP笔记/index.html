@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MMP," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="概述C++ Accelerated Massive Parallelism（加速大规模并行计算）。可用GPU加速代码的运行。Win7以上，Dx11以上支持。 使用头文件为amp.h。基本步骤是，构造数据并创建数据映射对象，定义算法，给GPU执行。   如果需要调试kernel函数，在vs的项目属性的调试-调试器类型处选择仅gpu，cpu和gpu不能同时调试，所以需要这样设置。可以在gpu线程窗口查">
+<meta name="keywords" content="MMP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MMP] AMP">
+<meta property="og:url" content="/2017/09/12/学习笔记/MMP/AMP笔记/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="概述C++ Accelerated Massive Parallelism（加速大规模并行计算）。可用GPU加速代码的运行。Win7以上，Dx11以上支持。 使用头文件为amp.h。基本步骤是，构造数据并创建数据映射对象，定义算法，给GPU执行。   如果需要调试kernel函数，在vs的项目属性的调试-调试器类型处选择仅gpu，cpu和gpu不能同时调试，所以需要这样设置。可以在gpu线程窗口查">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i-msdn.sec.s-msft.com/dynimg/IC660452.jpeg">
+<meta property="og:image" content="https://i-msdn.sec.s-msft.com/dynimg/IC588202.jpeg">
+<meta property="og:updated_time" content="2017-09-13T11:09:38.108Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[MMP] AMP">
+<meta name="twitter:description" content="概述C++ Accelerated Massive Parallelism（加速大规模并行计算）。可用GPU加速代码的运行。Win7以上，Dx11以上支持。 使用头文件为amp.h。基本步骤是，构造数据并创建数据映射对象，定义算法，给GPU执行。   如果需要调试kernel函数，在vs的项目属性的调试-调试器类型处选择仅gpu，cpu和gpu不能同时调试，所以需要这样设置。可以在gpu线程窗口查">
+<meta name="twitter:image" content="https://i-msdn.sec.s-msft.com/dynimg/IC660452.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/09/12/学习笔记/MMP/AMP笔记/"/>
+
+
+
+
+
+  <title>[MMP] AMP | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/09/12/学习笔记/MMP/AMP笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[MMP] AMP</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-12T14:07:45+08:00">
+                2017-09-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/MMP/" itemprop="url" rel="index">
+                    <span itemprop="name">MMP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>C++ Accelerated Massive Parallelism（加速大规模并行计算）。<br>可用GPU加速代码的运行。<br>Win7以上，Dx11以上支持。</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>头文件为amp.h。<br>基本步骤是，构造数据并创建数据映射对象，定义算法，给GPU执行。  </p>
+<p>如果需要调试kernel函数，在vs的项目属性的调试-调试器类型处选择仅gpu，cpu和gpu不能同时调试，所以需要这样设置。<br>可以在gpu线程窗口查看线程，并行堆栈窗口查看栈帧，其它调试方式跟cpu的差不多。<br>另外需要注意的是，当不需要带符号整数时，优先用无符号整数，因为无符号整数的模和除法性能比带符号的高。  </p>
+<p>构造数据后放入array或array_view。它们几乎具有相同的成员，但基本行为不同。<br>array是容器类，在构造时深拷贝数据，array_view是包装类，在kernel访问数据时才复制数据。  </p>
+<p>array构造时需要传入迭代器，理论上应该支持所有容器。<br>array_view可以用数组、std::array、std::vector存储数据（可以是有data和size成员函数的容器，string应该也行）。  </p>
+<p>使用array时，kernel函数修改的是对应的副本，在kernel函数执行完毕后，必须将数据复制回cpu线程上的对象中，默认不可通过它直接访问数据。<br>在使用array_view时，构造函数并不会把数据复制到gpu上，如果两个view同时引用同一个数据，则它们引用的是同样的内存空间。如果这样做，则必须同步所有多线程的访问。<br>使用 array_view 类的主要优点是数据仅在必要的时候移动。</p>
+<p>它们之间的异同：</p>
+<table>
+<thead>
+<tr>
+<th>描述</th>
+<th>array</th>
+<th>array_view</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>确定维度</td>
+<td>编译时</td>
+<td>编译时</td>
+</tr>
+<tr>
+<td>确定大小</td>
+<td>运行时</td>
+<td>运行时</td>
+</tr>
+<tr>
+<td>形状</td>
+<td>矩形</td>
+<td>矩形</td>
+</tr>
+<tr>
+<td>数据存储方式</td>
+<td>数据容器</td>
+<td>数据包装器</td>
+</tr>
+<tr>
+<td>复制方式</td>
+<td>定义时深拷贝</td>
+<td>kernel函数访问时隐式拷贝</td>
+</tr>
+<tr>
+<td>数据检索方式</td>
+<td>将数组数据复制回cpu线程上的对象</td>
+<td>直接访问对象或调用synchronize后访问原始容器上的数据</td>
+</tr>
+</tbody>
+</table>
+<p>array_view定义为（array类似，略）：<br><code>array_view&lt;类型, 维度&gt; sample(维度大小..., 数据容器);</code><br>类型填const就可以用常量容器传入了。</p>
+<p>注意构造参数里是从高维填到低维，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(z,y,x)</div><div class="line">sample[z][y][x]</div><div class="line">sample(z,y,x)</div></pre></td></tr></table></figure></p>
+<p>在进入并行前可以使用<strong>discard_data</strong>, 表示不要把对象数据复制到gpu。  </p>
+<p>用parallel_for_each函数将数据放入gpu处理，它需要两个参数：计算域和lambda表达式。<br>计算域是extent或tiled_extent对象，计算时会为域中每个元素生成一个线程。<br>lambda表达式是在每个线程上运行的代码，可以用<code>=</code>来捕获相关一些变量。表达式需要声明为restrict(amp)或restrict(amp, cpu)，表示会放到gpu执行，在表达式中可以调用其它amp函数。</p>
+<p>表达式参数是一个index对象，表示的是数据的位置，它可以用来表示多维下标，其维度与下标的关系为:<br>定义时：(z,y,x)<br>使用时：<code>index&lt;3&gt; idx -&gt; [0]:z [1]:y [2]:x</code><br>extent也类似。</p>
+<p>在定义或使用array_view时，维度不需要跟原始数据相同，可自定义维度。<br>parallel_for_each在返回时，kernel的运行可以没结束，所以它是异步的<br>但是通过array_view访问结果或用synchronize时，会等到运行结束。<br>可以用array_view的synchronize_async获得future对象，然后可以用then来实现任务拼接（配合ppl使用）。</p>
+<p>例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;numeric&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;array&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">// 主要头文件</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;amp.h&gt;</span></span></div><div class="line"><span class="comment">// 库</span></div><div class="line"><span class="comment">// #include &lt;amp_math.h&gt;</span></div><div class="line"><span class="comment">// #include &lt;amp_graphics.h&gt;</span></div><div class="line"><span class="comment">// #include &lt;amp_short_vectors.h&gt;</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">AmpTest</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line">	<span class="keyword">using</span> DataType = <span class="keyword">int32_t</span>;</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">int</span> MaxSize = <span class="number">1024</span>;</div><div class="line"></div><div class="line">	<span class="comment">// 构造数据</span></div><div class="line">	<span class="built_in">array</span>&lt;DataType, MaxSize&gt; data;</div><div class="line">	iota(data.begin(), data.end(), <span class="number">1</span>);</div><div class="line"></div><div class="line">	<span class="comment">// 假设算法是这样(不做优化)，对每个元素执行，最后将所有结果求和</span></div><div class="line">	<span class="keyword">auto</span> algo = [](DataType val)<span class="keyword">restrict</span>(amp, cpu)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (DataType i = <span class="number">0</span>; i &lt; <span class="number">1000000</span>; i++)</div><div class="line">		&#123;</div><div class="line">			val += i;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> val;</div><div class="line">	&#125;;</div><div class="line"></div><div class="line">	<span class="comment">// cpu</span></div><div class="line">	<span class="keyword">auto</span> cpuTime = clock();</div><div class="line">	DataType cpuRet = <span class="built_in">std</span>::accumulate(data.begin(), data.end(), <span class="number">0</span>,</div><div class="line">		[=](DataType ret, DataType val) &#123;</div><div class="line">		<span class="keyword">return</span> ret + algo(val);</div><div class="line">	&#125;);</div><div class="line"></div><div class="line">	cpuTime = clock() - cpuTime;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"CPU 计算用时： "</span> &lt;&lt; cpuTime &lt;&lt; <span class="string">" 结果："</span> &lt;&lt; cpuRet &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line"></div><div class="line"></div><div class="line">	<span class="comment">// gpu</span></div><div class="line">	<span class="comment">// 映射数据</span></div><div class="line">	concurrency::array_view&lt;<span class="keyword">const</span> DataType, <span class="number">1</span>&gt; dataView(data);</div><div class="line"></div><div class="line">	DataType gpuRet = <span class="number">0</span>;</div><div class="line">	concurrency::array_view&lt;DataType, <span class="number">1</span>&gt; gpuRetView(<span class="number">1</span>, &amp;gpuRet);</div><div class="line"></div><div class="line">	<span class="keyword">auto</span> gpuTime = clock();</div><div class="line">	<span class="comment">// 这个操作是异步的</span></div><div class="line">	concurrency::parallel_for_each(dataView.extent,</div><div class="line">		[=](concurrency::index&lt;<span class="number">1</span>&gt; idx) <span class="keyword">restrict</span>(amp)</div><div class="line">	&#123;</div><div class="line">		concurrency::atomic_fetch_add(&amp;gpuRetView[<span class="number">0</span>], algo(dataView[idx]));</div><div class="line">	&#125;);</div><div class="line">	gpuRetView.synchronize();</div><div class="line"></div><div class="line">	gpuTime = clock() - gpuTime;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"GPU 计算用时： "</span> &lt;&lt; gpuTime &lt;&lt; <span class="string">" 结果："</span> &lt;&lt; gpuRet &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">	<span class="comment">// 验证</span></div><div class="line">	<span class="built_in">cout</span> &lt;&lt; (gpuRet == cpuRet ? <span class="string">"结果相同"</span> : <span class="string">"结果不同"</span>) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	AmpTest();</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="parallel-for-each-函数"><a href="#parallel-for-each-函数" class="headerlink" title="parallel_for_each 函数"></a>parallel_for_each 函数</h1><p>在设备上启动并行计算。它是异步执行的。<br>可以传递accelerator_view参数，让代码在指定的accelerator上运行，如果有array绑定的是不同的accelerator，就会引发异常。<br>其回调可以传入函数和仿函数，传入仿函数对象时，重写的operator()需要具有restrict(amp)修饰。  </p>
+<p>kernel函数必须返回void，由于它没有其它参数，所以其它数据必须在函数对象或lambda中捕获，array对象必须用引用或指针捕获，其它必须用值捕获。</p>
+<p>注意传入的extent的维度必须和kernel函数的index参数维度相同。</p>
+<h2 id="restrict关键字"><a href="#restrict关键字" class="headerlink" title="restrict关键字"></a>restrict关键字</h2><p>可将限制说明符应用于函数和 lambda 声明。<br>可使用 restrict(cpu)、restrict(amp)、restrict(cpu, amp) 或 restrict(amp, cpu) 声明的函数调用。<br>restrict(A) restrict(B) 形式可以编写为 restrict(A,B)。 </p>
+<p>包含 restrict(amp) 子句的函数具有以下限制： </p>
+<ul>
+<li>函数只能调用具有 restrict(amp) 子句的函数。 </li>
+<li>函数必须可内联。 </li>
+<li>函数只能声明 int、unsigned int、float 和 double 变量，以及只包含这些类型的类和结构。<br>  也允许使用 bool，但如果您在复合类型中使用它，则它必须是 4 字节对齐的。 </li>
+<li>Lambda 函数无法通过引用捕获，并且无法捕获指针。<strong>但是有两个例外：concurrency::array、concurrency::graphics::texture</strong>，这些对象要按引用捕获。 </li>
+<li>仅支持引用和单一间接指针作为局部变量、函数参数和返回类型。 </li>
+<li>不允许使用以下项： <ul>
+<li>递归</li>
+<li>使用 volatile 关键字声明的变量</li>
+<li>虚函数</li>
+<li>指向函数的指针</li>
+<li>指向成员函数的指针</li>
+<li>结构中的指针</li>
+<li>指向指针的指针</li>
+<li>goto 语句</li>
+<li>Labeled 语句</li>
+<li>try、catch 或 throw 语句（不允许抛出异常）</li>
+<li>全局变量</li>
+<li>静态变量。 请改用 tile_static 关键字</li>
+<li>dynamic_cast 强制转换</li>
+<li>typeid 运算符</li>
+<li>asm 声明</li>
+<li>Varargs 用省略号的声明的变参</li>
+</ul>
+</li>
+</ul>
+<h1 id="加速器（Accelerator）"><a href="#加速器（Accelerator）" class="headerlink" title="加速器（Accelerator）"></a>加速器（Accelerator）</h1><p>可以使用加速器来指定运行amp代码的设备或仿真器。<br>加速器是针对数据并行而优化的硬件功能，它可以连接到PCIe总线(比如GPU)的设备上，或者它可以是主CPU上的扩展指令集。</p>
+<p>提供这些参数用于构造：<br>default_accelerator：默认<br>cpu_accelerator：用来设置临时数组（高级优化），不能在上面执行amp代码<br>direct3d_ref：使用cpu软件模拟<br>direct3d_warp：使用sse在cpu上模拟</p>
+<p>一个系统可能有多个设备或仿真器，它可能有不同的内存量和不同的共享内存、调试、双精度支持性。<br>concurrency::accelerator::get_all()得到所有设备或仿真器列表。<br>可以用concurrency::accelerator::set_default来设置默认的accelerator。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 可以这样输出</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">auto</span>&amp; i : concurrency::accelerator::get_all())</div><div class="line">&#123;</div><div class="line">    wcout &lt;&lt; <span class="string">"设备： "</span> &lt;&lt; i.description &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    wcout &lt;&lt; <span class="string">"设备路径： "</span> &lt;&lt; i.device_path &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    wcout &lt;&lt; <span class="string">"内存（KB）： "</span> &lt;&lt; i.dedicated_memory &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    wcout &lt;&lt; <span class="string">"是否连接到显示器： "</span> &lt;&lt; i.has_display &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    wcout &lt;&lt; <span class="string">"默认缓冲区访问权限： "</span> &lt;&lt; i.default_cpu_access_type &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    wcout &lt;&lt; <span class="string">"是否启用调试： "</span> &lt;&lt; i.is_debug &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    wcout &lt;&lt; <span class="string">"是否为仿真器： "</span> &lt;&lt; i.is_emulated &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    wcout &lt;&lt; <span class="string">"是否支持共享内存： "</span> &lt;&lt; i.supports_cpu_shared_memory &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    wcout &lt;&lt; <span class="string">"是否支持双精度： "</span> &lt;&lt; i.supports_double_precision &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    wcout &lt;&lt; <span class="string">"是否支持有限双精度： "</span> &lt;&lt; i.supports_limited_double_precision &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    wcout &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 可以得到这样的输出</span></div><div class="line"><span class="comment">// 设备： 我的主显卡，默认用的是这个</span></div><div class="line"><span class="comment">// 设备路径： PCI\xxxxx\xxxxx</span></div><div class="line"><span class="comment">// 内存（KB）： 4162432</span></div><div class="line"><span class="comment">// 是否连接到显示器： 1</span></div><div class="line"><span class="comment">// 默认缓冲区访问权限： 0</span></div><div class="line"><span class="comment">// 是否启用调试： 1</span></div><div class="line"><span class="comment">// 是否为仿真器： 0</span></div><div class="line"><span class="comment">// 是否支持共享内存： 1</span></div><div class="line"><span class="comment">// 是否支持双精度： 1</span></div><div class="line"><span class="comment">// 是否支持有限双精度： 1</span></div><div class="line"><span class="comment">// </span></div><div class="line"><span class="comment">// 设备： cpu带的显卡</span></div><div class="line"><span class="comment">// 设备路径： PCI\xxxxx\xxxxx</span></div><div class="line"><span class="comment">// 内存（KB）： 115200</span></div><div class="line"><span class="comment">// 是否连接到显示器： 0</span></div><div class="line"><span class="comment">// 默认缓冲区访问权限： 3</span></div><div class="line"><span class="comment">// 是否启用调试： 1</span></div><div class="line"><span class="comment">// 是否为仿真器： 0</span></div><div class="line"><span class="comment">// 是否支持共享内存： 1</span></div><div class="line"><span class="comment">// 是否支持双精度： 1</span></div><div class="line"><span class="comment">// 是否支持有限双精度： 1</span></div><div class="line"><span class="comment">// </span></div><div class="line"><span class="comment">// 设备： Microsoft Basic Render Driver</span></div><div class="line"><span class="comment">// 设备路径： direct3d\warp</span></div><div class="line"><span class="comment">// 内存（KB）： 0</span></div><div class="line"><span class="comment">// 是否连接到显示器： 0</span></div><div class="line"><span class="comment">// 默认缓冲区访问权限： 3</span></div><div class="line"><span class="comment">// 是否启用调试： 1</span></div><div class="line"><span class="comment">// 是否为仿真器： 1</span></div><div class="line"><span class="comment">// 是否支持共享内存： 1</span></div><div class="line"><span class="comment">// 是否支持双精度： 1</span></div><div class="line"><span class="comment">// 是否支持有限双精度： 1</span></div><div class="line"><span class="comment">// </span></div><div class="line"><span class="comment">// 设备： Software Adapter</span></div><div class="line"><span class="comment">// 设备路径： direct3d\ref</span></div><div class="line"><span class="comment">// 内存（KB）： 0</span></div><div class="line"><span class="comment">// 是否连接到显示器： 1</span></div><div class="line"><span class="comment">// 默认缓冲区访问权限： 0</span></div><div class="line"><span class="comment">// 是否启用调试： 1</span></div><div class="line"><span class="comment">// 是否为仿真器： 1</span></div><div class="line"><span class="comment">// 是否支持共享内存： 0</span></div><div class="line"><span class="comment">// 是否支持双精度： 1</span></div><div class="line"><span class="comment">// 是否支持有限双精度： 1</span></div><div class="line"><span class="comment">// </span></div><div class="line"><span class="comment">// 设备： CPU accelerator</span></div><div class="line"><span class="comment">// 设备路径： cpu</span></div><div class="line"><span class="comment">// 内存（KB）： 0</span></div><div class="line"><span class="comment">// 是否连接到显示器： 0</span></div><div class="line"><span class="comment">// 默认缓冲区访问权限： 3</span></div><div class="line"><span class="comment">// 是否启用调试： 0</span></div><div class="line"><span class="comment">// 是否为仿真器： 1</span></div><div class="line"><span class="comment">// 是否支持共享内存： 1</span></div><div class="line"><span class="comment">// 是否支持双精度： 0</span></div><div class="line"><span class="comment">// 是否支持有限双精度： 0</span></div></pre></td></tr></table></figure></p>
+<p>在选取默认accelerator时，按以下规则依次选取：</p>
+<ol>
+<li>如果在调试模式下运行，选择支持调试的</li>
+<li>使用<code>CPPAMP_DEFAULT_ACCELERATOR</code>设置的accelerator</li>
+<li>非模拟设备</li>
+<li>有最大可用内存的设备</li>
+<li>未连接到显示器的设备</li>
+</ol>
+<h2 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h2><p>可以在创建accelerator后设置相关的一些选项，比如让它支持<strong>共享内存</strong>。<br>选项定义如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">enum</span> access_type</div><div class="line">&#123;</div><div class="line">    access_type_none = <span class="number">0</span>,</div><div class="line">    access_type_read = (<span class="number">1</span> &lt;&lt; <span class="number">0</span>),</div><div class="line">    access_type_write = (<span class="number">1</span> &lt;&lt; <span class="number">1</span>),</div><div class="line">    access_type_read_write = access_type_read | access_type_write,</div><div class="line">    access_type_auto = (<span class="number">1</span> &lt;&lt; <span class="number">31</span>),</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>共享内存可以让accelerator和cpu访问同一位置的内存，可以显著减少复制开销，但是不要同时访问内存，因为会导致未定义行为。<br>注意AMP默认会自动选择最好的访问权限，设置共享可能会比原先非共享的性能差（带宽或延迟影响），如果共享读写都没问题就默认设置为可读写，否则会以保守的方式设置权限。  </p>
+<p>创建好accelerator后，就用default_view创建一个accelerator_view对象，accelerator_view表示accelerator上的虚拟设备抽象。<br>使用例子如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> concurrency;</div><div class="line"></div><div class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; data(<span class="number">5</span>);</div><div class="line"></div><div class="line">iota(data.begin(), data.end(), <span class="number">1</span>);</div><div class="line"></div><div class="line"><span class="function">accelerator <span class="title">acc</span><span class="params">(accelerator::default_accelerator)</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!acc.supports_cpu_shared_memory)</div><div class="line">&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"不支持共享内存"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">acc.set_default_cpu_access_type(access_type_read_write);</div><div class="line"></div><div class="line">concurrency::accelerator_view accView = acc.default_view;</div><div class="line"></div><div class="line">concurrency::<span class="built_in">array</span>&lt;<span class="keyword">int</span>, 1&gt; a(<span class="number">5</span>, data.begin(), data.end(),</div><div class="line">    accView, concurrency::access_type_read_write);</div><div class="line"></div><div class="line">concurrency::parallel_for_each(</div><div class="line">    a.extent,</div><div class="line">    [=, &amp;a](concurrency::index&lt;<span class="number">1</span>&gt; idx) <span class="keyword">restrict</span>(amp)</div><div class="line">&#123;</div><div class="line">    a[idx] = a[idx] * <span class="number">10</span>;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</div><div class="line">&#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; a[i] &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 如果不用共享内存就需要先将数据复制到本地再访问</span></div><div class="line">data = a;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</div><div class="line">&#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; data[i] &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="平铺-分组（Tiles）"><a href="#平铺-分组（Tiles）" class="headerlink" title="平铺/分组（Tiles）"></a>平铺/分组（Tiles）</h1><p>可以使用平铺来加速代码。它将线程划分为相等的矩形子集或图块，如果使用合适的平铺大小和算法，就可以使代码获得更多加速。<br>一般用在算法中需要访问多个内存位置的时候，在运行时先把相关内存都载入，再在算法中使用，这样就不需要读array/array_view造成性能损失。  </p>
+<p>需要的基本组件是：</p>
+<ul>
+<li>tile_static 变量<br>  tile_static关键字用于声明可在所有平铺线程中访问的变量（注意是<strong>该平铺分组的所有线程</strong>，不是全局所有线程）。此变量的生存期在执行到达声明点时开始，在内核函数返回时结束。访问tile_static变量比访问全局内存（array、array_view）快得多，一般用法是将数据从全局内存一次性复制到该变量中，然后就可以多次访问它。<br>  该关键字具有这些限制：<ul>
+<li>只能在具有restrict(amp)修饰符的函数中使用</li>
+<li>不能用来修饰指针或引用变量</li>
+<li>不能具有初始值，并且不会调用默认构造和析构</li>
+<li>未初始化的tile_static变量的值是不确定的</li>
+<li>如果在非平铺的调用中使用，其行为是不确定的</li>
+</ul>
+</li>
+<li>tile_barrier::wait 函数<br>  调用时将挂起当前线程，直到同一平铺的所有线程都运行到这里，然后再放行。一般用来同步tile_static变量的访问。</li>
+<li>全局和本地索引<br>  可以访问相对于全局内存的索引和平铺的索引。</li>
+<li>tiled_extent类 和 tiled_index类<br>  在平铺时parallel_for_each使用的是tiled_extent对象，kernel函数的参数是tiled_index类型。</li>
+</ul>
+<p>在使用平铺时，需要指定固定大小的1、2、3维度，另外还具有这些限制：</p>
+<ul>
+<li>平铺区域内维度大小不能超过1024，比如：<ul>
+<li>3D：D0 x D1 x D2 ≤ 1024；并且 D0 ≤ 64</li>
+<li>2D：D0 x D1 ≤ 1024</li>
+<li>1D：D0 ≤ 1024</li>
+</ul>
+</li>
+<li>作为提交给parallel_for_each的第一个参数，其平铺网络必须是可分割的。</li>
+</ul>
+<p>在kernel函数里用变量时，其数据会被保存在当前线程的寄存器中。每个gpu线程都有自己的寄存器，但是不能访问其它线程的寄存器。其速度和大小可以类比cpu的寄存器。<br>在使用tile_static时，数据存储在tile_static共享内存中，只能在平铺模式中使用。<br>注意tile_static是分组可访问，会有竟态条件出现。  </p>
+<p><br><br><strong>索引关系</strong><br>平铺后，可取到的索引如下(注意顺序是z/y/x)：<br><img src="https://i-msdn.sec.s-msft.com/dynimg/IC660452.jpeg" alt=""><br><img src="https://i-msdn.sec.s-msft.com/dynimg/IC588202.jpeg" alt="">  </p>
+<p>tiled_extent: 图块坐标转换<br>global: 全局每个维度坐标<br>tile: 分块的坐标<br>local: 分块内元素的坐标</p>
+<p>对于index<br>index[x]: 所在维度的坐标<br>index: 总体的坐标</p>
+<h2 id="内存屏障"><a href="#内存屏障" class="headerlink" title="内存屏障"></a>内存屏障</h2><p>如果tile_static 变量需要填充再使用，可用tile_barrier::wait 函数来等待填充完毕。<br>有两种必须同步的内存访问：全局内存访问、tile_static内存访问。array仅分配全局内存，array_view可引用全局内存或tile_static内存。</p>
+<p>有3种等待方式（这里可能涉及到了内存序的内容），每一个方式都是等待分块内的其它线程到达（不保证全局）：</p>
+<ul>
+<li>wait/wait_with_all_memory_fence: 并确保全局和tile_static内存可见</li>
+<li>wait_with_global_memory_fence: 确保全局内存可见</li>
+<li>wait_with_tile_static_memory_fence: 确保tile_static内存可见</li>
+</ul>
+<p>例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> concurrency;</div><div class="line"><span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">int</span> Y = <span class="number">9</span>;</div><div class="line"><span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">int</span> X = <span class="number">8</span>;</div><div class="line"></div><div class="line"><span class="comment">// y=9 x=8</span></div><div class="line"><span class="built_in">std</span>::<span class="built_in">array</span>&lt;<span class="keyword">uint32_t</span>, Y * X&gt; data;</div><div class="line">iota(data.begin(), data.end(), <span class="number">0</span>);</div><div class="line">array_view&lt;<span class="keyword">uint32_t</span>, <span class="number">2</span>&gt; dataView(Y, X, data);</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 假设分块大小为 y3 * x2，需要计算块内平均值</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">int</span> TY = <span class="number">3</span>;</div><div class="line"><span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">int</span> TX = <span class="number">2</span>;</div><div class="line"></div><div class="line"><span class="built_in">std</span>::<span class="built_in">array</span>&lt;<span class="keyword">uint32_t</span>, Y / TY * X / TX&gt; ret;</div><div class="line">array_view&lt;<span class="keyword">uint32_t</span>, <span class="number">2</span>&gt; retView(Y / TY, X / TX, ret);</div><div class="line">retView.discard_data();</div><div class="line"></div><div class="line">parallel_for_each(dataView.extent.tile&lt;TY, TX&gt;(),</div><div class="line">    [=](tiled_index&lt;TY, TX&gt; idx) <span class="keyword">restrict</span>(amp)</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 组内共有变量</span></div><div class="line">    tile_static <span class="keyword">uint32_t</span> tileAvgData;</div><div class="line">    <span class="keyword">bool</span> isFirst = idx.local[<span class="number">0</span>] == <span class="number">0</span> &amp;&amp; idx.local[<span class="number">1</span>] == <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (isFirst)</div><div class="line">    &#123;</div><div class="line">        tileAvgData = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    idx.barrier.wait_with_tile_static_memory_fence();</div><div class="line"></div><div class="line">    concurrency::atomic_fetch_add(&amp;tileAvgData, dataView[idx]);</div><div class="line"></div><div class="line">    idx.barrier.wait_with_tile_static_memory_fence();</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (isFirst)</div><div class="line">    &#123;</div><div class="line">        retView[idx.tile] = tileAvgData / (TX*TY);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">retView.synchronize();</div><div class="line"></div><div class="line"><span class="comment">// 输出，请无视这个算法，它不是重点</span></div><div class="line"><span class="keyword">int</span> idxX = X / TX;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">auto</span>&amp; i : ret)</div><div class="line">&#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">"\t"</span>;</div><div class="line">    --idxX;</div><div class="line">    <span class="keyword">if</span> (idxX == <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">        idxX = X / TX;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 输出如下</span></div><div class="line"><span class="comment">// 8       10      12      14</span></div><div class="line"><span class="comment">// 32      34      36      38</span></div><div class="line"><span class="comment">// 56      58      60      62</span></div></pre></td></tr></table></figure></p>
+<h1 id="数学库"><a href="#数学库" class="headerlink" title="数学库"></a>数学库</h1><p>头文件为amp_math.h。包括两个数学库。<br>Concurrency::precise_math 命名空间中的双精度库支持双精度函数。  它还支持单精度功能，尽管硬件仍需要支持双精度。<br>Concurrency::fast_math 命名空间中的快速数学库包含另一组数学函数。<br>只支持 float 操作数的这些函数，执行速度更快，但精确度不如双精度数学库中的函数。<br>基本上cmath的函数都有，用法相同，不做过多介绍。  </p>
+<h1 id="图形库"><a href="#图形库" class="headerlink" title="图形库"></a>图形库</h1><p>头文件amp_graphics.h。<br>包括为加速的图形编程而设计的图形库。此库仅用于支持本地图形功能的设备。<br>函数在 Concurrency::graphics 命名空间中。</p>
+<p>图形库的关键组件有：  </p>
+<ul>
+<li>texture 类：可以使用纹理类创建内存或文件纹理。<br>  纹理类似于数组，因为它们包含数据，而它们在分配和复制构造方面类似于标准模板库 (STL) 中的容器。<br>  texture 类的模板参数是元素类型与维度。可以是 1、2 或 3维。<br>  元素类型是Short Vector库中定义的类型。</li>
+<li>writeonly_texture_view 类：为任何纹理提供只写访问权。</li>
+<li>Short Vector库：定义一个基于 int、uint、float、double、norm或 unorm 的长度为 2、3 和 4 的短矢量类型集。</li>
+</ul>
+<p>因为我用不到，这部分内容没看，相关内容在<a href="https://msdn.microsoft.com/zh-cn/library/hh913015.aspx" target="_blank" rel="external">链接1</a>、<a href="https://msdn.microsoft.com/en-us/library/hh913015.aspx" target="_blank" rel="external">链接2</a>、<a href="https://msdn.microsoft.com/en-us/library/hh708799.aspx" target="_blank" rel="external">链接3</a>。  </p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>整体感觉比较简单，一小时内可以学会（比cuda简单多了），并且amp可以跟ppl相配合，可以很方便的开发高性能程序，只不过只支持Windows。<br>另外上面提到设置临时数组的高级优化方法，我没有在msdn找到相关内容。<br>调试时用的并行可视化工具，据说在分析菜单里，我在vs里没看到（找遍了好像只有性能分析工具），以后用到了再更新文档。  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/09/12/学习笔记/MMP/AMP笔记/" title="[MMP] AMP">/2017/09/12/学习笔记/MMP/AMP笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MMP/" class="fa fa-tag" rel="tag"> MMP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/07/其它/微调了一下模板/" rel="next" title="微调了一下模板">
+                <i class="fa fa-chevron-left"></i> 微调了一下模板
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#parallel-for-each-函数"><span class="nav-number">3.</span> <span class="nav-text">parallel_for_each 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#restrict关键字"><span class="nav-number">3.1.</span> <span class="nav-text">restrict关键字</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加速器（Accelerator）"><span class="nav-number">4.</span> <span class="nav-text">加速器（Accelerator）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#共享内存"><span class="nav-number">4.1.</span> <span class="nav-text">共享内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#平铺-分组（Tiles）"><span class="nav-number">5.</span> <span class="nav-text">平铺/分组（Tiles）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内存屏障"><span class="nav-number">5.1.</span> <span class="nav-text">内存屏障</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学库"><span class="nav-number">6.</span> <span class="nav-text">数学库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图形库"><span class="nav-number">7.</span> <span class="nav-text">图形库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最后"><span class="nav-number">8.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
