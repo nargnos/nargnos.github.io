@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="模式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="资源管理模式">
+<meta name="keywords" content="模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[模式] 资源、数据">
+<meta property="og:url" content="/2017/09/13/学习笔记/模式/资源数据/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="资源管理模式">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-16T09:57:18.466Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[模式] 资源、数据">
+<meta name="twitter:description" content="资源管理模式">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/09/13/学习笔记/模式/资源数据/"/>
+
+
+
+
+
+  <title>[模式] 资源、数据 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/09/13/学习笔记/模式/资源数据/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[模式] 资源、数据</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-13T21:03:14+08:00">
+                2017-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/模式/" itemprop="url" rel="index">
+                    <span itemprop="name">模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  资源管理模式
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>这里有一部分内容之前已经写过，不再重复。另外看的这本书翻译正确多了，看得好舒服。</em><br><!--20 21--></p>
+<h1 id="资源获取"><a href="#资源获取" class="headerlink" title="资源获取"></a>资源获取</h1><h2 id="查找（Lookup）"><a href="#查找（Lookup）" class="headerlink" title="查找（Lookup）"></a>查找（Lookup）</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>使用查找服务作为中介实例来发现和访问资源（不管资源是本地的还是分布的）。</p>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>提供一个资源<strong>查找服务</strong>，可以向它注册（描述和引用）<strong>资源提供者</strong>或<strong>资源</strong>，这样在<strong>资源使用者</strong>使用到资源时，查找服务可以访问提供者获取资源或直接返回注册的资源；使用者不需要知道提供者的位置，提供者也不需要知道使用者的位置。  </p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><ol>
+<li>决定查找服务的接口</li>
+<li>决定是注册资源引用还是资源提供者引用</li>
+<li>实现查找服务<br> 可以用map来存储</li>
+<li>提供查找服务访问点<br> 可以是一个指针或引用，也可以是主机地址。如果查找服务没有发布访问点，可以用一个自举协议来获得访问点，就是当查找服务收到资源提供者或使用者的初始请求后，就回应访问点，这样的协议通常需要广播或多播协议来设计。  </li>
+<li>决定查询语言<br> 可以让使用者用复杂的方式寻找资源。  </li>
+</ol>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>资源提供者和资源可以合并。<br>可以设置一个单独的实体负责把引用注册到查找服务，而不必在提供者实现。<br>可以将多个查找服务联合起来，在自身无法执行请求时将它转发给其它服务，这样可以扩展查询范围。<br>查找服务可以用来建立容错系统，复制查找服务或复制资源及其资源提供者可以实现。  </p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>可获得性、自举、位置独立、配置简单。<br>基于属性来选择资源，可以细粒度地匹配用户需求。  </p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>悬挂引用，资源提供者失效后，查找服务的引用会变得过时。<br>单一失败点，服务崩溃后需要等待其重启重新注册资源，另外可能会成为性能瓶颈，所以需要复制查找服务。<br>相同资源可能会错误的重复注册，需要在实现中注意确保属性唯一。</p>
+<hr>
+<h2 id="延迟获取（Lazy-Acquisition）"><a href="#延迟获取（Lazy-Acquisition）" class="headerlink" title="延迟获取（Lazy Acquisition）"></a>延迟获取（Lazy Acquisition）</h2><p>延迟初始化是这个模式的一个特化，之前写过了。<br>这里不同的是获取的是资源，某些资源不一定是对象（不需要初始化），获取时可以返回一个代理对象，等到用到的时候通过代理对象获取资源，获取步骤对调用者是透明的。<br>还可以扩展为延迟载入模块（比如dll），或延迟求值等</p>
+<hr>
+<h2 id="预先获取（Eager-Acquisition）"><a href="#预先获取（Eager-Acquisition）" class="headerlink" title="预先获取（Eager Acquisition）"></a>预先获取（Eager Acquisition）</h2><h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><p>在实际使用资源前预先获取并初始化资源来使运行时资源获取具有可预测性和快速性。</p>
+<h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><p>在使用之前，<strong>资源提供者代理</strong>已经从<strong>资源提供者</strong>那里先获取了<strong>资源</strong>，然后资源被保存在高效的容器中。当资源提供者代理获取<strong>资源使用者</strong>的资源请求时，就可以通过访问容器来返回请求的资源。<br>内存池就是用这个模式。  </p>
+<h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><p>提升性能</p>
+<h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><p>需要管理获取的资源，并且可能出现过度获取的情况，如果一开始获取了过多资源，会减慢启动速度</p>
+<hr>
+<h2 id="部分获取（Partial-Acquisition）"><a href="#部分获取（Partial-Acquisition）" class="headerlink" title="部分获取（Partial Acquisition）"></a>部分获取（Partial Acquisition）</h2><h3 id="作用-2"><a href="#作用-2" class="headerlink" title="作用"></a>作用</h3><p>把资源获取分成多阶段来优化资源管理，每个阶段都获取资源的一部分。  </p>
+<h3 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h3><p>之前提到过，不过说的不是资源。<br>在获取资源时，可以根据当前的系统状况或根据某些策略分步获取一定数目的资源，当资源被部分获取时，使用者就可以开始使用它。<br>注意在分步获取时可能有一些额外的调用开销。</p>
+<hr>
+<h1 id="资源生命周期"><a href="#资源生命周期" class="headerlink" title="资源生命周期"></a>资源生命周期</h1><h2 id="缓存（Caching）"><a href="#缓存（Caching）" class="headerlink" title="缓存（Caching）"></a>缓存（Caching）</h2><p>之前写过了。<br>实现时缓存对象的提供者和存储者可以不是同一个对象。<br>另外可以配合一些资源获取模式使用，让获取缓存这个行为透明。  </p>
+<hr>
+<h2 id="池（Pooling）"><a href="#池（Pooling）" class="headerlink" title="池（Pooling）"></a>池（Pooling）</h2><h3 id="作用-3"><a href="#作用-3" class="headerlink" title="作用"></a>作用</h3><p>通过循环使用不再需要的资源来避免昂贵的获取和释放资源的开销，一旦资源被循环利用并置入池中，它们就失去了自己的标识和状态。  </p>
+<h3 id="概念-3"><a href="#概念-3" class="headerlink" title="概念"></a>概念</h3><p>在池中管理一类资源的多个实例，被释放的资源会被放回池中。<br>为了增加效率，资源池会在创建后预先获取固定数目的资源，如果对资源的需求超过了池中的资源数目，它会延迟地获取更多资源。<br>当<strong>资源</strong>被释放并放回池中时，<strong>资源使用者</strong>或者<strong>资源池</strong>应当让资源失去其标识；资源被重用前，它需要重新初始化，可以提供一个单独的初始化接口。<br>资源使用者只依赖于资源池以及实际的资源，资源由资源池从<strong>资源提供者</strong>（通常是系统）获取。</p>
+<h3 id="扩展-1"><a href="#扩展-1" class="headerlink" title="扩展"></a>扩展</h3><p>可以用来管理线程和连接。<br>连接池可以维持远程服务的连接，这样在请求服务时直接使用该连接发送请求。  </p>
+<h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><p>提升性能、共享资源、稳定可伸缩</p>
+<h3 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h3><p>管理资源会有一些额外开销，需要注意同步问题</p>
+<hr>
+<h2 id="协调者（Coordinator）"><a href="#协调者（Coordinator）" class="headerlink" title="协调者（Coordinator）"></a>协调者（Coordinator）</h2><h3 id="作用-4"><a href="#作用-4" class="headerlink" title="作用"></a>作用</h3><p>协调多个参与者（每个参与者都包含资源、资源使用者和资源提供者）的任务的完成来维护系统的一致性。<br>使得在涉及多个参与者的任务中，要么所有参与者的任务都完成，要么一项任务都没有完成；这确保了系统总是处于一致的状态。  </p>
+<h3 id="概念-4"><a href="#概念-4" class="headerlink" title="概念"></a>概念</h3><p>比如由分布在网络上多个处理节点的大规模系统，每个节点上的子系统的服务需要被频繁更新。为了让它们能够动态更新，每个节点都需要由一个软件下载组件。为了更新整个系统的配置，需要有一个集中监管组件来和每个节点上的下载组件通信。集中监管组件需要向多个下载组件发送更新请求，如果有部分下载组件未能更新系统，那么就会导致系统处于不一致的状态。<br>所以需要这个模式来协调同一个任务的多个参与者，任务被分配到多个参与者，每个参与者都独立工作，每个参与者执行的工作都必须成功，以达成整个任务的成功。  </p>
+<p>可以引入<strong>协调者</strong>，负责所有<strong>参与者</strong>执行和完成<strong>任务</strong>。所有参与者执行的工作都分成两个阶段：准备和提交。<br>在准备阶段，协调者要求每个参与者准备要完成的工作。每个参与者必须用这个阶段类检查一致性并判断结果是否会失败。如果在准备阶段有参与者返回失败，协调者就停止任务，并且要求完成准备的参与者中止任务并恢复为开始前的状态。<br>如果参与者全都成功完成了准备，协调者就发起参与者的提交操作，参与者会在这个阶段做实际的工作，因为准备阶段表明工作会成功，所以提交阶段会成功，整个任务便可成功执行。  </p>
+<h3 id="特点-3"><a href="#特点-3" class="headerlink" title="特点"></a>特点</h3><p>原子性、一致性</p>
+<h3 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h3><p>额外的开销和职责</p>
+<hr>
+<h2 id="资源生命周期管理器（Resource-Lifecycle-Manager）"><a href="#资源生命周期管理器（Resource-Lifecycle-Manager）" class="headerlink" title="资源生命周期管理器（Resource Lifecycle Manager）"></a>资源生命周期管理器（Resource Lifecycle Manager）</h2><h3 id="作用-5"><a href="#作用-5" class="headerlink" title="作用"></a>作用</h3><p>将资源的生命周期管理和它们的使用解耦。  </p>
+<h3 id="概念-5"><a href="#概念-5" class="headerlink" title="概念"></a>概念</h3><p>如果程序管理对象复杂的生命周期，其复杂性可能会影响到程序的核心功能，使得业务逻辑难以维护，因为它们的代码纠缠在一起。<br>这里的资源可以是网络连接、线程、同步原语、服务等，引入RLM可以管理和维护资源使用者用到的资源。  </p>
+<p>资源使用者可以用RLM来获取和访问特定的资源。如果被请求的资源不存在，RLM会执行创建工作。<br>RLM知道当前的资源使用情况，所以可以拒绝来自资源使用者的资源获取请求。比如内存很少的时候它可以拒绝分配内存。<br>它还管理这些资源的回收，并基于当前可用资源来选择合适的策略维护资源。<br>它可以负责一类或多类资源，如果资源之间存在依赖关系，它们之间可协同工作。</p>
+<p>当使用者使用资源时从RLM获取资源，不使用时还回去。可用池或者缓存模式来优化它。</p>
+<h3 id="特点-4"><a href="#特点-4" class="headerlink" title="特点"></a>特点</h3><p>提升效率和性能</p>
+<h3 id="缺点-4"><a href="#缺点-4" class="headerlink" title="缺点"></a>缺点</h3><p>出错会导致程序的很多部分运行失败</p>
+<hr>
+<h1 id="资源释放"><a href="#资源释放" class="headerlink" title="资源释放"></a>资源释放</h1><h2 id="租约（Leasing）"><a href="#租约（Leasing）" class="headerlink" title="租约（Leasing）"></a>租约（Leasing）</h2><h3 id="作用-6"><a href="#作用-6" class="headerlink" title="作用"></a>作用</h3><p>通过在获取资源时把资源和基于时间的租约相关联，从而简化资源的释放。<br>在租约过期并且没有被更新时，资源就会被自动释放。  </p>
+<h3 id="概念-6"><a href="#概念-6" class="headerlink" title="概念"></a>概念</h3><p>配合前面的一些模式（比如查找服务）使用的，暂存的资源可能再也不会被访问到（可能是引用失效，或者是不被使用），如果不清除会造成堆积。<br>当资源使用者和资源在不同的分布式节点的时候可能会出现这种情况。  </p>
+<p>为每个被资源使用者使用的<strong>资源</strong>引入一个<strong>租约</strong>，<strong>授与者</strong>（通常是资源提供者）提供租约，<strong>持有者</strong>（通常是资源使用者）获得租约。租约表明资源使用者可以使用资源的时间长度。<br>如果使用者持有资源，到期时就会被使用者释放；如果使用者持有的是资源的引用，到期时就由提供者释放，其引用就标记为无效。<br>在未过期时可以取消或者延长租约。  </p>
+<h3 id="扩展-2"><a href="#扩展-2" class="headerlink" title="扩展"></a>扩展</h3><p>可以设置到期时自动更新的租约，在过期时自动更新；或者设置回调在过期时提醒是否续约。</p>
+<h3 id="特点-5"><a href="#特点-5" class="headerlink" title="特点"></a>特点</h3><p>可以使资源版本相对容易的被新版本替换。<br>增强系统稳定性。</p>
+<h3 id="缺点-5"><a href="#缺点-5" class="headerlink" title="缺点"></a>缺点</h3><p>额外开销、额外逻辑、需要定时监视器</p>
+<hr>
+<h2 id="清除者（Evictor）"><a href="#清除者（Evictor）" class="headerlink" title="清除者（Evictor）"></a>清除者（Evictor）</h2><h3 id="作用-7"><a href="#作用-7" class="headerlink" title="作用"></a>作用</h3><p>可以让我们决定何时以及如何释放资源以优化资源管理，并且可以配置不同的策略来自动决定哪些资源应该释放，以及应该什么时候释放。  </p>
+<h3 id="概念-7"><a href="#概念-7" class="headerlink" title="概念"></a>概念</h3><p>程序中会用到各种资源，在设置缓存或池的时候并不知道这些资源的使用频率。有可能一些资源只用一次，但是程序持续获取它们并且不释放它，这就会导致性能下降和系统不稳定；如果在使用资源之后立刻释放，程序可能又需要重新使用相同资源，这会造成一定性能损耗。  </p>
+<p>可以监控<strong>资源</strong>的使用，用某种<strong>清除策略</strong>（LRU最近最少使用（淘汰最长时间未被使用）、LFU最近最不常用（淘汰一定时间访问次数最少））来控制其生命周期。当资源被<strong>资源使用者</strong>使用时，就会被程序标记，然后<strong>清除者</strong>周期性的根据需要选择没有被标记的资源释放掉。<br>还可以制定其它策略比如按内存大小，优先清除占内存大的资源。  </p>
+<h3 id="扩展-3"><a href="#扩展-3" class="headerlink" title="扩展"></a>扩展</h3><p>可以在清除资源时将资源放入FIFO队列，这样队列满时，前面的就被清除；如果其中的元素又被访问了，就取出使用，避免了重新创建资源的开销，但是会有维护队列的开销。<br>可以配合池来使用，当清除时放入池中，如果池满了就删除对象。</p>
+<h3 id="特点-6"><a href="#特点-6" class="headerlink" title="特点"></a>特点</h3><p>低内存占用、稳定</p>
+<h3 id="缺点-6"><a href="#缺点-6" class="headerlink" title="缺点"></a>缺点</h3><p>额外开销，策略不适合时会造成资源重新获取</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/09/13/学习笔记/模式/资源数据/" title="[模式] 资源、数据">/2017/09/13/学习笔记/模式/资源数据/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/模式/" class="fa fa-tag" rel="tag"> 模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/12/学习笔记/MMP/AMP笔记/" rel="next" title="[MMP] AMP">
+                <i class="fa fa-chevron-left"></i> [MMP] AMP
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/16/学习笔记/模式/接口组件划分/" rel="prev" title="[模式] 接口、组件划分">
+                [模式] 接口、组件划分 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#资源获取"><span class="nav-number">1.</span> <span class="nav-text">资源获取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查找（Lookup）"><span class="nav-number">1.1.</span> <span class="nav-text">查找（Lookup）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用"><span class="nav-number">1.1.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">1.1.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">1.1.3.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展"><span class="nav-number">1.1.4.</span> <span class="nav-text">扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">1.1.5.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">1.1.6.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延迟获取（Lazy-Acquisition）"><span class="nav-number">1.2.</span> <span class="nav-text">延迟获取（Lazy Acquisition）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预先获取（Eager-Acquisition）"><span class="nav-number">1.3.</span> <span class="nav-text">预先获取（Eager Acquisition）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-1"><span class="nav-number">1.3.4.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部分获取（Partial-Acquisition）"><span class="nav-number">1.4.</span> <span class="nav-text">部分获取（Partial Acquisition）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用-2"><span class="nav-number">1.4.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念-2"><span class="nav-number">1.4.2.</span> <span class="nav-text">概念</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资源生命周期"><span class="nav-number">2.</span> <span class="nav-text">资源生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存（Caching）"><span class="nav-number">2.1.</span> <span class="nav-text">缓存（Caching）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#池（Pooling）"><span class="nav-number">2.2.</span> <span class="nav-text">池（Pooling）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用-3"><span class="nav-number">2.2.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念-3"><span class="nav-number">2.2.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-2"><span class="nav-number">2.2.4.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-2"><span class="nav-number">2.2.5.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协调者（Coordinator）"><span class="nav-number">2.3.</span> <span class="nav-text">协调者（Coordinator）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用-4"><span class="nav-number">2.3.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念-4"><span class="nav-number">2.3.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-3"><span class="nav-number">2.3.3.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-3"><span class="nav-number">2.3.4.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源生命周期管理器（Resource-Lifecycle-Manager）"><span class="nav-number">2.4.</span> <span class="nav-text">资源生命周期管理器（Resource Lifecycle Manager）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用-5"><span class="nav-number">2.4.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念-5"><span class="nav-number">2.4.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-4"><span class="nav-number">2.4.3.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-4"><span class="nav-number">2.4.4.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资源释放"><span class="nav-number">3.</span> <span class="nav-text">资源释放</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#租约（Leasing）"><span class="nav-number">3.1.</span> <span class="nav-text">租约（Leasing）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用-6"><span class="nav-number">3.1.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念-6"><span class="nav-number">3.1.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展-2"><span class="nav-number">3.1.3.</span> <span class="nav-text">扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-5"><span class="nav-number">3.1.4.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-5"><span class="nav-number">3.1.5.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清除者（Evictor）"><span class="nav-number">3.2.</span> <span class="nav-text">清除者（Evictor）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用-7"><span class="nav-number">3.2.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念-7"><span class="nav-number">3.2.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展-3"><span class="nav-number">3.2.3.</span> <span class="nav-text">扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-6"><span class="nav-number">3.2.4.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-6"><span class="nav-number">3.2.5.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
