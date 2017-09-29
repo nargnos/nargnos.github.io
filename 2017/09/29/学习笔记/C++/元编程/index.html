@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="模板,C++," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="C++模板元编程的一些内容">
+<meta name="keywords" content="模板,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="元编程笔记">
+<meta property="og:url" content="/2017/09/29/学习笔记/C++/元编程/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="C++模板元编程的一些内容">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-29T11:34:47.090Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="元编程笔记">
+<meta name="twitter:description" content="C++模板元编程的一些内容">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/09/29/学习笔记/C++/元编程/"/>
+
+
+
+
+
+  <title>元编程笔记 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/09/29/学习笔记/C++/元编程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">元编程笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T06:34:31+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/未分类/" itemprop="url" rel="index">
+                    <span itemprop="name">未分类</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  C++模板元编程的一些内容
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>未涉及到所有内容，根据自己经验写的。会的不多，特别是看到Boost的MPL和Phoenix库之后，感觉自己的水平低到尘埃里……</em><br><em>这里先从基础的记，一些内容之前（大部分在变参模板那里，有一部分在惯用法那里）已经提到，这里就简略记录。</em><br><em>另外这里不记录trait的内容（之后再写）。这里主要写的是在编译期可执行的内容。</em></p>
+<h1 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h1><p>直接使用或定义模板类型在执行某些操作后导出。<br>stl里有很多类都是用type导出（关于trait的很多）。<br>如果要修改模板参数类型（创建新的绑定类型）可以用rebind的方式实现。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TType&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sample</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">// 假设这里执行某些类型操作</span></div><div class="line">	<span class="keyword">using</span> Type = TType;</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> TNewType&gt;</div><div class="line">	<span class="keyword">using</span> Rebind = Sample&lt;TNewType&gt;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>也可以使用同样的方式来生成或转换类型。  </p>
+<p>另一种方式是用decltype，比如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Array</span></span></div><div class="line">&#123;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span>... TVals&gt;</div><div class="line">index_sequence&lt;TVals...&gt; Convert(Array&lt;TVals...&gt;);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> arr = Array&lt;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>&gt;;</div><div class="line">	<span class="keyword">using</span> seq = <span class="keyword">decltype</span>(Convert(arr()));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以用result_of来简化前面的过程。  </p>
+<h1 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h1><p>有这几种声明方式：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sample</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">enum</span></div><div class="line">	&#123;</div><div class="line">		Value0 = <span class="number">0</span></div><div class="line">	&#125;;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> Value1 = <span class="number">1</span>;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">int</span> Value2 = <span class="number">2</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>第0和第1个方式是旧的，现在一般用最后一种方式定义。<br>取值就是取类静态变量的操作。  </p>
+<p>stl有现成的类可使用：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">integral_constant&lt;<span class="keyword">int</span>, <span class="number">3</span>&gt;::value</div></pre></td></tr></table></figure></p>
+<p>关于内部实现方式之前记录过，用的是最后一种方式，比较简单。<br>类库还提供bool_constant可以直接定义bool类型数值，并定义了true_type、false_type类型，可以用在tag方式声明的参数中。  </p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>一般可直接用value成员取得。如果不想定义类型，可以在模板参数中直接声明数值参数来使用。  </p>
+<h1 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h1><p>由于在声明时已经赋值了固定的数值，所以需要修改原值只能通过重新创建一个同类型结构，这可以用rebind的方式实现（如果能方便的获取到类型就不需要用这个方式）：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TType, TType TValue&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sample</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> TType Value = TValue;</div><div class="line">	<span class="keyword">template</span>&lt;TType TNewValue&gt;</div><div class="line">	<span class="keyword">using</span> Assign = Sample&lt;TType, TNewValue&gt;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> V0 = Sample&lt;<span class="keyword">int</span>, <span class="number">0</span>&gt;;</div><div class="line">	<span class="keyword">using</span> V1 = V0::Assign&lt;<span class="number">1</span>&gt;;</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">auto</span> value = V1::Value;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注意需要新创建一个类型，如果用做模板参数（一般都用作模板参数），就可以忽略掉这个限制：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="title">GetValue</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">return</span> T::Value;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> V0 = Sample&lt;<span class="keyword">int</span>, <span class="number">0</span>&gt;;</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">auto</span> value0 = GetValue&lt;V0&gt;();</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">auto</span> value1 = GetValue&lt;V0::Assign&lt;<span class="number">1</span>&gt;&gt;();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h1><p>需要创建新类型绑定新值。<br>相关操作函数可以单独分出也可以整合在类型中。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TType, TType TValue&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sample</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> TType Value = TValue;</div><div class="line">	<span class="keyword">template</span>&lt;TType TNewValue&gt;</div><div class="line">	<span class="keyword">using</span> Rebind = Sample&lt;TType, TNewValue&gt;;</div><div class="line">	<span class="keyword">using</span> Type = TType;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 也可以用rebind的方式在Sample中声明</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, T::Type TValue&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Add</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> Type = T::<span class="keyword">template</span> Rebind&lt;T::Value + TValue&gt;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> V0 = Sample&lt;<span class="keyword">int</span>, <span class="number">321</span>&gt;;</div><div class="line">	<span class="keyword">using</span> V1 = Add&lt;V0, <span class="number">123</span>&gt;::Type;</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">auto</span> value = V1::Value;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果导出的是数值，就直接定义静态变量即可：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, T::Type TValue&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Add</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> T::Type Value = T::Value + TValue;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><p>需要用变参模板，相关内容在之前文档写过了，这里简单写一些。  </p>
+<p>一般这样声明：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TType, TType... TValues&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Array</span></span></div><div class="line">&#123;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>类型数组（可直接用tuple）：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... TTypes&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TypeArray</span></span></div><div class="line">&#123;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>可以在内部写一些rebind、运算、取大小或取下标元素的内容。<br>stl中可使用integer_sequence定义数组：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">integer_sequence&lt;<span class="keyword">int</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>&gt; <span class="built_in">array</span>;</div><div class="line"><span class="comment">// 可以使用更方便的</span></div><div class="line">index_sequence&lt;<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>&gt; <span class="built_in">array</span>;</div></pre></td></tr></table></figure></p>
+<p>可以声明递增元素数组：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">make_index_sequence&lt;<span class="number">8</span>&gt;::type a;</div><div class="line">make_integer_sequence&lt;<span class="keyword">long</span>, <span class="number">8</span>&gt;::type b;</div></pre></td></tr></table></figure></p>
+<p>它可以生成具有从0到Size元素的数组类型。  </p>
+<p>另外index_sequence_for可根据模板参数数量来创建下标数组。</p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>数组类型是不能直接用成员变量或者类型定义来获得内容的（type、size除外），需要配合模板参数使用（把内容提取为模板参数，这部分之前写过）：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span>... TValues&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(index_sequence&lt;TValues...&gt; tag)</span></span></div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	test(make_index_sequence&lt;<span class="number">8</span>&gt;::type());</div><div class="line">	test(index_sequence&lt;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>&gt;());</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以在模板类参数中使用：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DoSum</span>;</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TVal,<span class="keyword">size_t</span>... TOthers&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DoSum</span>&lt;TVal,TOthers...&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Value = TVal + DoSum&lt;TOthers...&gt;::Value;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TVal&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DoSum</span>&lt;TVal&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Value = TVal;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sum</span>;</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sum</span>&lt;index_sequence&lt;TVals...&gt;&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Value = DoSum&lt;TVals...&gt;::Value;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> seq = index_sequence&lt;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>&gt;;</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">auto</span> value = Sum&lt;seq&gt;::Value;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h1><h2 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h2><p>可以有两种方式实现，如果方便在取值时做判断（一般是返回数值类型），就可以用?:三元操作符处理；如果不方便，就可以用模板特化的方式选择（如果是返回数值类型一般不需要这种形式）：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TType, <span class="keyword">bool</span> cdt, TType TTrueValue, TType TFalseValue&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sample</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> TType Value = cdt ? TTrueValue : TFalseValue;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TType, <span class="keyword">bool</span> cdt, TType TTrueValue, TType TFalseValue&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sample2</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> TType Value = TFalseValue;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TType, TType TTrueValue, TType TFalseValue&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sample2</span>&lt;TType, true, TTrueValue, TFalseValue&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> TType Value = TTrueValue;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">auto</span> val = Sample&lt;<span class="keyword">int</span>, <span class="literal">true</span>, <span class="number">1</span>, <span class="number">2</span>&gt;::Value;</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">auto</span> val2 = Sample2&lt;<span class="keyword">int</span>, <span class="literal">true</span>, <span class="number">1</span>, <span class="number">2</span>&gt;::Value;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>一般直接用stl的conditional或conditional_t即可，内部实现之前写过。<br>注意它的后两个参数是类型，如果需要返回数值的需要先把数值转换为类型，或者直接用三元操作判断得到具体值。  </p>
+<p>关于switch，就定义多个模板特化即可，比较简单，略。  </p>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>可以用递归或数组展开的方式实现循环，在之前的文档里写过了，这里略。  </p>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p>一些例子前面写了。<br>可以用constexpr函数实现（其实跟直接定义静态变量差不多），或者用一系列的模板定义实现。（太复杂的调用会被编译器拒绝编译，比如出现多个递归）<br>一般在函数中使用的变量都可以定义为模板参数，这样便可以在类型递归定义时传递（某些时候可以降低递归复杂性），比如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TIdx, <span class="keyword">size_t</span> TLeft, <span class="keyword">size_t</span> TRight&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fi</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Value = Fi&lt;TIdx - <span class="number">1</span>, TRight, TLeft + TRight&gt;::Value;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TLeft, <span class="keyword">size_t</span> TRight&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fi</span>&lt;0, TLeft, TRight&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Value = TRight;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TIdx&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GetFi</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Value = Fi&lt;TIdx, <span class="number">0</span>, <span class="number">1</span>&gt;::Value;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">auto</span> value = GetFi&lt;<span class="number">10</span>&gt;::Value;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果能配合执行期函数会好编很多，不过此篇目的是写只在编译期执行的函数，所以例子不太好写。这个例子我本来想用index_sequence的方式实现，不过好像不行。  </p>
+<p>所以写另一个例子：逆序数组。<br>目前想到的这个方法就是创建并逆序下标，然后根据下标取元素，可能有更简单的方法，想到了再补充。<br>例子应该有可以优化的地方（调整一下参数顺序应该可以省掉一些中间步骤），还可能有些bug，懒得改了。<br>可以用栈来实现逆序，但是这里先不用（后面讲）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TIdx, <span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GetN</span>;</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TIdx, <span class="keyword">size_t</span> TVal, <span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GetN</span>&lt;TIdx, TVal, TVals...&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Value = GetN&lt;TIdx - <span class="number">1</span>, TVals...&gt;::Value;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TVal, <span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GetN</span>&lt;0, TVal, TVals...&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Value = TVal;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TIdx, <span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GetNSeq</span>;</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TIdx, <span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GetNSeq</span>&lt;TIdx, index_sequence&lt;TVals...&gt;&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Value = GetN&lt;TIdx, TVals...&gt;::Value;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ReverseIdx</span>;</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ReverseIdx</span>&lt;index_sequence&lt;TVals...&gt;&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> Type = index_sequence&lt;(<span class="keyword">sizeof</span>...(TVals)<span class="number">-1</span> - TVals)...&gt;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TSeq, <span class="keyword">typename</span> TIdxSeq&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GetReverse</span>;</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TSeq, <span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GetReverse</span>&lt;TSeq, index_sequence&lt;TVals...&gt;&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> Type = index_sequence&lt;GetNSeq&lt;TVals, TSeq&gt;::Value...&gt;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Reverse</span>;</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Reverse</span>&lt;index_sequence&lt;TVals...&gt;&gt;</span></div><div class="line">&#123;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Size = <span class="keyword">sizeof</span>...(TVals);</div><div class="line">	<span class="keyword">using</span> TmpSeq = <span class="keyword">typename</span> ReverseIdx&lt;<span class="keyword">typename</span> make_index_sequence&lt;Size&gt;::type&gt;::Type;</div><div class="line">	<span class="keyword">using</span> Data = index_sequence&lt;TVals...&gt;;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">using</span> Type = <span class="keyword">typename</span> GetReverse&lt;Data, TmpSeq&gt;::Type;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> seq = index_sequence&lt;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>&gt;;</div><div class="line">	<span class="keyword">using</span> rev = Reverse&lt;seq&gt;::Type;	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h1><p>栈、队列的实现比较简单，不过会受需要创建新类型的限制：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span>... Vals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Stack</span>;</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TTop, <span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Stack</span>&lt;TTop, TVals...&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">size_t</span> Top = TTop;</div><div class="line">	<span class="keyword">using</span> Pop = Stack&lt;TVals...&gt;;</div><div class="line"></div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TVal&gt;</div><div class="line">	<span class="keyword">using</span> Push = Stack&lt;TVal, TTop, TVals...&gt;;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">template</span>&lt;&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Stack</span>&lt;&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">template</span>&lt;<span class="keyword">size_t</span> TVal&gt;</div><div class="line">	<span class="keyword">using</span> Push = Stack&lt;TVal&gt;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> s = Stack&lt;&gt;;</div><div class="line">	<span class="keyword">using</span> s1 = s::Push&lt;<span class="number">1</span>&gt;;</div><div class="line">	<span class="keyword">using</span> s2 = s1::Push&lt;<span class="number">2</span>&gt;;</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">auto</span> val1 = s2::Top;</div><div class="line">	<span class="keyword">using</span> s3 = s2::Pop;</div><div class="line">	<span class="keyword">constexpr</span> <span class="keyword">auto</span> val2 = s3::Top;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>队列的实现无非就是调整一下参数顺序，比较容易修改，略。  </p>
+<p>有了数据结构后，某些算法就很容易实现了，比如上面的逆序（顺便展示容器的使用方法，其实总共加起来没比前面的少多少）：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TStack, <span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DoReverse</span>;</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TStack, <span class="keyword">size_t</span> TVal, <span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DoReverse</span>&lt;TStack, TVal, TVals...&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> NewStack = <span class="keyword">typename</span> TStack::<span class="keyword">template</span> Push&lt;TVal&gt;;</div><div class="line">	<span class="keyword">using</span> Type = <span class="keyword">typename</span> DoReverse&lt;NewStack, TVals...&gt;::Type;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TStack, <span class="keyword">size_t</span> TVal&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DoReverse</span>&lt;TStack, TVal&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> Type = <span class="keyword">typename</span> TStack::<span class="keyword">template</span> Push&lt;TVal&gt;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ConvertStack</span>;</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ConvertStack</span>&lt;Stack&lt;TVals...&gt;&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> Type = index_sequence&lt;TVals...&gt;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Reverse</span>;</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">size_t</span>... TVals&gt;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Reverse</span>&lt;index_sequence&lt;TVals...&gt;&gt;</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> Type = <span class="keyword">typename</span> ConvertStack&lt;<span class="keyword">typename</span> DoReverse&lt;Stack&lt;&gt;, TVals...&gt;::Type&gt;::Type;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">using</span> seq = index_sequence&lt;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>&gt;;</div><div class="line">	<span class="keyword">using</span> rseq = Reverse&lt;seq&gt;::Type;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面例子在msvc通过，gcc没测。  </p>
+<p>关于其它结构，个人觉得能基于数组实现的结构都可以实现。  </p>
+<h1 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h1><p>想到了新的再写</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/09/29/学习笔记/C++/元编程/" title="元编程笔记">/2017/09/29/学习笔记/C++/元编程/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/模板/" class="fa fa-tag" rel="tag"> 模板</a>
+          
+            <a href="/tags/C/" class="fa fa-tag" rel="tag"> C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/学习笔记/安全/安全技巧/" rel="next" title="安全技巧">
+                <i class="fa fa-chevron-left"></i> 安全技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#类型"><span class="nav-number">1.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数值"><span class="nav-number">2.</span> <span class="nav-text">数值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.1.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#赋值"><span class="nav-number">3.</span> <span class="nav-text">赋值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运算"><span class="nav-number">4.</span> <span class="nav-text">运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数组"><span class="nav-number">5.</span> <span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用法"><span class="nav-number">5.1.</span> <span class="nav-text">用法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制"><span class="nav-number">6.</span> <span class="nav-text">控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#条件"><span class="nav-number">6.1.</span> <span class="nav-text">条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环"><span class="nav-number">6.2.</span> <span class="nav-text">循环</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数"><span class="nav-number">7.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器"><span class="nav-number">8.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#未完待续"><span class="nav-number">9.</span> <span class="nav-text">未完待续</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

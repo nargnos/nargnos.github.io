@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="安全相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安全技巧">
+<meta property="og:url" content="/2017/09/19/学习笔记/安全/安全技巧/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="安全相关">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-29T13:05:22.918Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安全技巧">
+<meta name="twitter:description" content="安全相关">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/09/19/学习笔记/安全/安全技巧/"/>
+
+
+
+
+
+  <title>安全技巧 | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/09/19/学习笔记/安全/安全技巧/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">安全技巧</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T15:51:24+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/安全/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  安全相关
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>TODO: 原始笔记，内容较简练，记录时未记录基础内容。目前不需要复习这类知识，之后可能要再看书补充一些内容，这里内容太少了。</em></p>
+<h1 id="安全编码"><a href="#安全编码" class="headerlink" title="安全编码"></a>安全编码</h1><p>常见字符串错误有</p>
+<ul>
+<li><p>无界字符串复制<br>将一个无界数据源复制到定长字符数组时<br>strcpy和strcat都是无界复制操作<br>可以通过strlen（取字符串字符长度，不包括0）取得长度+1再分配内存<br>gets和c++的cin也可能会导致越界<br>可以配置cin::width限制读入长度</p>
+</li>
+<li><p>差一错误<br>结尾空字符计算长度时忽略，或者循环的时候对结束条件判断错误<br>一个字符串的结构为 字符串\0 ，strlen只返回前面的部分，声明为数组时会包括后面的\0<br>0~n，判断i&lt;n的循环共执行n次， 1~n包括n的话有n个数，中间隔了n-1个数，0~n包括n就有n+1个，中间隔了n-0</p>
+</li>
+<li><p>空结尾<br>字符末尾忽略了空字符<br>声明数组时填的大小可能会忽略掉最后一个\0导致输出时出错</p>
+</li>
+</ul>
+<ul>
+<li>字符串截断<br>数组长度不足以容纳内容，拷贝字符串到数组时，数组中的字符串截断缺了\0，输出时也会出错，或者会丢失信息</li>
+</ul>
+<h1 id="溢出"><a href="#溢出" class="headerlink" title="溢出"></a>溢出</h1><h2 id="栈粉碎"><a href="#栈粉碎" class="headerlink" title="栈粉碎"></a>栈粉碎</h2><p>指的是缓冲区溢出覆盖到执行栈中的数据。<br>shellcode因为代码注入时通常只是开shell，所以叫shellcode<br>缓冲区溢出有可能可以导致栈帧被覆盖，这时候如果<strong>覆盖到了栈帧的返回地址</strong>，就可以进行任意跳转<br>跳转到代码本身其它位置这种形式的攻击（修改了程序控制流的注入称为弧注入）只能获得程序本身控制权，如果要运行任意代码需要注入代码才有用<br>弧注入留下痕迹很小（覆盖区很小），而且是基于数据的攻击，所以无法通过将内存段属性设置为不可执行的方式来保护<br><strong>跳转指针可以写跳到某一函数，这样可以在指针前写该函数的一些参数，跳转过去就相当于用自定义参数调用了该函数</strong></p>
+<p>需要注入的代码可以写在溢出部分跳转数据的后面，这时候可能并不能获得这部分地址，这就需要多做一些处理，首先在栈中执行代码需要关闭DEP，具体写后面<br>DEP并不能防止溢出，而是禁止栈执行权限，所以不能防止弧注入</p>
+<p><strong>防御</strong><br>使用一些缓存策略可以进行预防<br>分为静态预防策略和动态预防策略</p>
+<p>静态分配的缓冲区会假定一个固定大小，一旦被填满就不能再添加任何数据，因为会丢弃数据，所以为了保证完整性需要进行有效性验证处理</p>
+<p>动态分配的缓冲区如果对输入不加以限制，会消耗内存，这可以被DoS利用</p>
+<p>另外不要用gets这类有溢出风险的函数</p>
+<p>微软环境中可以使用strsafe.h中的函数进行操作，它保证所有字符串都是null结尾（甚至被截断时），并且不会越缓冲区边界写</p>
+<p>cin&gt;&gt;std::string 是不会有溢出的，string可以动态调整大小（所以有些人喜欢串用来做缓冲区）</p>
+<p>编译器调试的时候会提示有溢出，不过要输入导致溢出的数据才行，编译或输入正常数据时，调试是调不出来的</p>
+<p>系统在分配栈内存时会加入随机大小的空隙，这样可以使攻击者更难定位栈上的返回地址（ret地址位置不定）</p>
+<p>还有一些方式是在栈中加入难以插入（在溢出位置之前添加哨位，出口处判断）或难以伪造（栈中插入随机值，之后检查）的值保护栈<br>还有就是重排局部变量，将缓冲区放到指针后面，并将函数参数中的指针复制到局部缓冲区变量之前<br>这些特性在很多编译器都有提供</p>
+<h2 id="指针诡计"><a href="#指针诡计" class="headerlink" title="指针诡计"></a>指针诡计</h2><p>只需要区分函数指针和数据指针就行了<br>可以<strong>通过覆盖函数指针来将程序控制权转移到shellcode</strong><br>另外<strong>数据指针可以被修改让程序对任意内存位置赋值</strong></p>
+<p>很难预防指针诡计，这需要在编程阶段消除漏洞</p>
+<p>要使溢出能覆盖函数或数据指针，需要满足</p>
+<ul>
+<li>缓冲区与目标函数或数据指针必须分配在同一个段内</li>
+<li>缓冲区必须位于比目标指针更低的地址处</li>
+<li>缓冲区必须可被缓冲区溢出利用</li>
+</ul>
+<p>栈粉碎不可能发生于数据段中，但是覆写函数指针在任何内存段都会发生</p>
+<p>如果利用缓冲区溢出漏洞时，如果一个指针接下来被用作赋值操作的目的地址，就可以控制该地址达到修改其他内存位置内容的目的，称为<strong>任意内存写</strong></p>
+<p>在32位下因为int跟指针长度一样，所以可以很容易的覆写任意位置的一个地址</p>
+<p>还有的一些方式就是iat hook类似的东西了，linux程序也有类似结构<br>如果任意内存写写的是iat，之后调用一些函数时就可以跳转到shellcode了</p>
+<p>在linux中，可定义在main之前之后执行的函数，这些函数是存储为指针形式的，也可以把这一段覆盖，这一段都是一起存在的</p>
+<p><strong>虚指针修改</strong><br>虚函数表中的函数指针可以被修改，指向任意函数是可以的，在其它手段失效的情况下可以考虑</p>
+<p>atexit函数设置的地址也可以被修改<br>longjmp得到的存储结构也可以被修改</p>
+<p><strong>异常处理</strong><br>windows提供3种形式的异常处理器，操作系统按给定顺序调用它们直到某一个被成功执行（责任链）</p>
+<ol>
+<li>向量化异常处理(Vectored exception handling, VEH)，先于结构化异常处理器调用（未被漏洞利用广泛使用所以略掉）</li>
+<li>结构化异常处理(Structured …, SEH)，实现为每函数或每线程的异常处理器（即每个函数或线程都有自己的异常处理器）</li>
+<li>系统默认异常处理，全局的异常过滤器和处理器，用于处理整个进程的异常情况，如果前面的都没处理，这个就会被调用</li>
+</ol>
+<p><strong>SEH</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">typedef struct _EXCEPTION_REGISTRATION_RECORD &#123;</div><div class="line">    struct _EXCEPTION_REGISTRATION_RECORD *Next;</div><div class="line">    PEXCEPTION_ROUTINE Handler;</div><div class="line">&#125; EXCEPTION_REGISTRATION_RECORD;</div><div class="line"></div><div class="line">NTAPI</div><div class="line">EXCEPTION_ROUTINE (</div><div class="line">    _Inout_ struct _EXCEPTION_RECORD *ExceptionRecord,</div><div class="line">    _In_ PVOID EstablisherFrame,</div><div class="line">    _Inout_ struct _CONTEXT *ContextRecord,</div><div class="line">    _In_ PVOID DispatcherContext</div><div class="line">    );</div></pre></td></tr></table></figure></p>
+<p>编译器将一个指向EXCEPTION_REGISTRATION_RECORD结构的指针的地址写入fs段寄存器所引用的地址，其结构存储的形式是链表，Handler是回调地址<br>windows对异常处理器施加几条强制性措施<br>EXCEPTION_REGISTRATION_RECORD必须在栈上分配<br>Next必须在高位<br>其结构必须按双字节边界对齐</p>
+<p>一般函数开头会建立这样的栈帧<br>|Handler|<br>|前一个Handler，fs:[0]位于函数起始处|<br>|哨位|<br>|保存的ebp|<br>|返回地址|</p>
+<p>如果栈变量缓冲区溢出，异常处理地址将可以被覆写为其它地址</p>
+<p>除了覆盖函数指针外，还可以替换TEB中的指针<br>windows已经加入有效性校验功能，但是在很多情况下还是可以被利用[Litchfield 03a]</p>
+<p>有些时候程序会使用SetUnhandledExceptionFilter来设置全局未捕获的异常处理函数，如果使用任意内存写就可以把相应地址覆盖，所以编译器为了防范就添加了SAFE SEH的选项来讲地址编码</p>
+<p>避免这类漏洞的方法就是降低漏洞进程的权限，并且设置内存区域要么可写要么可执行，但不能两者兼备</p>
+<h2 id="动态内存管理"><a href="#动态内存管理" class="headerlink" title="动态内存管理"></a>动态内存管理</h2><p>对malloc或RtlHeap使用不当会造成漏洞，堆中的内存由动态分配器或内存管理器管理</p>
+<p>各种内存管理器使用的算法有区别，但是大多是Knuth在《Art of Computer Programming》中所描述的动态存储分配算法变种<br>Knuth定义了一种动态存储分配器算法，用于对来自一个较大的存储区域可变大小内存块进行分配和释放。</p>
+<p>动态存储分配需要维护一个可用空间列表，按照Knuth的描述“通常最好让可用空间自己携带这样的列表”</p>
+<p>动态内存管理容易产生缺陷，有：初始化错误、检查返回值失败、对已释放内存写、多次释放同一块内存、不匹配的内存管理函数、混淆标量和数组的使用、不正确使用内存分配函数</p>
+<p><strong>初始化</strong><br>malloc分配的内存块是未初始化的，<br>这样可能在操作敏感信息后，信息残留在内存中可以被再次读到</p>
+<p><strong>检查返回值失败</strong><br>当无法分配内存的时候需要处理，哪怕是返回错误信息并结束程序<br>可以使用nothrow来处理</p>
+<p><strong>对已释放内存写</strong><br>引用已释放内存，写入空闲内存块可能会覆盖并破坏内存管理器的数据结构</p>
+<p><strong>多次释放同一块内存</strong></p>
+<p><strong>不匹配的内存管理函数</strong><br>无法保证代码能一直正确工作</p>
+<p><strong>混淆标量和数组的使用</strong><br>delete[]和delete释放的范围不同的，用错可能会使部分对象调用不到dtor</p>
+<p><strong>不正确使用内存分配函数</strong><br>不要用malloc分配0大小的指针</p>
+<p><strong>@ 堆缓冲区溢出</strong><br><strong>这部分要重新看一下，主要是了解内存管理器结构</strong><br>对堆缓冲区溢出的利用通常比栈的困难些<br>主要原理就是破坏内存管理器的数据结构（这需要熟知内存分配管理器才行）</p>
+<p><strong>unlink技术</strong><br>可以欺骗unlink往任意位置写入指针大小的数据<br>当分配的内存块边界标识被覆写时（出现在连续分配几次内存的情况），free操作可能会把攻击者提供的数据写到设定的指针位置，达到任意内存写的效果<br>可以任意位置写后，写到iat就可以执行了</p>
+<p><strong>frontlint技术</strong><br>更难使用，但是更危险，书中说目前没有已知的利用报告</p>
+<p><strong>@ 双重释放</strong></p>
+<p>必须满足相邻内存块是已分配的，这样就不会发生合并<br>释放第二次时，管理器数据结构被破坏，第二次分配可能会返回同样信息</p>
+<p><strong>@ 写入已释放内存</strong><br>跟双重释放类似，具体看书</p>
+<h2 id="RtlHeap"><a href="#RtlHeap" class="headerlink" title="RtlHeap"></a>RtlHeap</h2><p>该函数的数据结构相关信息存储在PEB，PEB维护每个进程的全局变量，并且被每个线程TEB引用，TEB又被fs寄存器引用</p>
+<p>可以用PEB获取堆最大数量、实际数量、默认堆位置以及指向包含所有堆位置的数组的指针</p>
+<p>总之又是利用覆写指针导致内存管理器合并的时候将数据写到其它位置，具体看书</p>
+<p>防止这类攻击可以将分配内存的地址随机化，或添加一些哨位页（无法存取的内存），这样溢出写到临接内存时会出错</p>
+<h1 id="整数安全"><a href="#整数安全" class="headerlink" title="整数安全"></a>整数安全</h1><p>在分配内存空间时取strlen，注意有可能会导致取结果整数溢出<br>（比如假定用char来存储strlen的话，长度大于可表示的最大值时会变成其它值，当这个值较小时分配的空间就不够存储字符串，将原本很长的字符串写入时就能引发溢出）</p>
+<p>注意上下溢、符号无符号类型的转换，这会导致内存分配得到的结果不是正确的值<br>注意数字间的加减乘除运算，和存储类型的范围，这可能导致范围的降级使表述数值错误</p>
+<p>注意数组赋值时下标的检查，当是有符号类型时要进行负数检查，因为负数下标也是可以的</p>
+<p>外部输入都要检查上下界</p>
+<h1 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h1><p>printf、sprintf<br>变参函数导致格式化输出函数的使用中容易产生漏洞<br>va_list 声明类型<br>va_start 初始化<br>va_arg 返回下一个参数的值并递增参数指针<br>va_end<br>（原理就是取第一个参数地址一直往下读就是了，按照压栈顺序后面的参数在高位地址，直接递增就可以取到类型，另外必须要_cdecl调用，由调用者恢复栈，函数自己不知道有几个参数进来）</p>
+<p>变参函数需要一个固定参数来确定边界</p>
+<p>在使用sprintf时，有条件可以发生缓冲区溢出<br>即使限制了格式输出类型长度仍有可能溢出<br>比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">char outbuf[512];</div><div class="line">char buff[512];</div><div class="line">sprintf(buff,&quot;xxxx: %.400s&quot;,user); // 这里限制了写入字节数，但是可以写入格式字符串</div><div class="line">sprintf(outbuf,buffer); // 当buffer是格式字符串时，将会出现问题，可以写 %xxxd，填充outbuf到溢出，然后后面跟上对应的返回地址和shellcode，这样在执行函数时就发生了溢出</div></pre></td></tr></table></figure></p>
+<p>又比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">void Output(char* str)</div><div class="line">&#123;</div><div class="line">	printf(str);</div><div class="line">&#125;</div><div class="line">// 写格式字符串的时候就产生错误了，传入%s%s%s%s%s...就可以查看栈内容</div></pre></td></tr></table></figure></p>
+<p>这个方式可以用来重建栈内存（传入%08x.%08x.%08x…输出16进制），可以进一步进行攻击</p>
+<p>覆写内存<br>用的是%n，其作用是把输出长度写到以参数形式提供的整数地址中<br>这个就差不多相当于任意位置写了，不过目前编译器调试时禁止了这个参数<br>因为格式输出有选项可以填充指定个数的字节，所以这类不需要写很长，但是选项对填充大小有限制的，所以要写类似地址的值就比较困难，这时候可以把它拆成字节多次写入就可以了</p>
+<h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><p>linux的符号链接曾经有bug</p>
+<p>shellexecute依赖于注册表，运行程序时用createprocess更可靠</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/09/19/学习笔记/安全/安全技巧/" title="安全技巧">/2017/09/19/学习笔记/安全/安全技巧/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/其它/接下来的内容规划/" rel="next" title="接下来的内容规划">
+                <i class="fa fa-chevron-left"></i> 接下来的内容规划
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/29/学习笔记/C++/元编程/" rel="prev" title="元编程笔记">
+                元编程笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安全编码"><span class="nav-number">1.</span> <span class="nav-text">安全编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#溢出"><span class="nav-number">2.</span> <span class="nav-text">溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈粉碎"><span class="nav-number">2.1.</span> <span class="nav-text">栈粉碎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针诡计"><span class="nav-number">2.2.</span> <span class="nav-text">指针诡计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态内存管理"><span class="nav-number">2.3.</span> <span class="nav-text">动态内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RtlHeap"><span class="nav-number">2.4.</span> <span class="nav-text">RtlHeap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#整数安全"><span class="nav-number">3.</span> <span class="nav-text">整数安全</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#格式化输出"><span class="nav-number">4.</span> <span class="nav-text">格式化输出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件"><span class="nav-number">5.</span> <span class="nav-text">文件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
