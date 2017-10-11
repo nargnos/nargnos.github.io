@@ -83,10 +83,32 @@
 <meta property="og:site_name" content="{S}">
 <meta property="og:description" content="不全待补">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-21T07:04:01.212Z">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/layers.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/pipesAndFilters.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/centralRepository.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/blackboard.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/domainObject.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/messaging.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/messageChannel.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/messageEndpoint.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/messageTranslator.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/messageRouter.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/publisherSubscriber.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/broker.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/clientProxy.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/requestor.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/invoker.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/clientRequestHandler.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/serverRequestHandler.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/mvc.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/pac.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/microkernel.jpg">
+<meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/reflection.jpg">
+<meta property="og:updated_time" content="2017-10-11T05:33:40.345Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[模式] 架构型">
 <meta name="twitter:description" content="不全待补">
+<meta name="twitter:image" content="/2017/09/03/学习笔记/模式/架构型/layers.jpg">
 
 
 
@@ -355,7 +377,8 @@
 <h2 id="层（Layers）"><a href="#层（Layers）" class="headerlink" title="层（Layers）"></a>层（Layers）</h2><p>多层（Multitier/n-tier/multilayered）<br>用于分解大系统</p>
 <h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><p>分层帮助将应用结构分解为子任务群，使各层可以独立的开发，每一层都有明确而具体的职责。</p>
 <p><em>比如网络协议的分层，或者在介绍框架时一般会附带一张结构图，基本都是层次结构。</em>  </p>
-<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>将系统分层，按次序排列，底层是系统基础，其上的<strong>每一层都只用到下一层提供的抽象</strong>（没有更进一步的直接依赖关系），直到顶层。在某一层中用到的所有组件都工作在同一个抽象层。每个独立层都要防止较高层直接访问较低层。    </p>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/layers.jpg" alt="layers.jpg" title="">
+<p>将系统分层，按次序排列，底层是系统基础，其上的<strong>每一层都只用到下一层提供的抽象</strong>（没有更进一步的直接依赖关系），直到顶层。在某一层中用到的所有组件都工作在同一个抽象层。每个独立层都要防止较高层直接访问较低层。    </p>
 <p>在使用时向顶层发送请求，如果不能完成这个请求该层就向下传递，直到底层；在请求处理完成后，便一层层向上传递回顶层。在传递时可以判断这个事件是否应该继续往下传递，如果不需要，可向上层返回处理结果。可以在某一层缓存请求结果，这样在请求传递时可以检查缓存直接返回结果，而不需要传递到底层。<br>也可以像网络协议那样使用，每一层附加一些解析信息，一层层添加完毕后传递给其它对象，再一层层解析出来。</p>
 <p>划分的标准可以通过各种不同的维度来定义，比如抽象性、粒度、硬件距离以及变化率。<br>划分的关键问题是确定合适的层数；太少可能无法将系统的不同问题充分的分开以便独立升级；太多会导致架构过于零碎而没有清晰的视图和范畴，从而难以改进，另外还可能还会引入性能问题。<br>为每一层提供一个接口并公开给其它层访问，控制和数据流可以<strong>双向传输</strong>，往上可以用回调或命令的方式传送数据，往下通过调用下层接口。  </p>
 <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>可以用以下步骤构建，但不是所有步骤都是必须的：</p>
@@ -385,7 +408,8 @@
 <hr>
 <h2 id="管道和过滤器（Pipes-and-Filters）"><a href="#管道和过滤器（Pipes-and-Filters）" class="headerlink" title="管道和过滤器（Pipes and Filters）"></a>管道和过滤器（Pipes and Filters）</h2><p>用于处理数据流</p>
 <h3 id="作用-2"><a href="#作用-2" class="headerlink" title="作用"></a>作用</h3><p>为<strong>处理数据流</strong>的系统提供了一种结构：每个处理步骤封装在一个<strong>过滤器组件</strong>中，数据通过相邻过滤器之间的<strong>管道传输</strong>，重组过滤器可以建立相关系统族。<br>也就是将应用的任务划分为几个自我完备的数据处理步骤并将这些步骤通过中间数据缓存连接到数据处理管道中。  </p>
-<h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><p>在创建处理或转换输入数据流的系统时，需要把任务分解成几个阶段，而且需求容易变动，可以用这个模式解决。<br>把系统任务分成几个顺序的步骤，每个步骤由一个过滤器组件实现，步骤间采用数据流连接（前一个步骤输出是下一个步骤输入）。  </p>
+<h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/pipesAndFilters.jpg" alt="pipesAndFilters.jpg" title="">
+<p>在创建处理或转换输入数据流的系统时，需要把任务分解成几个阶段，而且需求容易变动，可以用这个模式解决。<br>把系统任务分成几个顺序的步骤，每个步骤由一个过滤器组件实现，步骤间采用数据流连接（前一个步骤输出是下一个步骤输入）。  </p>
 <p><strong>过滤器</strong>在产生任何输出之前会将它的输入全部处理，系统的输入由数据源提供，输出会被存储到数据汇点（比如文件什么的），这些过滤器、数据源、数据汇点由管道顺序连接，每个管道处理步骤间的数据流动。通过管道连接的过滤器序列叫处理流水线（Processing pipeline）。</p>
 <p>过滤器是流水线的处理单元，它可以丰富、提炼、转换它的输入数据。<br>流水线可以等待数据流入或者主动从连一个流水线拉出数据（推拉模型）。<br>可以用循环的方式工作，从流水线取得输入数据并将输出数据输出流水线。<br>可以将流水线设计为一个独立的程序或线程。  </p>
 <p><strong>管道</strong>用来处理它们之间的连接，不过如果过滤器用推模型实现的话，在管道中需要调用相关的函数，会使过滤器重组更加困难。<br>管道可以设置一个缓冲区，如果过滤器是独立的线程，还可以将管道设计为一个队列用来同步。  </p>
@@ -406,11 +430,13 @@
 <hr>
 <h2 id="共享仓库（Shared-Repository）"><a href="#共享仓库（Shared-Repository）" class="headerlink" title="共享仓库（Shared Repository）"></a>共享仓库（Shared Repository）</h2><p>某些应用是数据驱动的，组件之间的交互不遵循特定业务流程，而是依赖于操作的数据。这会比较难将程序的各个部分连接起来，但是还是要保证它们之间的交互可控。  </p>
 <h3 id="作用-3"><a href="#作用-3" class="headerlink" title="作用"></a>作用</h3><p>将所有数据维护在中心仓库（Central Repository）中，并被数据驱动应用的<strong>所有功能组件共享</strong>，同时让数据的可用性、质量及状态来触发和协调应用程序的控制流。<br>帮助结构化那些功能和协作均由数据驱动的应用。它负责维护应用组件的公共数据，这些组件在共享仓库中能够自行访问并修改数据，此外，其中的数据状态影响特定组件的控制流。  </p>
-<h3 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h3><p>组件直接工作在共享存储库维护的数据之上，这样其它组件可以在数据变化时做出反应（观察者）。如果创建了新的数据，或者从环境中接收到新的数据，也一起放进去，以便其它组件访问。<br>存储库的访问需要同步，因为可能会被多个应用组件访问；应用组件不需要关心其内部实现。存储库可以通过相应的质量属性来表示数据的质量（如最新、过时、不确定、损坏等），组件可以用该信息来控制对该数据的特定处理。  </p>
+<h3 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/centralRepository.jpg" alt="centralRepository.jpg" title="">
+<p>组件直接工作在共享存储库维护的数据之上，这样其它组件可以在数据变化时做出反应（观察者）。如果创建了新的数据，或者从环境中接收到新的数据，也一起放进去，以便其它组件访问。<br>存储库的访问需要同步，因为可能会被多个应用组件访问；应用组件不需要关心其内部实现。存储库可以通过相应的质量属性来表示数据的质量（如最新、过时、不确定、损坏等），组件可以用该信息来控制对该数据的特定处理。  </p>
 <hr>
 <h2 id="黑板（Blackboard）"><a href="#黑板（Blackboard）" class="headerlink" title="黑板（Blackboard）"></a>黑板（Blackboard）</h2><p>可作为行为树的辅助模块使用。</p>
 <h3 id="作用-4"><a href="#作用-4" class="headerlink" title="作用"></a>作用</h3><p>对于<strong>无确定性求解策略</strong>的问题比较有用。在这个模式中有几个专用子系统收集信息并建立一个可能的局部解或近似解。<br>通过将多个具有确定性解决方案的算法或更小的组件结合起来，使用启发式的运算来解决这类任务以逐渐改善过渡性的假定解决方案。</p>
-<h3 id="概念-3"><a href="#概念-3" class="headerlink" title="概念"></a>概念</h3><p>当需要做一个决策的时候，需要输入一些外部信息，如果为每个外部信息都设置一个接口，会导致接口复杂，把这堆数据集中在一个数据结构中处理，可以使调用简单化而且可使使用者更像一个黑盒。<br>其思想是多个独立程序集共享一个数据，可以放入不同的数据供感兴趣的程序使用。</p>
+<h3 id="概念-3"><a href="#概念-3" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/blackboard.jpg" alt="blackboard.jpg" title="">
+<p>当需要做一个决策的时候，需要输入一些外部信息，如果为每个外部信息都设置一个接口，会导致接口复杂，把这堆数据集中在一个数据结构中处理，可以使调用简单化而且可使使用者更像一个黑盒。<br>其思想是多个独立程序集共享一个数据，可以放入不同的数据供感兴趣的程序使用。</p>
 <p>针对的是那些在把原始数据转换为高层数据结构方面没有可行的确定解的问题，这些问题常常出现在一些不成熟的领域，其中没有相近的已知方法或可行的方法。<br>将一个问题分解成若干子问题时，部分问题需要跨几个领域的专业知识，并且需要不同的表示和泛型。许多情况不一定能产出最优解，有可能得到次优或没有解；有可能在给定时间无法搜索所有的解空间（所有可能解的集合），或者领域还不成熟。所以黑板系统需要仔细做文档，并且如果重要的决定需要依赖它的结果，必须验证这个结果。  </p>
 <p>这个模式的思想是让多模块在一个<strong>公共数据结构</strong>上<strong>合作</strong>。每个程序用来解决整个任务中的一个<strong>特定部分</strong>，<strong>所有</strong>程序一起工作以解决问题。这些程序彼此独立但不相互调用，它们的活动也没有预先确定的顺序，系统的执行方向主要由当前状态决定。并设置有一个中心控制组件评估处理当前状态，协调各个程序。</p>
 <p>在求解过程中，系统通过将求解方案组合、更改、否定来工作。每一个解表示一部分问题和其解法的一个阶段，解空间被组织成几个抽象层次，最低层次由输入的一个内部表示构成，系统的潜在解决方案处于最高层。  </p>
@@ -445,25 +471,31 @@
 <h3 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h3><p>测试困难，不能保证有解，低效，开发麻烦，缺少对并行机制的支持</p>
 <hr>
 <h2 id="域对象（Domain-Object）"><a href="#域对象（Domain-Object）" class="headerlink" title="域对象（Domain Object）"></a>域对象（Domain Object）</h2><h3 id="作用-5"><a href="#作用-5" class="headerlink" title="作用"></a>作用</h3><p>将应用中所有明确的功能封装为一个自我完备的构造块。<br>为域对象提供一个跟实现相分离的接口，每个域对象程序只使用这些接口来访问其它域对象。<br>将自我完备的连贯功能和基础性责任封装成定义良好的实体，通过一个或多个显式接口提供功能，并隐藏内部结构和实现。  </p>
-<h3 id="概念-4"><a href="#概念-4" class="headerlink" title="概念"></a>概念</h3><p>将应用中不同功能的职责分开，每个功能都各自封装，从而可以独立改变。  </p>
+<h3 id="概念-4"><a href="#概念-4" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/domainObject.jpg" alt="domainObject.jpg" title="">
+<p>将应用中不同功能的职责分开，每个功能都各自封装，从而可以独立改变。  </p>
 <hr>
 <h1 id="分布式系统"><a href="#分布式系统" class="headerlink" title="分布式系统"></a>分布式系统</h1><h2 id="消息传递（Messaging）"><a href="#消息传递（Messaging）" class="headerlink" title="消息传递（Messaging）"></a>消息传递（Messaging）</h2><p>有些分布式系统是由独立开发的服务组成的，但是如果要组成完整的系统，这些服务必须能够可靠的交互，同时又不能产生过分紧密的依赖关系。</p>
 <h3 id="作用-6"><a href="#作用-6" class="headerlink" title="作用"></a>作用</h3><p>通过消息总线连接不同服务，允许它们异步地传递数据消息。对消息进行编码，这样发送者和接受者不必静态地了解所有的数据类型信息即可可靠的通信。  </p>
-<h3 id="概念-5"><a href="#概念-5" class="headerlink" title="概念"></a>概念</h3><p>客户端动态地把固定类型的消息发送给特定的远程服务，而不发给特定的方法。所以它可以实现多对一的通信方式，同时不需要静态地预定义接口，否则这个接口会导致客户端对服务的依赖。</p>
+<h3 id="概念-5"><a href="#概念-5" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/messaging.jpg" alt="messaging.jpg" title="">
+<p>客户端动态地把固定类型的消息发送给特定的远程服务，而不发给特定的方法。所以它可以实现多对一的通信方式，同时不需要静态地预定义接口，否则这个接口会导致客户端对服务的依赖。</p>
 <p>构成分布式系统的服务通过<strong>消息总线</strong>连接（多个服务共同连接一个总线，由总线分发消息）在一起，利用消息总线异步地与其他服务交换数据信息。<br>消息通常是自描述的，它既包含描述结构的元数据还包含相应的数值。消息对它的发送者与接收者及消息中间件都隐藏了内容的具体数据格式，这样对数据格式的修改对于系统就是透明的。可以用xml、json等作为消息格式。    </p>
 <p>消息客户端只知道所用的服务端点，不知道服务的特定接口，所以在将消息发送到特定的服务前，无法静态的检查消息的格式和内容；由接收消息的服务解析消息，这包括验证和提取消息内容，如果无法理解消息中的一些域，可直接忽略，因为有些消息格式设计的时候并没有考虑它们的协作。  </p>
 <h3 id="特点-3"><a href="#特点-3" class="headerlink" title="特点"></a>特点</h3><p>松耦合</p>
 <h3 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h3><p>缺少静态定义的接口，处理自描述信息会有开销</p>
 <h2 id="信道（Message-Channel）"><a href="#信道（Message-Channel）" class="headerlink" title="信道（Message Channel）"></a>信道（Message Channel）</h2><p>增加消息交换的可靠性</p>
 <h3 id="作用-7"><a href="#作用-7" class="headerlink" title="作用"></a>作用</h3><p>将彼此协作的客户端和服务连接起来，使它们能够交换消息。  </p>
-<h3 id="概念-6"><a href="#概念-6" class="headerlink" title="概念"></a>概念</h3><p>当客户端准备通信时，将消息写到Channel中，处理它的服务可以提取并处理消息。<br>消息的接受者一定对其包含的信息感兴趣，可以进行使用和处理。<br>连接的方式可以是点对点、或者出版者订阅者的方式。  </p>
+<h3 id="概念-6"><a href="#概念-6" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/messageChannel.jpg" alt="messageChannel.jpg" title="">
+<p>当客户端准备通信时，将消息写到Channel中，处理它的服务可以提取并处理消息。<br>消息的接受者一定对其包含的信息感兴趣，可以进行使用和处理。<br>连接的方式可以是点对点、或者出版者订阅者的方式。  </p>
 <h2 id="消息端点（Message-Endpoint）"><a href="#消息端点（Message-Endpoint）" class="headerlink" title="消息端点（Message Endpoint）"></a>消息端点（Message Endpoint）</h2><h3 id="作用-8"><a href="#作用-8" class="headerlink" title="作用"></a>作用</h3><p>当数据传送时需要将数据转化为可传输的格式，读取时又要转换回来，这会造成应用与消息中间件所需的格式之间形成紧密耦合。<br>可以在传输过程中设置一个单独的过程来转换和解析消息。</p>
-<h3 id="概念-7"><a href="#概念-7" class="headerlink" title="概念"></a>概念</h3><p>Message Endpoint<strong>为客户端和服务封装了消息中间件的细节</strong>，并且对中间件的通用api做了专门的客户化。这样在消息机制改变时可以对应用完全透明。</p>
+<h3 id="概念-7"><a href="#概念-7" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/messageEndpoint.jpg" alt="messageEndpoint.jpg" title="">
+<p>Message Endpoint<strong>为客户端和服务封装了消息中间件的细节</strong>，并且对中间件的通用api做了专门的客户化。这样在消息机制改变时可以对应用完全透明。</p>
 <h2 id="消息转换器（Message-Translator）"><a href="#消息转换器（Message-Translator）" class="headerlink" title="消息转换器（Message Translator）"></a>消息转换器（Message Translator）</h2><h3 id="作用-9"><a href="#作用-9" class="headerlink" title="作用"></a>作用</h3><p>当消息的发送者和接受者使用不同的消息格式时，可以将消息从一种格式转换为另一种格式。  </p>
-<h3 id="概念-8"><a href="#概念-8" class="headerlink" title="概念"></a>概念</h3><p>提供<strong>双向消息格式转换</strong>，客户端可以用其它格式来发送消息，Translator能够保证服务接收到的格式是它能够理解的。</p>
+<h3 id="概念-8"><a href="#概念-8" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/messageTranslator.jpg" alt="messageTranslator.jpg" title="">
+<p>提供<strong>双向消息格式转换</strong>，客户端可以用其它格式来发送消息，Translator能够保证服务接收到的格式是它能够理解的。</p>
 <h2 id="消息路由（Message-Router）"><a href="#消息路由（Message-Router）" class="headerlink" title="消息路由（Message Router）"></a>消息路由（Message Router）</h2><p>互相协作的客户端和服务之间交换的信息，必须通过消息基础设施进行路由，但是这三者<strong>都</strong>不应该知道如何选择路由途径（消息在系统中传递的路径）。</p>
 <h3 id="作用-10"><a href="#作用-10" class="headerlink" title="作用"></a>作用</h3><p>将来自某些Channel的消息根据一系列条件重新插入到不同的Channel中。<br>它可以将一系列Channel连接成一个网络，从一个通道中读出消息，将它路由到另一个通道里，这个通道最终会将消息传递给预期接收者。  </p>
-<h3 id="概念-9"><a href="#概念-9" class="headerlink" title="概念"></a>概念</h3><p>把消息发送规则集中到一个位置，如果定义了新的消息类型，可以很容易做出局部修改；必要时还可以插入新的消息路由；这对应用来说是透明的。  </p>
+<h3 id="概念-9"><a href="#概念-9" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/messageRouter.jpg" alt="messageRouter.jpg" title="">
+<p>把消息发送规则集中到一个位置，如果定义了新的消息类型，可以很容易做出局部修改；必要时还可以插入新的消息路由；这对应用来说是透明的。  </p>
 <p>在部署的时候必须仔细计划和配置消息路由的数量和类型；包含越多，消息在不同组件之间路由的方式就越灵活，但是交换效率就越差。</p>
 <p>可以根据系统负载或者故障情况选择目标，也可以根据消息某些特定属性来选择。<br>还可以将大型消息转换为多个小型消息分别路由，或将多个消息合并路由；可以将失序消息排序后重新发布。</p>
 <p>在实现控制逻辑时可以是静态配置也可以是动态配置，静态开销低但不灵活，动态相反。  </p>
@@ -471,13 +503,15 @@
 <hr>
 <h2 id="发布者-订阅者（Publisher-Subscriber）"><a href="#发布者-订阅者（Publisher-Subscriber）" class="headerlink" title="发布者-订阅者（Publisher-Subscriber）"></a>发布者-订阅者（Publisher-Subscriber）</h2><h3 id="作用-11"><a href="#作用-11" class="headerlink" title="作用"></a>作用</h3><p>改变组件内部状态可能会引入合作组件之间的不一致性，为重建一致性，需要一种机制来交换这种组件间的数据或状态信息。<br>定义一个用于传播变更的机制，允许在分布式应用中通过Publisher发送事件，事件可以承载对其它组件有用的信息；在信息发布后，会通知对这些信息感兴趣的组件。  </p>
 <p>用于不同的服务和组件通过一对多的关系异步交换事件来相互作用的系统。</p>
-<h3 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h3><p>组件间应该松散耦合，信息提供者不应该依赖协作者的细节，并且信息提供者的组件并不是预知的。<br><strong>订阅者和发布者不直接耦合</strong>，发布者和订阅者能够相互独立地运行。<br>发布者将消息发送到一个中介者（用来调度，跟观察者不同的是需要一个调度器，这个调度器不一定跟发布者接收者同一个进程），订阅者向这个中介订阅（可设置订阅规则如过滤某些消息），消息的传递由中介者调度，这样发布者和订阅者之间就不存在依赖关系。<br>观察者的推拉模型也是可以应用到这里来的。</p>
+<h3 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h3><img src="/2017/09/03/学习笔记/模式/架构型/publisherSubscriber.jpg" alt="publisherSubscriber.jpg" title="">
+<p>组件间应该松散耦合，信息提供者不应该依赖协作者的细节，并且信息提供者的组件并不是预知的。<br><strong>订阅者和发布者不直接耦合</strong>，发布者和订阅者能够相互独立地运行。<br>发布者将消息发送到一个中介者（用来调度，跟观察者不同的是需要一个调度器，这个调度器不一定跟发布者接收者同一个进程），订阅者向这个中介订阅（可设置订阅规则如过滤某些消息），消息的传递由中介者调度，这样发布者和订阅者之间就不存在依赖关系。<br>观察者的推拉模型也是可以应用到这里来的。</p>
 <p>消息的发送是可以一对多的，如果有多个订阅者对同一事件感兴趣，模式会将事件转发到所有关注它的订阅者。  </p>
 <h3 id="缺点-5"><a href="#缺点-5" class="headerlink" title="缺点"></a>缺点</h3><p>当订阅者只对某一种符合规则的事件感兴趣时，需要基于事件进行过滤和分发，这样会带来一些开销；如果在组件内部过滤会影响系统吞吐量，如果在订阅者过滤就会有一些不必要的通知；如果在发布者过滤就会破坏这个通信模型。</p>
 <hr>
 <h2 id="经纪人（Broker）"><a href="#经纪人（Broker）" class="headerlink" title="经纪人（Broker）"></a>经纪人（Broker）</h2><p>用于带有独立协作组件的分布式（可能是异构）系统。</p>
 <h3 id="作用-12"><a href="#作用-12" class="headerlink" title="作用"></a>作用</h3><p>在分布式系统中，可以通过使用一系列Broker，从应用的功能中<strong>隔离并封装通信基础设施的细节</strong>。这样客户端可以像使用本地服务一样，调用远程服务的方法。<br>可以用于构建带有隔离组件的分布式软件系统，通过远程服务调用进行交互，<strong>Broker负责协调通信</strong>（比如转发请求、传递结果和异常）。</p>
-<h3 id="概念-10"><a href="#概念-10" class="headerlink" title="概念"></a>概念</h3><p>用于不同组件通过远程方法调用来相互作用的系统。通过它，很多客户端可以调用托管在服务器上的远程组件对象的远程方法。因此客户端可以按照多对一的方式与服务器通信。<br>并且它们描述功能的接口通常都是静态类型的。如果希望隐藏网络的存在，使用这个模式最适合。  </p>
+<h3 id="概念-10"><a href="#概念-10" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/broker.jpg" alt="broker.jpg" title="">
+<p>用于不同组件通过远程方法调用来相互作用的系统。通过它，很多客户端可以调用托管在服务器上的远程组件对象的远程方法。因此客户端可以按照多对一的方式与服务器通信。<br>并且它们描述功能的接口通常都是静态类型的。如果希望隐藏网络的存在，使用这个模式最适合。  </p>
 <p>构建一个复杂的软件系统，它是独立和可互操作的组件集合而不是一个整体程序，从而有较大灵活性、可维护性和可变更性。通过将功能分割成独立组件，让系统变得可分布和可扩展。  </p>
 <p>当分布式组件相互通信时需要一些进程间通信机制，如果组件自身处理通信，最终系统会依赖所使用的通信机制；这些服务器程序不应该依赖特定的系统细节以确保在异构网络中的可移植性和互操作性。  </p>
 <p>引入代理者可较好地做到客户机和服务器的隔离。<strong>服务器</strong>向代理者<strong>注册</strong>自己，使其服务通过接口能被客户机所使用；<strong>客户机通过代理者发送</strong>请求访问服务器功能。代理者的任务包括<strong>定位</strong>合适的服务器，将请求<strong>转发</strong>到服务器并向客户机<strong>回送</strong>结果和异常。</p>
@@ -524,26 +558,32 @@
 <h3 id="特点-4"><a href="#特点-4" class="headerlink" title="特点"></a>特点</h3><p>定位透明性，CS之间互相不必关心对方位置</p>
 <h3 id="缺点-6"><a href="#缺点-6" class="headerlink" title="缺点"></a>缺点</h3><p>容错性较差，如果代理者或者服务器失效，依赖于它的程序都不能成功地继续进行，可以通过复制组件来提高可靠性。</p>
 <h2 id="客户端代理（Client-Proxy）"><a href="#客户端代理（Client-Proxy）" class="headerlink" title="客户端代理（Client Proxy）"></a>客户端代理（Client Proxy）</h2><h3 id="作用-13"><a href="#作用-13" class="headerlink" title="作用"></a>作用</h3><p>在访问远程组件服务的时候，客户端需要使用特定的数据格式和网络协议。但是，如果将格式和协议信息硬编码到客户端中，将导致客户端依赖于协作组件的“远程性”，因为远程组件的调用和本地组件是不同的。<br>因此，在客户端地址空间提供一个客户端代理，它可以<strong>代替远程组件</strong>。它提供了与远程组件相同的接口，并将客户端的调用映射到特定的消息格式或协议，以便跨网络发送这些调用请求。 </p>
-<h3 id="概念-11"><a href="#概念-11" class="headerlink" title="概念"></a>概念</h3><p>客户端的请求只能哦通过客户端代理发送到远程组件，代理会把具体的调用和参数转换为可被网络理解的数据格式，然后再用IPC机制将数据发送到远程组件；然后再将组件返回的结果转换为客户端能够理解的格式。  </p>
+<h3 id="概念-11"><a href="#概念-11" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/clientProxy.jpg" alt="clientProxy.jpg" title="">
+<p>客户端的请求只能哦通过客户端代理发送到远程组件，代理会把具体的调用和参数转换为可被网络理解的数据格式，然后再用IPC机制将数据发送到远程组件；然后再将组件返回的结果转换为客户端能够理解的格式。  </p>
 <p>它为客户端屏蔽掉远程组件接口上的变化。不过如果提供很多细粒度的方法时可能会需要多次代理调用，这会带来网络开销。<br>它并不能完全实现通信位置无关性，因为它们必须先通过Broker获得，所以客户端组件的远程属性使已知的。<br>它可以确保客户端有权限访问远程组件，如果访问被拒绝，可以降低不必要的网络通信。  </p>
 <h2 id="请求者（Requestor）"><a href="#请求者（Requestor）" class="headerlink" title="请求者（Requestor）"></a>请求者（Requestor）</h2><h3 id="作用-14"><a href="#作用-14" class="headerlink" title="作用"></a>作用</h3><p>负责创建和处理请求消息，并将其发送给远程组件。这样可以使发送请求时不会依赖特定的网络协议和IPC机制。</p>
-<h3 id="概念-12"><a href="#概念-12" class="headerlink" title="概念"></a>概念</h3><p>希望访问远程组件的客户端向请求者提供相关信息和参数，请求者将这些信息构造为一个消息，然后发送到远程组件。  </p>
+<h3 id="概念-12"><a href="#概念-12" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/requestor.jpg" alt="requestor.jpg" title="">
+<p>希望访问远程组件的客户端向请求者提供相关信息和参数，请求者将这些信息构造为一个消息，然后发送到远程组件。  </p>
 <p>可以为所有客户端进/线程分配一个请求者，但可能会称为系统吞吐量和可伸缩性的瓶颈。<br>或者可以为每个客户分配独立的请求者，或者多客户端共享一个，但粒度较粗需要进行同步。</p>
 <h2 id="调用者（Invoker）"><a href="#调用者（Invoker）" class="headerlink" title="调用者（Invoker）"></a>调用者（Invoker）</h2><h3 id="作用-15"><a href="#作用-15" class="headerlink" title="作用"></a>作用</h3><p>将来自远程客户端的请求消息的接收和分发封装在组件实现的某个特定方法中。  </p>
-<h3 id="概念-13"><a href="#概念-13" class="headerlink" title="概念"></a>概念</h3><p>它会在接收消息后对消息解析，判断应该调用那个组件的方法以及所需参数，然后把这个消息分派到指定的组件上。<br>它可以为分布式系统中的应用逻辑屏蔽掉服务器端网络以及IPC任务和活动的诸多细节。  </p>
+<h3 id="概念-13"><a href="#概念-13" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/invoker.jpg" alt="invoker.jpg" title="">
+<p>它会在接收消息后对消息解析，判断应该调用那个组件的方法以及所需参数，然后把这个消息分派到指定的组件上。<br>它可以为分布式系统中的应用逻辑屏蔽掉服务器端网络以及IPC任务和活动的诸多细节。  </p>
 <p>它可以将多个子活动委托给其它组件，比如反序列化操作或者解析安全令牌等。</p>
 <p>可以为应用中的全部组件只部署一个调用者，但是可能会造成性能瓶颈，应该让几个或者每个远程组件使用一个调用者。</p>
 <h2 id="客户端请求处理程序（Client-Request-Handler）"><a href="#客户端请求处理程序（Client-Request-Handler）" class="headerlink" title="客户端请求处理程序（Client Request Handler）"></a>客户端请求处理程序（Client Request Handler）</h2><h3 id="作用-16"><a href="#作用-16" class="headerlink" title="作用"></a>作用</h3><p>代表客户端封装和执行所有的ipc任务。这样就不需要对每一个客户端都独立编写和执行这些任务。<br>客户端通过它发送网络请求和接收请求响应。  </p>
-<h3 id="概念-14"><a href="#概念-14" class="headerlink" title="概念"></a>概念</h3><p>将一些底层的ipc任务比如连接管理、发送请求、分发结果、超时处理和错误侦测等独立成一个组件，该组件还需要负责网络和计算资源的高效管理和利用。在内部对所有客户端的网络资源实施集中化的执行和管理，可以提高分布式应用的服务质量，尤其是延迟时间、吞吐量、可伸缩性和资源的利用。<br>它还实现了接受者-连接者中连接者的功能。</p>
+<h3 id="概念-14"><a href="#概念-14" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/clientRequestHandler.jpg" alt="clientRequestHandler.jpg" title="">
+<p>将一些底层的ipc任务比如连接管理、发送请求、分发结果、超时处理和错误侦测等独立成一个组件，该组件还需要负责网络和计算资源的高效管理和利用。在内部对所有客户端的网络资源实施集中化的执行和管理，可以提高分布式应用的服务质量，尤其是延迟时间、吞吐量、可伸缩性和资源的利用。<br>它还实现了接受者-连接者中连接者的功能。</p>
 <h2 id="服务端请求处理程序（Server-Request-Handler）"><a href="#服务端请求处理程序（Server-Request-Handler）" class="headerlink" title="服务端请求处理程序（Server Request Handler）"></a>服务端请求处理程序（Server Request Handler）</h2><h3 id="作用-17"><a href="#作用-17" class="headerlink" title="作用"></a>作用</h3><p>代表远程组件封装和执行所有的ipc任务，比如从网络接收请求，并通过网络发送响应。</p>
-<h3 id="概念-15"><a href="#概念-15" class="headerlink" title="概念"></a>概念</h3><p>类似上面那个，不过它实现的是接受者的角色。</p>
+<h3 id="概念-15"><a href="#概念-15" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/serverRequestHandler.jpg" alt="serverRequestHandler.jpg" title="">
+<p>类似上面那个，不过它实现的是接受者的角色。</p>
 <hr>
 <h1 id="交互式系统"><a href="#交互式系统" class="headerlink" title="交互式系统"></a>交互式系统</h1><p>保持内核功能独立于用户接口，因为内核功能通常保持稳定，用户接口常常需要变化。  </p>
 <h2 id="模型-视图-控制器（Model-View-Controller，MVC）"><a href="#模型-视图-控制器（Model-View-Controller，MVC）" class="headerlink" title="模型-视图-控制器（Model-View-Controller，MVC）"></a>模型-视图-控制器（Model-View-Controller，MVC）</h2><p>这个<strong>模式</strong>在web开发用得比较多，但是也可在其它情况使用。<br>这个也是分为三层，不过跟三层架构的一般分法不同，需要注意。<br>用于需要具有灵活的人机接口的交互式程序。<br>这么分是因为这三个部分的变化率不同。  </p>
 <h3 id="作用-18"><a href="#作用-18" class="headerlink" title="作用"></a>作用</h3><p>将一个交互式应用程序分为三个独立部分：处理（模型）、输入（控制器）和输出（视图）。采用变化传播机制来确保各部分的一致性。  </p>
 <p>模型包含核心功能和数据，视图向用户显示信息，控制器处理用户输入。<strong>视图和控制器</strong>共同构成用户接口，<strong>变更-传播机制</strong>确保了用户接口和模型间的一致性。  </p>
 <p>将各模块分层相互独立，降低耦合度，提高灵活性。<br>分层有助于管理复杂的应用程序，并且可以简化分组开发，不同开发人员可同时开发这些模块<br>可以提高有大量界面且业务复杂的大型程序的健壮性。</p>
-<h3 id="概念-16"><a href="#概念-16" class="headerlink" title="概念"></a>概念</h3><p>模式将交互式程序分为三个部分：处理、输出、输入。  </p>
+<h3 id="概念-16"><a href="#概念-16" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/mvc.jpg" alt="mvc.jpg" title="">
+<p>模式将交互式程序分为三个部分：处理、输出、输入。  </p>
 <p>各模型职责如下(按层序排列)：</p>
 <ul>
 <li>视图：显示数据，依据模型数据创建。一个模型可以有多个视图。   </li>
@@ -583,7 +623,8 @@
 <h2 id="表示-抽象-控制（Presentation-Abstraction-Control，PAC）"><a href="#表示-抽象-控制（Presentation-Abstraction-Control，PAC）" class="headerlink" title="表示-抽象-控制（Presentation-Abstraction-Control，PAC）"></a>表示-抽象-控制（Presentation-Abstraction-Control，PAC）</h2><p>当软件系统被分为多个且大部分时间互相独立偶尔有交互的子系统，并且每个子系统需要自己的用户界面风格时，这个模式才比较有用，一般用的少（相对MVC来说）。  </p>
 <h3 id="作用-21"><a href="#作用-21" class="headerlink" title="作用"></a>作用</h3><p>某些应用需要通过不同的界面形式来操作其所提供的不同功能类型，将交互式应用结构化，使其形成由多个解耦代理（agent）构成的层次：一个顶层、几个中间层和多个低层代理。每个代理负责应用的一个特定功能并为其提供特定用户界面。  </p>
 <p>以多层合作代理的方式定义了交互式软件系统的一种结构，每个代理负责应用程序的某一特定功能，并且由表示、抽象、控制组成，这种细分将人机交互部分 与 功能内核 和 代理的通信分隔开来。</p>
-<h3 id="概念-19"><a href="#概念-19" class="headerlink" title="概念"></a>概念</h3><p>这个结构可对系统进行横向和纵向分解。它为某一特定的任务制定一个agent，所有的agent共同提供整个系统的功能。<br>每个agent都维护它自身的状态和数据，所以agent之间需要有一个交换数据、消息和事件的机制。它们各自的人机交互方式常常差别较大，所以它们各自有各自的用户接口。使用这个结构，在替换agent时不会影响到整个系统。  </p>
+<h3 id="概念-19"><a href="#概念-19" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/pac.jpg" alt="pac.jpg" title="">
+<p>这个结构可对系统进行横向和纵向分解。它为某一特定的任务制定一个agent，所有的agent共同提供整个系统的功能。<br>每个agent都维护它自身的状态和数据，所以agent之间需要有一个交换数据、消息和事件的机制。它们各自的人机交互方式常常差别较大，所以它们各自有各自的用户接口。使用这个结构，在替换agent时不会影响到整个系统。  </p>
 <p>这个模式用<strong>树状</strong>层次结构构建交互式程序。它设置一个顶层，几个中间层和较多的底层agent，它们各自负责应用功能的某一特定方面，并且<strong>每一个agent都由PAC三部分组成</strong>。每个agent都依赖所有较上层的agent直到顶层。</p>
 <p>agent的<strong>表示</strong>组件提供了<strong>可视行为</strong>；<strong>抽象</strong>组件构成<strong>数据模型</strong>，并可对这些数据进行操作；<strong>控制</strong>组件<strong>连接</strong> <strong>表示与抽象</strong>组件，并提供与其它agent<strong>通信</strong>的功能。</p>
 <p><strong>顶层</strong><br>提供系统功能核心，控制结构层，其它绝大部分agent都依赖于它。</p>
@@ -625,7 +666,8 @@
 <h1 id="适应性系统"><a href="#适应性系统" class="headerlink" title="适应性系统"></a>适应性系统</h1><p>在设计期间可以应对软件系统的变化。</p>
 <h2 id="微核（Microkernel）"><a href="#微核（Microkernel）" class="headerlink" title="微核（Microkernel）"></a>微核（Microkernel）</h2><p>当应用存在多个版本时，所有版本都应该基于一个公共的架构和功能核心。这样可以避免应用在不同版本之间出现架构偏移，以降低共享功能开发和维护的成本。</p>
 <h3 id="作用-22"><a href="#作用-22" class="headerlink" title="作用"></a>作用</h3><p>用于必须能够<strong>适应变更系统需求</strong>的软件系统。它把最小功能核心从扩展功能和特定客户部分分离出来，它也可以作为插入到这些扩展中并协调其协作的组件。<br>通过“即插即用”机制来扩展一个公共且最小的内核来为应用构造不同版本。  </p>
-<h3 id="概念-20"><a href="#概念-20" class="headerlink" title="概念"></a>概念</h3><p>将平台上的基本服务封装到一个<strong>微核</strong>组件中，该组件包含进程间通信的功能，并且负责维护系统资源和提供存取接口给其它组件。<br>不能在微核中实现的核心功能应该分到<strong>内部服务器</strong>中，<strong>外部服务器</strong>实现了它们自己的微核结构，每个外部服务器是一个独立进程，该进程表示一个应用程序平台。一个微核系统可以被视为集成了其它应用程序平台的平台。客户机通过使用由微核提供的通信能力与外部通信。  </p>
+<h3 id="概念-20"><a href="#概念-20" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/microkernel.jpg" alt="microkernel.jpg" title="">
+<p>将平台上的基本服务封装到一个<strong>微核</strong>组件中，该组件包含进程间通信的功能，并且负责维护系统资源和提供存取接口给其它组件。<br>不能在微核中实现的核心功能应该分到<strong>内部服务器</strong>中，<strong>外部服务器</strong>实现了它们自己的微核结构，每个外部服务器是一个独立进程，该进程表示一个应用程序平台。一个微核系统可以被视为集成了其它应用程序平台的平台。客户机通过使用由微核提供的通信能力与外部通信。  </p>
 <p>有5个参与组件：</p>
 <ul>
 <li>微核：主要组件。实现了通信和资源处理机制，其它组件全部或部分建立在这个基本服务之上。许多系统特定的内容都被封装在内，维护像进程或文件那样的系统资源，并控制和协调对这些资源的访问。</li>
@@ -646,7 +688,8 @@
 <h3 id="作用-23"><a href="#作用-23" class="headerlink" title="作用"></a>作用</h3><p>为<strong>动态改变</strong>软件系统的<strong>结构和行为</strong>提供了一种机制。它支持诸如类型结构和函数调用机制等基本方面的修改。  </p>
 <p>将应用的结构、行为以及状态方面的属性和变化因素具体化到一套<strong>元对象</strong>中。通过两层架构将元对象和核心应用逻辑分开，<strong>元数据层</strong>包含<strong>元对象</strong>，<strong>基础层</strong>包含<strong>应用逻辑</strong>。  </p>
 <p>运行时行为可以通过维护所选系统属性的元数据来识别，从而使得软件系统具有自我识别能力。因此，改变保持在元数据中的信息可以改变接下来的基础行为。  </p>
-<h3 id="概念-21"><a href="#概念-21" class="headerlink" title="概念"></a>概念</h3><p>在这种模式中，一个应用程序可以分成两部分：</p>
+<h3 id="概念-21"><a href="#概念-21" class="headerlink" title="概念"></a>概念</h3><img src="/2017/09/03/学习笔记/模式/架构型/reflection.jpg" alt="reflection.jpg" title="">
+<p>在这种模式中，一个应用程序可以分成两部分：</p>
 <ul>
 <li>元数据层：封装可更改的系统内部信息，提供所选系统属性的相关信息并使软件含自述信息；由元对象组成，它封装和表达了有关软件的信息；提供一个接口以方便对元数据层修改</li>
 <li>基础层：包括应用程序逻辑，它的实现建立在元数据层之上，改变保存在元数据层上的信息会影响基本层次的行为（不需修改基本层次的代码）</li>
@@ -794,7 +837,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++,MMP,Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="这里记一些进程间通信（专注数据交换）和同步（操作同步和信号）的内容 这里不记录网络和文件部分，之后在其它文件记录。这里是原始笔记，结构有点不好，夹杂了一些其它内容，之后会把它们分到其它文件里。   进程记了一些跟多进程无关的内容。   创建fork以父进程当前状态为基础创建一个子进程。linux中所有子进程都是由init直接或间接fork出来的。   复制（写时复制）了几乎所有信息，包括执行位置，">
+<meta name="keywords" content="C++,MMP,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MMP] Linux相关API">
+<meta property="og:url" content="/2017/09/28/学习笔记/MMP/Linux相关API/index.html">
+<meta property="og:site_name" content="{S}">
+<meta property="og:description" content="这里记一些进程间通信（专注数据交换）和同步（操作同步和信号）的内容 这里不记录网络和文件部分，之后在其它文件记录。这里是原始笔记，结构有点不好，夹杂了一些其它内容，之后会把它们分到其它文件里。   进程记了一些跟多进程无关的内容。   创建fork以父进程当前状态为基础创建一个子进程。linux中所有子进程都是由init直接或间接fork出来的。   复制（写时复制）了几乎所有信息，包括执行位置，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-10T11:48:43.461Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[MMP] Linux相关API">
+<meta name="twitter:description" content="这里记一些进程间通信（专注数据交换）和同步（操作同步和信号）的内容 这里不记录网络和文件部分，之后在其它文件记录。这里是原始笔记，结构有点不好，夹杂了一些其它内容，之后会把它们分到其它文件里。   进程记了一些跟多进程无关的内容。   创建fork以父进程当前状态为基础创建一个子进程。linux中所有子进程都是由init直接或间接fork出来的。   复制（写时复制）了几乎所有信息，包括执行位置，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2017/09/28/学习笔记/MMP/Linux相关API/"/>
+
+
+
+
+
+  <title>[MMP] Linux相关API | {S}</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">        
+        <span class="site-title logo-font">{S}</span>  
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2017/09/28/学习笔记/MMP/Linux相关API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nargnos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="{S}">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[MMP] Linux相关API</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-28T21:33:50+08:00">
+                2017-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/MMP/" itemprop="url" rel="index">
+                    <span itemprop="name">MMP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>这里记一些进程间通信（专注数据交换）和同步（操作同步和信号）的内容</em></p>
+<p><em>这里不记录网络和文件部分，之后在其它文件记录。这里是原始笔记，结构有点不好，夹杂了一些其它内容，之后会把它们分到其它文件里。</em>  </p>
+<h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1><p>记了一些跟多进程无关的内容。  </p>
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><p><strong>fork</strong><br>以父进程当前状态为基础创建一个子进程。<br>linux中所有子进程都是由init直接或间接fork出来的。  </p>
+<p>复制（写时复制）了几乎所有信息，包括执行位置，所以每个进程都会从fork的返回处继续执行。多线程只会复制当前线程状态信息，其它线程丢弃。<br>子进程ppid会设置为父pid。<br>父进程返回子进程pid，子进程返回0，错误-1。一般用switch/-1/0/default处理。<br>在创建后其执行先后顺序是<strong>不定</strong>的。<br>子进程可获得父进程所有fd副本（类似dup创建），并且共享文件偏移量，父进程打开的文件描述符在子进程也是打开的，文件描述符引用计数+1，父进程的用户根目录、当前工作目录等引用都会+1。<br>pid不同，文件锁定不继承。  </p>
+<p>注意在fork后可能会引发一些问题：<br>关于stdio缓冲，缓冲区是由进程控制的，fork时也会复制缓冲区。但是缓冲区的刷新（flush）策略（行缓冲、块缓冲）不同，可能会引发不同的执行结果，比如先printf后fork，有可能会在fork后得到两个输出，这就是因为缓冲区的刷新策略。<br>要避免这类问题，需要在fork前用fflush刷新缓冲区或关闭缓冲功能。<br>用write不会产生这类问题，因为它将数据提交给内核缓冲区，fork无法复制，所以有可能会先于printf输出（因为要等刷新）。  </p>
+<p><strong>execl、execlp、execle、execv、execvp、execve</strong><br>运行指定程序替换当前进程，那些后缀表示不同的参数输入方式<br>一般不返回（没必要），出错返回-1<br>如果不出错，之后的代码都不会执行，被替换成指定的程序<br>exec不会关闭原程序打开的文件描述符，除非文件描述符设置了FD_CLOEXEC（socket SOCK_CLOEXEC）<br>exec会继承之前程序的环境变量，所以要修改就要在执行exec前改好<br>fexecve 运行指定文件描述符的程序</p>
+<p>运行进程时用exec可以将程序加载至内存并替换掉先前程序执行，进程id、父进程id优先级和用户、组都不变，其它都替换掉就跟刚才不是那个进程执行一样<br>需要在不同程序间共享文件描述符，就需要fork再exec另一个程序<br>文件描述符是继承的  </p>
+<p>一个用法是fork创建子进程然后子进程exec一个程序，这样就相当于运行一个其它程序作为子进程，<br>fork在现在采用了写时复制（以前不是，所以有一个vfork是为那时候准备的，但是这个函数不会判断创建子进程失败的问题），所以fork再exec实际上还是比较快的。  </p>
+<p><strong>clone</strong><br>它可以在进程创建期间提供更细致的操作，不过会有损可移植性。<br>用于线程库的实现，它跟fork一样，但是在创建完后会去调用指定的函数。内部跟fork一样都是用do_fork实现。<br>当函数返回时进程会退出。<br>可以在创建的同时设置父子进程共享选项</p>
+<!-- exec fork 对进程属性的影响见UNIX系统编程手册 上 p505 pdf:p534 -->
+<h2 id="终止"><a href="#终止" class="headerlink" title="终止"></a>终止</h2><p>exit(会执行一些退出操作)/_exit（直接终止，貌似不会刷新缓冲区） 可以终止程序<br>aexit 用来注册程序结束时运行的函数</p>
+<h2 id="监控子进程"><a href="#监控子进程" class="headerlink" title="监控子进程"></a>监控子进程</h2><p><strong>wait</strong> 等待任一子进程终止，同时在参数返回该子进程的终止状态，可用某些宏（sys/wait.h）读取退出原因。如果调用时（之前）没有子进程终止则阻塞，如果调用时（之前）有子进程终止，则立即返回。<br>错误-1 ECHILD。<em>一些书说会丢失某些退出信息。需要用非阻塞的函数来处理。</em></p>
+<p><strong>waitpid</strong> 可用于等待指定子进程终止，可用WNOHANG选项设置非阻塞，未终止返回0，退出就返回pid，错误时会-1 ECHILD。可传入pid:-1参数等待任意子进程（表示法跟常用的一样）。  </p>
+<p><strong>waitid</strong> sys/wait.h 类似上面，不过设置是用另一种方法，提供更细的方式等待。</p>
+<p><strong>wait3 wait4</strong> 可以同时返回一些资源使用情况，不过这个函数返回的信息没什么价值。</p>
+<!--*子进程传递文件描述符给父进程*
+Linux高性能服务器编程.pdf 283p 没仔细看
+用socket_pair-->
+<h2 id="僵尸孤儿"><a href="#僵尸孤儿" class="headerlink" title="僵尸孤儿"></a>僵尸孤儿</h2><p>子进程结束时会保留一个基本数据结构等待父进程取信息，取完后才结束，这时<strong>子进程</strong>处于<strong>僵尸状态</strong>（在子进程早于父进程退出时）。该进程所保留的是内核进程表中的一条记录，包含一些进程信息。<br>此时该进程无法用SIGKILL终止，确保父进程总是可以执行wait方法，注意一定要清掉僵尸进程，否则它会一直保留。<br>如果父进程终止，子进程的父进程会被重新指派成init，init进程会周期等待子进程，这样确保它们不会成为僵尸进程（在子进程退出前子进程处于僵尸态）。  </p>
+<p>一个wait只能等待一个子进程，如果创建了多个而只等待一次，将会出现n-1个僵尸子进程。对wait调用可以同步也可以异步。  </p>
+<p>如果不想一直阻塞等待或连续调用waitpid，可以用信号来处理。<br>子进程结束时它会给父进程发送<strong>SIGCHLD</strong>。<br>注册处理函数，就不需要阻塞等待了。<br>由于信号的一些特性，连续的SIGCHLD可能只能捕获一次，这时候需要在处理函数中写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// -1表示所有子进程</div><div class="line">while(waitpid(-1,NULL,WNOHANG) &gt; 0) continue;</div></pre></td></tr></table></figure></p>
+<p>规范未规定在未注册处理程序前，子程序终止是否会发送信号；所以要<strong>先注册再生成子进程</strong>。</p>
+<p>另外在子进程停止时父进程也可能收到SIGCHLD，可以在sigaction设置时传入SA_NOCLDSTOP，这样在子进程停止时就不会发出该信号。  </p>
+<p>忽略终止的子进程<br>可以显式设置忽略SIGCHLD, 设置为 SIG_IGN 即可，但并不是所有系统都支持。此时系统会将终止的子进程立即删除，不转化为僵尸（此时用wait不会得到任何消息）。<br>也可以设置sigaction的SA_NOCLDWAIT，作用一样（但是貌似可以捕获信号）。</p>
+<p>如果创建进程并立即等待终止，可以用system来创建进程</p>
+<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div></pre></td></tr></table></figure>
+<p><strong>getpid</strong><br>取得当前进程id<br>进程pid上限32768（32位），超过就重置到300开始递增，64位很大，不用担心。  </p>
+<p><strong>getppid</strong><br>取父进程id<br>当父进程终止，init就会接管孤儿进程，所以这个情况会得到1（init的pid）。可以用pstree查看进程树。<br>可以读取/proc/PID/status PPid字段获取父进程id  </p>
+<p>检查进程存在<br>可以用kill发空信号（0）检查，如果发送失败且ESRCH错误，表示进程不存在。但是有可能该进程是僵尸或者被其它进程替代，所以为了保证正确性需要用其它方式检查。<br>可以用wait监视子进程；或者用信号量或排它锁，当检查时能获取到锁时表明进程终止；或者用管道，当接收到EOF时表示进程退出。  </p>
+<h2 id="组、会话、作业控制"><a href="#组、会话、作业控制" class="headerlink" title="组、会话、作业控制"></a>组、会话、作业控制</h2><p>进程组由一个或多个共享同一进程组标识符的进程组成。<br>进程组id跟创建组的进程id相等。  </p>
+<p>会话是一组进程组的集合，子进程会继承父进程sid。<br>会话中所有进程共享单个控制终端，终端会在首进程首次打开一个终端设备时建立。任一时刻，会话中的其中一个进程组会成为前台进程组，其它为后台进程组，只有前台组可以从终端读取输入。  </p>
+<p>作业控制就是shell中的bg fg jobs相关功能。<br>当进程变为孤儿时，会与终端断开连接，如果进程组变为孤儿进程组（每个成员的父进程是组成员或是其它组会话的成员），而且有停止执行的成员时，系统会发送SIGHUP和SIGCONT给进程组</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getpgrp</td>
+<td>取pgid</td>
+</tr>
+<tr>
+<td>setpgrp</td>
+<td>设置指定pid的pgid，0表示自身pid（pgid:0表示设置pgid为自身pid）</td>
+</tr>
+<tr>
+<td>getsid</td>
+<td>主要用于诊断，用处不大</td>
+</tr>
+<tr>
+<td>setsid</td>
+<td>创建新会话，调用进程会成为新会话的首进程和会话中新进程组的首进程。id都会设置与pid相等。</td>
+</tr>
+<tr>
+<td>ctermid</td>
+<td>获取终端路径名</td>
+</tr>
+<tr>
+<td>tcgetpgrp<br>tcsetpgrp</td>
+<td>获取或修改一个终端的进程组</td>
+</tr>
+</tbody>
+</table>
+<h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><p>-20~19  高~低<br>特权进程才能调高自己或别人的优先级，否则只能降低自己的优先级（现在可以在软限制范围RLIMIT_NICE内提升）<br>nice值会继承。  </p>
+<p>getpriority setpriority 用于设置或获取</p>
+<p><strong>实时调度</strong><br>可以提供足够的性能和响应度，实时优先级范围1~99（低~高）<br>优先选择优先级高的，然后按策略选择：<br>SCHED_RR 循环，每个进程使用固定长度时间片，可以放弃或被高优先级抢占<br>SCHED_FIFO 得到控制权后会一直执行，直到放弃或被高优先级抢占</p>
+<p>非实时的策略（不过要用实时调度的api来设置）：<br>SCHED_BATCH 类似SCHED_OTHER 用于进程批量执行，前者会减少频繁被唤醒的任务的调度<br>SCHED_IDLE 非常低的优先级，只在空闲时调度</p>
+<p>sched_get_priority_min sched_get_priority_max 用于获取指定策略的优先级</p>
+<p>sched_setscheduler 修改策略和优先级<br>sched_setparam 修改调度策略，不修改优先级</p>
+<p>获取就是改为get，略  </p>
+<p>sched_yield 释放cpu</p>
+<p>sched_rr_get_interval 取得rr策略的时间片长度</p>
+<h2 id="亲和力"><a href="#亲和力" class="headerlink" title="亲和力"></a>亲和力</h2><p>设置亲和力可以避免cache数据失效带来的性能影响；如果多个进程或线程访问同样的数据，可以将它们限制到同一个cpu上提升性能（提高命中率）；对于某些实时程序，可以将它限制到其中一个cpu，其它进程限制到其它cpu上。  </p>
+<p>sched_setaffinity sched_getaffinity 用于设置和获取，pid:0表示自身  </p>
+<p>注意这是一个线程级特性，pid:0表示调用线程，可以设置gettid返回的值来设置相应线程亲和性。  </p>
+<p>设置结构用以下函数(宏)操作：<br>CPU_ZERO（初始化） CPU_SET（添加cpu） CPU_CLR（删除cpu） CPU_ISSET（判断是否设置）<br>cpu从0开始编号，如果编号不匹配setaffinity会返回EINVAL  </p>
+<h2 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h2><p>可以用getrusage监控自己和子进程已经用掉的资源，有cpu时间、内存占用和页错误次数等</p>
+<p>可用get[set]rlimit 读取和修改资源限制，可以设置的是RLIMIT_XXX宏定义，有内存、cpu、资源数量等。<br>注意跟在shell下的单位不同，这里是字节单位，shell的是kb  </p>
+<h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h2><p>运行在后台的进程，不会连接到任何控制终端，名称通常以d结尾（如shhd）<br>必须符合：是init子进程，不得连接到一个终端</p>
+<p>注意特定的daemon会作为内核线程运行，在用ps列出时会用[]标识</p>
+<p>使进程变成daemon的步骤为（一些书会有多一些步骤，比如会在setsid后再fork确保进程永远不会重新请求一个终端）：</p>
+<ul>
+<li>调用fork，父进程exit</li>
+<li>调用setsid，替子进程创建一个新的进程组以及会话，这两者都会以daemon作为首领，这样可以确保该进程不会被关联到控制终端</li>
+<li>用chdir将工作目录换到根目录，主要是防止保留之前的工作目录</li>
+<li>关闭所有文件描述符，文件描述符会继承的，要关干净</li>
+<li>打开文件描述符0、1、2（stdin、stdout、err）并将它们重定向到/dev/null</li>
+<li>会用umask把守护进程的umask设置为0，因为它会继承，而且会潜在影响文件创建</li>
+</ul>
+<p>setid创建新会话和建立一个新进程组，然后守护进程会成为新会话领导以及进程组领导，并保证新会话没有控制中端，如果调用进程是进程组领导则调用失败，成功返回新会话id，失败-1</p>
+<p>有函数<strong>daemon</strong>可以简化这些步骤<br>会返回-1错误，成功返回0，父进程会被结束</p>
+<p>通常daemon在系统关闭时终止，在系统终止时daemon会收到SIGTERM，可以捕获来做一些清理工作；在发完SIGTERM 5s后，会发SIGKILL，所以需要快速的完成清理。  </p>
+<p>由于守护需要持续运行，所以有时候需要在不重启进程的情况下修改配置或操作某些文件，可以设置SIGHUP（因为没有终端所以系统永远不会向进程发这个信号）来重新初始化进程</p>
+<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><p>需要了解的函数：<br>getuid 取当前用户id<br>geteuid 取有效用户id（可使用资源的用户id，这个是因为+s的程序运行时会把有效用户id设置成属主或组id而使程序获得高权限）<br>getgid 取组id<br>set的略</p>
+<p>如果在程序中不需要使用到权限就不使用（以最小权限操作），需要权限才能完成的功能可以拆分到其它只执行单个任务的程序里。  </p>
+<p>如果需要允许用户修改一个它没有写权限的文件，可以将文件属组和进程有效组都设置为一个专用组，这样可以避免程序被破坏时造成的损失。  </p>
+<p>在程序开始时可以禁用某些权限，如果不需要可以删除，如果需要就在使用时临时获取权限执行。通过geteuid seteuid实现。<br>需要临时降低权限用 seteuid(getuid()) ，但是在永久删除权限时需要重新获取权限，然后调用 setreuid(getuid(),getuid())，组的就用组相关的函数。<br>书中建议在设置后再验证一次id，因为可能会由于系统的某些设置而修改失败。  </p>
+<p>在程序执行其它程序的时候需要注意删除权限。并且注意特权程序不要直接或间接的执行shell和其它不受限的解释器。并且注意关掉用不到的fd。  </p>
+<p>安全程序需要避免产生核心dump，可用setrlimit将RLIMIT_CORE设置为0来防止其创建。  </p>
+<p>注意需要确保进程永远无法创建（用umask）公共可写的文件的值，否则可能会被修改。另外不要信任环境列表，对所有用户输入内容做防御性地处理，防止出现缓冲区溢出等问题。  </p>
+<h2 id="能力"><a href="#能力" class="headerlink" title="能力"></a>能力</h2><p>传统的权限模型是all-or-nothing，使用能力模型可以限制权限。<br><strong>进程能力</strong><br>内核会为每个进程维护3个能力集（位掩码）：  </p>
+<ul>
+<li>许可的：可使用，如果删除将无法重新获取（除非它执行再次授予该能力的程序）</li>
+<li>有效的：内核会用这些能力对进程执行权限进行检测，可以临时禁用该能力，之后还可以还原</li>
+<li>可继承的：执行程序时可以将这些权限带入许可集中</li>
+</ul>
+<p><strong>文件能力</strong><br>如果文件具有相关能力集，它会被用来确定执行这个文件的进程的能力。  </p>
+<ul>
+<li>许可的：在exec调用中会将能力添加到进程的许可集里，不管既有能力是什么</li>
+<li>有效的：只有1位，启用后，在进程新许可集启用的能力在有效集里也会启用，否则是空的</li>
+<li>可继承的：取掩码来确定在执行exec后进程的许可集中启用的能力集</li>
+</ul>
+<!--能力定义 CAP\_XXX  UNIX系统编程手册 下 p655 pdf98有表-->
+<p>能力用setcap getcap操作（编程中应该避免使用这两个系统调用）。<br>可以使用libcap库进行编程操作。<br>cap_get_proc 获取能力集副本<br>cap_set_flag 更新副本<br>cap_set_proc 提交副本，传回内核以修改进程能力<br>cap_free 释放get_proc分配的结构  </p>
+<!--没记完 pdf108-->
+<h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><p>这里主要记录的是pthread线程。<br>这里会<strong>记录得比较少</strong>，因为大部分情况都可以直接用stl或boost。<br>多线程主要是为了更方便的共享信息，多进程必须用一些进程间通信方式来进行信息交换。在多线程中使用信号时需要小心设计（一些书建议不要在多线程程序中使用信号机制，因为会引起混乱）。  </p>
+<p>书里提到linux用clone实现线程（估计是设置了某些共享参数）</p>
+<p>在多线程中errno是tls的。<br>所有pthread函数返回0表示成功，<strong>正值</strong>（errno值）表示失败。<br>编译时要加-pthread。<br>线程栈2M(32),32M(64)</p>
+<p>注意在多线程程序中fork，子进程不会复制其它线程，只是复制调用fork的线程，而且锁也是锁住的，锁可能是其它线程锁的所以这时fork出来可能会有问题<br>这时要用pthread_atfork  </p>
+<p>每个线程都可以设置信号掩码<br>pthread_sigmask  </p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pthread_create</td>
+<td>创建，在函数返回前会将tid（pthread_t格式）保存到第一个参数中；可以在创建时为线程设置某些属性，可传入null</td>
+</tr>
+<tr>
+<td>pthread_exit</td>
+<td>终止</td>
+</tr>
+<tr>
+<td>pthread_self</td>
+<td>取自身tid</td>
+</tr>
+<tr>
+<td>pthread_equal</td>
+<td>检查两个tid是否相等</td>
+</tr>
+<tr>
+<td>pthread_join</td>
+<td>等待指定线程停止</td>
+</tr>
+<tr>
+<td>pthread_detach</td>
+<td>分离线程，如果不关心返回状态可以使用，此时无法再join</td>
+</tr>
+<tr>
+<td>pthread_cancel</td>
+<td>取消线程，执行后立即返回，不会等待线程退出</td>
+</tr>
+<tr>
+<td>pthread_setcancelstate<br>pthread_setcanceltype</td>
+<td>对取消请求响应过程加以控制</td>
+</tr>
+<tr>
+<td>pthread_testcancel</td>
+<td>检查可取消性</td>
+</tr>
+<tr>
+<td>pthread_cleanup_push<br>pthread_cleanup_pop</td>
+<td>设置清理函数，在线程取消时会执行这些函数来回收一些资源</td>
+</tr>
+</tbody>
+</table>
+<p><strong>线程属性</strong><br>create时传入的参数用这些函数构造：<br>pthread_attr_init<br>pthread_attr_setdetachstate<br>…</p>
+<p><strong>call_once</strong><br>pthread_once 跟stl一样，不过flag为pthread_once_t</p>
+<p><strong>tls</strong><br>一般用cpp的关键字，这组函数用kv的方式取得相应的内容（注意各个线程用的是相同的key，可以取得线程特有value）<br>pthread_key_create<br>pthread_key_setspecific<br>pthread_key_getspecific  </p>
+<h1 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h1><p><strong>初始化</strong><br>pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER</p>
+<p>或者可以动态初始化，用：<br>pthread_mutex_init  </p>
+<p>可以设置一些错误检查和死锁检测功能，并且可以设置为可递归</p>
+<p><strong>操作</strong><br>pthread_mutex_lock<br>pthread_mutex_unlock<br>pthread_mutex_trylock<br>pthread_mutex_timedlock<br>pthread_mutex_destory</p>
+<h1 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h1><p><strong>初始化</strong><br>pthread_count_t cond = PTHREAD_COND_INITIALIZER<br>pthread_cond_init  </p>
+<p><strong>操作</strong><br>跟stl相同，也需要mtx，但是如果需要条件检查，需要自己写（函数不提供检查功能）<br>pthread_cond_signal<br>pthread_cond_broadcast<br>pthread_cond_wait<br>pthread_cond_timedwait<br>pthread_cond_destory  </p>
+<h1 id="原子"><a href="#原子" class="headerlink" title="原子"></a>原子</h1><p>因为用stl更方便，没有记录相关内容，待补充。  </p>
+<h1 id="管道-FIFO"><a href="#管道-FIFO" class="headerlink" title="管道/FIFO"></a>管道/FIFO</h1><p>在传送数据时，会将数据复制到内核中的管道缓冲区中，读取时再从该位置读取出来。<br>FIFO可以用于任意进程间的通信。<br>都是单向数据流，无消息边界，可用流socket的方式来读取数据。 </p>
+<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>pipe/pipe2（带选项） 创建，传入数组，调用成功后会在数组中填入管道读写端，使用read write读写。<br>如果多个进程写入同一个管道，如果同一时刻写入的数据量小于PIPE_BUF（至少512字节，不同系统实现不同）时，可以确保写入操作是原子的。<br>管道缓冲区存储能力有限（65535，可修改），如果满了，后续操作会被阻塞到有空位为止。<br>fork后一般会把一个方向的fd关掉，只保留一个方向；如果同时使用会造成竞争，而且关闭后，在写入结束关闭fd时，读取端可以看到文件结束；如果需要双向通信就需要再创建一个管道，但是要注意在阻塞等待数据时可能会死锁。<br>当进程试图写入数据但没有读取fd打开时，内核会向写入进程发送SIGPIPE，默认会终止掉进程，可以捕获或忽略，这样可以从write处收到EPIPE错误。<br>如果写操作大于阈值PIPE_BUF,返回值是管道中目前数据的字节数，如果小于就返回现有数据字节数（管道数据量小于请求量）或者返回请求数（管道数据量大于请求数据量）<br>如果只写不读，管道会被充满并阻塞写操作；销毁管道后未读取数据都会丢失。<br>书中提供了一种将管道用于同步的方法，就是父进程read，子进程做完动作后就关掉写fd，这样在fd被完全关掉后父进程就可以执行其它操作。  </p>
+<h2 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h2><p>命名管道，它在文件系统中拥有一个名称，打开方式跟打开一个文件一样。可用于非相关进程通信。<br>在所有fd关闭后，未读取数据会被丢弃。在shell中用mkfifo创建，程序中也用同名函数创建。<br>注意以读方式（O_RDONLY）open时，会阻塞直到有进程以写方式（O_WRONLY）打开为止。可以指定O_RDWR绕过阻塞行为，但是无法使用fd进行读取和写入，如果需要避免阻塞，可以指定O_NONBLOCK标记。<br>注意在以读取非阻塞方式打开时，如果没有以写方式打开，也会返回成功，因为此时读取时不会返回数据；但是以写非阻塞方式打开，没有以读方式打开时，会返回ENXIO错误。<br>可以用fcntl修改阻塞状态。<br>非阻塞操作跟socket一样，在其它笔记写。  </p>
+<h1 id="System-V-IPC"><a href="#System-V-IPC" class="headerlink" title="System V IPC"></a>System V IPC</h1><p>在get时给定key，如果存在就返回该对象，不存在就创建后返回。<br>如果用IPC_CREAT打开，不存在（存在但是设置为IPC_PRIVATE也一样）时会ENOENT错误。<br>可用IPC_EXCL确保进程是该对象的创建者，如果已存在就会返回EEXIST错误。<br>可用ctl操作的IPC_RMID删除对象，有一些对象是立即删除，有一些会等到所有进程都释放才删除。<br>在创建时可以将<strong>IPC_PRIVATE</strong>常量作为key的值，这会导致每个调用会创建一个全新的IPC对象，从而确保拥有唯一key，但此时使用时需要用某种机制（比如fork）获得这个对象的fd。可以用ftok函数生成一个key，需要使用一个可以应用stat的既有文件路径，它是用inode来生成key，而且要注意可能会生成同样的key（可能性很小）。  </p>
+<p>如果进程是特权进程，所有权限都会被赋予IPC对象；如果有效用户id跟对象所有者或创建者匹配，则将owner的权限赋予进程；如果有效用户id或任意辅助组id与对象所有者组或创建者组id匹配，则将对象group的权限赋予进程；否则将对象的other赋予进程。  </p>
+<p>在get时会检查参数中指定的权限（有S_IRUSR、S_IWUSR、S_IRGRP等）跟对象权限是否匹配，不匹配会返回EACCESS。  </p>
+<p>ipcs可以获得系统上ipc对象的信息，也可用/proc/sysvipc查看。<br>可用ipcrm删除ipc对象。  </p>
+<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><p>sys/msg.h<br>一次读取一个消息，消息带有类型标识，可以根据类型来读取消息。<br>msgget 用于打开或创建消息队列<br>msgsnd msgrcv 用于执行消息队列上的io，第一个参数是消息队列标识符，第二个是接收数据指针。数据格式第一部分用long标识数据类型，其它任意。  </p>
+<p>可自定义消息大小，注意不能大于MSGMAX。在发送消息时需要将数据类型标识（mtype）设置为大于0的值，发送时填入的大小字段是除了类型标识外的大小（数据mtext大小，可以不必是完整长度），flag参数只有IPC_NOWAIT用于非阻塞。<br>在接收时需要传入同样的类型的缓冲区（需要带long类型标识），并填入数据字段最大可用空间（缓冲大小），如果队列中的消息大小超过这个大小，将会产生E2BIG错误。<br>可以传入类型标识（mtype）参数选择消息，如果==0，就从第一条读；&gt;0 就从第一条类型等于这个值的读，可以用pid标识类型，这样就可以多个进程用同一个队列；&lt;0 会把这个队列当做优先队列，取队列中mtype最小并且小于或等于参数绝对值的第一条。  </p>
+<p>msgctl 控制操作<br>IPC_RMID 立即删除，调用会返回EIDRM错误。<br>IPC_STAT 将管理的msqid_ds结构（内容基本上是一些状态信息）副本放到缓冲区（buf参数）中<br>IPC_SET 使用缓冲区提供的值更新关联的msqid_ds结构  </p>
+<p>系统会对消息队列有一些限制：<br>MSGMNI 能创建消息队列标识符的数量<br>MSGMAX 最多可写入的字节数<br>MSGMNB 最多保存的字节数<br>MSGTQL 系统中所有消息队列的消息总数<br>MSGPOOL 系统中所有消息队列数据的缓冲池大小  </p>
+<p>在使用时可以多进程共用一个消息队列，也可以为每个方向设置一个队列。<br>消息队列是用消息队列标识符引用的，而不是fd，所以无法用于epoll。<br>书中不建议使用System V消息队列，可用POSIX消息队列替代。  </p>
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p>sys/sem.h<br>其值被限制&gt;=0，试图减小到0以下会被阻塞。<br>semget<br>创建或打开信号量集（注意这是一个集合），如果用它创建，可以用参数设定初始信号量数量，否则该参数必须小于或等于集合大小  </p>
+<p>semctl<br>第二个参数（信号量编号）按需使用<br>用SETVAL(可以指定下标)或SETALL初始化信号量，IPC_RMID删除，GETALL/GETVAL可以获得信号量值。可以用GETPID获取上一个在该信号量上执行semop的进程的pid，GETNCNT 等待信号量增长的进程数，GETZCNT 等待信号量为0的进程数  </p>
+<p>信号量必须用SETVAL/SETALL设置初始值</p>
+<p>可用IPC_STAT IPC_SET 获取或设置关联数据结构</p>
+<p>semop<br>操作信号量值<br>需要传入操作数组和操作数组的大小。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ushort sem_num; <span class="comment">// 标识要操作的信号量编号</span></div><div class="line"><span class="keyword">short</span> sem_op;  <span class="comment">// 大于0就加，小于0就减，等于0就检查是否为0，否则阻塞</span></div><div class="line"><span class="keyword">short</span> sem_flag; <span class="comment">// IPC_NOWAIT SEM_UNDO（内核记录信号量操作的效果，在进程终止时撤销掉这个操作，不过这个操作需要配合回复资源，否则没有实际用处，另外撤销的值可能大于当前信号量，此时会带来一些问题）</span></div></pre></td></tr></table></figure>
+<p>semtimedop<br>带有超时机制的信号量操作</p>
+<p>信号量也有类似消息队列那样的限制，略。<br>书中同样推荐用POSIX信号量代替使用。  </p>
+<h2 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h2><p>分到统一分类里  </p>
+<h1 id="POSIX-IPC"><a href="#POSIX-IPC" class="headerlink" title="POSIX IPC"></a>POSIX IPC</h1><p>共享内存和消息队列名最大长度为NAME_MAX(255)字节，信号量少4，因为实现会附加前缀<code>sem.</code>。名字可以以<code>/</code>开头。<br>每一种机制都有open调用。除用munmap解内存映射，其它有相应的close调用。    </p>
+<p>flag可用O_CREAT O_EXCL，功能类似前面提到的。  </p>
+<p>POSIX IPC 是引用计数的，在所有进程关闭该对象后会销毁。<br>建议用POSIX IPC代替System V IPC   </p>
+<h2 id="消息队列-1"><a href="#消息队列-1" class="headerlink" title="消息队列"></a>消息队列</h2><p>引用计数，消息按优先级排序，提供通知机制。<br>内部被实现成虚拟文件系统中的inode。<br>可用 <code>mount -t mqueue 任意 目标</code> 挂载它  </p>
+<p>mq_open<br>创建或打开队列，返回消息队列描述符<br>可以通过参数mq_attr设置消息队列非阻塞、队列大小()&gt;0)、消息大小(&gt;0)等  </p>
+<p>flags:<br>O_CREAT<br>O_EXCL<br>O_RDONLY<br>O_WRONLY<br>O_RDWR<br>O_NONBLOCK  </p>
+<p>fork后子进程会继承描述符，在进程终止或exec，描述符会被关闭。</p>
+<p>mq_send<br>向队列写入<br>msg_len必须小于等于mq_msgsize，可以为0<br>msg_prio是优先级（0最低，最高至少32，linux上到32768），如果不需要消息优先级，设置为0即可<br>如果队列满会阻塞，非阻塞会返回EAGAIN  </p>
+<p>mq_receive<br>读，会将数据放到msg_ptr缓冲区，从优先级最高，存在时间最长的开始读。  空队列会阻塞</p>
+<p>mq_timedsend mq_timedrecive<br>超时机制读写</p>
+<p>mq_close<br>关闭，会删除通知注册，关闭消息队列并不会删除它，删除要用unlink</p>
+<p>mq_unlink<br>删除消息队列名，并在所有进程关闭队列时清除，如果其它进程都关闭会立即删除。  </p>
+<p>mq_getattr<br>获取消息队列特性</p>
+<p>mq_setattr<br>设置特性，但只能修改阻塞与否，不能改大小（在创建时已固定）  </p>
+<p>mq_notify<br>消息通知（推模型）<br>任何时刻只有一个进程能注册接收通知，后续注册会失败。<br>如果注册时队列非空，只有在队列清空后再来消息时才通知，因为通知时机是空到非空。<br>当向进程发送通知后会<strong>删除</strong>注册信息，之后其它进程可以注册。<br>传入null参数注销注册。  </p>
+<h2 id="信号量-1"><a href="#信号量-1" class="headerlink" title="信号量"></a>信号量</h2><p>sem_open<br>打开或创建信号量，创建时会初始化</p>
+<p>sem_post sem_wait sem_trywait<br>递增递减信号量<br>到0时wait会阻塞  </p>
+<p>sem_getvalue<br>获取信号量当前值  </p>
+<p>sem_close<br>删除信号量与进程的关联</p>
+<p>sem_unlink<br>删除信号量名，在所有进程关闭该信号量时删除 </p>
+<p>sem_init<br>用于初始化未名信号量，可以设置是在线程间共享还是进程间共享，会放到sem_t中    </p>
+<p>sem_destory<br>销毁未名信号量  </p>
+<h2 id="共享内存-1"><a href="#共享内存-1" class="headerlink" title="共享内存"></a>共享内存</h2><p>分到统一分类里  </p>
+<h1 id="共享内存-2"><a href="#共享内存-2" class="headerlink" title="共享内存"></a>共享内存</h1><p>内核将进程中的页表条目指向同一个ram分页来实现，不需要系统调用和在内核及用户内存之间传输数据，所以速度很快。<br>放入共享内存中的数据对所有共享这块内存的进程可见。在使用时需要配合其它同步机制。</p>
+<h2 id="System-V-共享内存"><a href="#System-V-共享内存" class="headerlink" title="System V 共享内存"></a>System V 共享内存</h2><p>sys/shm.h<br>shmget<br>创建或取得共享内存段，如果没有就按大小创建，有就忽略这个大小，但是大小必须小于或等于已有段的大小。<br>flag除了之前的可用外，还有SHM_HUGETLB 巨页共享内存段（MB以上的分页大小），SHM_NORESERVE 跟在mmap中作用一样    </p>
+<p>shmat<br>使该内存段成为进程虚拟内存的一部分，需要使用返回的addr值<br>可以指定目标地址（跟win的一样），但是不推荐，一般用null<br>有这些flag（0是读写）：<br>SHM_RDONLY 附加只读段<br>SHM_REMAP 替换shmaddr既有映射<br>SHM_RND 将shmaddr对齐到SHMLBA大小的倍数  </p>
+<p>默认会映射到栈和堆之间未分配的内存地址空间中（从0x400000000开始）<br>如果需要在共享内存空间中存储指针，需要使用偏移指针（boost中有例子）  </p>
+<p>shmdt<br>分离共享内存段  </p>
+<p>shmctl<br>删除（IPC_RMID）共享内存段（只需要执行一次。此时仍可以附加段，但是这个行为不可移植），只有所有的都分离后才会被真正销毁  </p>
+<p>共享内存段可以锁进RAM中，这样它就不会被交换出去。可用SHM_LOCK SHM_UNLOCK 锁定和解锁，前提是有效用户id跟创建者用户id一致。在设置时并不会马上锁入内存，而是在这些分页被访问时一个个地锁入。  </p>
+<p>相关取关联数据结构和资源限制的内容跟前面一样，略。   </p>
+<h2 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h2><p>使用mmap可在进程虚拟地址空间创建一个新的内存映射。<br>可以创建两种类型的映射：文件、匿名。<br>可以通过映射同一个文件的同一个区域实现映射共享，也可以通过fork取得映射副本实现共享。  </p>
+<p>当多个进程共享的页面相同时，如果是用私有标志（MAP_PRIVATE）映射(写时复制)的，则对映射内容修改<strong>对其它进程不可见</strong>，并且改动也不会更新到文件上；如果以共享方式（MAP_SHARED），修改会对其他进程可见，并且会对文件造成改动。</p>
+<p>mmap<br>创建映射，可以指定映射位置，错误时返回MAP_FAILED（-1）。需要指定映射大小和保护位（prot: PROT_NONE（无法访问） READ WRITE（需要配合read使用，不能用只写标识） EXEC），flag参数是设置私有还是共享（MAP_PRIVATE MAP_SHARED）的。fd和offset（必须是分页大小倍数）是用于文件映射的，匿名映射会忽略它。  </p>
+<p>会按页面大小整数倍映射，用sysconf（unistd.h）可以取得页面大小，或者用getpagesize或用宏PAGE_SIZE更简单  </p>
+<p>其它的flag有：<br>MAP_ANONYMOUS 创建匿名映射<br>MAP_FIXED 原样解释addr参数<br>MAP_LOCKED 锁入内存<br>MAP_HUGETLB 巨页<br>MAP_NORESERVE 控制交换空间预留，默认映射使用稀疏矩阵的方式，使用这个会预留足够的空间，防止因空间不足而引起程序退出（由OOM(out-of-memory)代码发送SIGKILL信号）<br>MAP_POPULATE 填充映射的分页<br>MAP_UNINITIALIZED 不清除匿名映射  </p>
+<p>munmap<br>解除该区域的映射，可以解除整个空间，也可以解除一部分，如果该区域不存在映射，也返回成功（不执行任何操作）。<br>当结束进程或exec后映射会被自动解除。  </p>
+<p>mprotect<br>可以修改保护位，跟win的差不多</p>
+<p><strong>文件映射</strong><br>在mmap后可以关闭fd，这不会有任何影响。映射的分页会在首次被访问时被映射进内存。<br>对映射内容的变更都会自动反映到文件上。可以减少read write造成的内存传输和缓冲区消耗，提高性能。<br>试图访问映射结尾外的字节会产生SIGSEGV信号，这会打出core dump并终止进程。如果映射大于文件结尾，这部分内存会被初始化为0，对它的修改不会反映到文件中，并且不会跟其它进程共享。    </p>
+<p>在修改映射内容后，内核会自动将变更写入底层文件中，但是不保证这个同步操作的发生时机，所以提供 msync 用于同步操作。可以使用MS_SYNC MS_ASYNC设置同步或异步操作。可以带MS_INVALIDATE 这样可以在其它进程的更新在区域中可见。    </p>
+<p>可用remap_file_pages创建非线性映射</p>
+<p>mmap绝对不会返回0，失败时会返回MAP_FAILED<br>打开同一个文件，使用MAP_ANONYMOUS可以实现父子进程匿名内存共享<br>或者使用shm_open创建或打开一个共享内存对象，这个会返回一个文件描述符，可供mmap使用，用完后用shm_unlink删除，如果使用了这套函数，需要指定链接选项-lrt  </p>
+<p><strong>匿名映射</strong><br>使用MAP_ANONYMOUS并且fd:-1，或者映射/dev/zero。<br>_书中说glibc的malloc使用MAP_PRIVATE分配大于阈值的内存块_  </p>
+<p>可以用mremap来修改映射大小，但是这个操作不可移植。  </p>
+<h2 id="POSIX-共享内存"><a href="#POSIX-共享内存" class="headerlink" title="POSIX 共享内存"></a>POSIX 共享内存</h2><p>shm_open<br>创建或打开，返回的fd带FD_CLOEXEC特性，初始长度为0<br>创建后传入mmap使用（历史原因），跟open区别是不需要创建文件。<br>在调用mmap之前需要用ftruncate扩大或搜索该对象<br>可用fchmod fchown修改共享内存对象权限和所有权  </p>
+<p>shm_unlink<br>删除，否则会持续存在直到被删除或系统重启<br>删除名字不会影响既有映射，但会阻止后续用open打开对象，一旦解除映射，对象就会被删除  </p>
+<h1 id="文件同步"><a href="#文件同步" class="headerlink" title="文件同步"></a>文件同步</h1><p>文件锁，配合stdio使用时需要小心（因为缓冲区刷新时机），一般用read write取代stdio来执行文件io  </p>
+<p>加锁方式：  </p>
+<ul>
+<li>劝告式: 默认，进程可以忽略掉这个锁，这需要所有进程配合使用  </li>
+<li>强制式: 系统强制检查io  </li>
+</ul>
+<p>flock<br>用于加锁（整个文件，劝告式），传入fd，flag有：<br>LOCK_SH 共享锁<br>LOCK_EX 互斥锁<br>LOCK_UN 解锁<br>LOCK_NB 非阻塞锁，锁互斥时会阻塞，使用这个不阻塞并返回EWOULDBLOCK错误  </p>
+<p>锁是与打开的文件描述相关联的，这样在fd被复制时会引用<strong>同一个</strong>文件锁（fork后会使用同一个锁），如果不显式解锁，当所有描述符副本关闭后这个锁才会被释放  </p>
+<p>fcntl<br>可用F_SETLK（锁不兼容会调用失败）、F_SETLKW（锁不兼容会阻塞）、F_GETLK（检查锁）来进行操作。<br>可设置文件一段范围的锁（劝告式）<br>此时需要传入flock结构，带有flag：<br>F_RDLCK、F_WRLCK、F_UNLCK</p>
+<p>如果要使用强制式加锁，需要开启set-group-ID并关闭group-execute来完成。  </p>
+<h1 id="虚拟内存操作"><a href="#虚拟内存操作" class="headerlink" title="虚拟内存操作"></a>虚拟内存操作</h1><p>mprotect 修改内存保护标识。flag用的是 PROT_ READ WRITE EXEC NONE<br><strong>内存锁</strong><br>将虚拟内存的部分或全部锁进内存防止被交换出去，这样可以提高性能，还可以避免敏感数据泄露（分页被写入硬盘，但是笔记本在挂起时是不管是否有锁都会存储到硬盘的）。<br>特权进程能锁住的内存数量无限制，非特权能锁住的上限由软限制RLIMIT_MEMLOCK定义（以分页为单位，默认8个分页（32768 Byte /x32））。<br>这个限制能影响mlock、mlockall、mmap、shmctl操作  </p>
+<p>使用mlock、munlock为内存区域加解锁，建议addr对齐分页大小，并且会锁住整个分页。<br>可以用mlockall或munlockall来给进程占据的所有内存加解锁。<br>锁行为不会叠加。  </p>
+<p>可以用mincore来确定内存驻留性。  </p>
+<p><strong>建议内存使用模式</strong><br>madvise 可以通知内核相应地址的内存范围可能的使用情况来提升程序性能。<br>flags(MADV_开头)：<br>NORMAL 分页以簇的形式传输，会导致一些预先读和事后读。<br>RANDOM 分页会被随机访问，因此内核每次读取的数据量尽可能少。<br>SEQUENTIAL 分页只会被访问一次，并且是顺序访问，因此内核可以激进地预读，并且访问后将其释放。<br>WILLNEED 预读分页以备将来之需<br>DONTNEED 在需要时交换出去<br>DONTFORK<br>DOFORK<br>REMOVE<br>SOFT_OFFLINE<br>MERGEABLE<br>UNMERGEABLE  </p>
+<h1 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h1><p>因为信号编程比较繁杂，并且没有排队处理可能会丢失信息，使用中还会面临各种问题，携带的信息量也有限，所以很少将信号用于进程间通信。<br>可以用man 7 signal 得到帮助</p>
+<h2 id="类型和默认行为"><a href="#类型和默认行为" class="headerlink" title="类型和默认行为"></a>类型和默认行为</h2><table>
+<thead>
+<tr>
+<th>信号</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> SIGABRT/6</td>
+<td>当调用abort函数时，系统就向进程发送。<br>默认终止进程并产生核心转储文件（用于调试）。</td>
+</tr>
+<tr>
+<td> SIGALRM/14</td>
+<td>alarm或settimer的实时定时器到期，内核产生。</td>
+</tr>
+<tr>
+<td> SIGBUS/7</td>
+<td>发生某种内存访问错误。比如当用mmap时，访问地址超出结尾就会引发</td>
+</tr>
+<tr>
+<td> SIGCHILD/17 <br> SIGCLD</td>
+<td>子进程终止，内核会向父进程发送。当某一子进程因为收到信号停止或恢复时也可能发送。</td>
+</tr>
+<tr>
+<td> SIGCONT/18</td>
+<td>发送给已停止的进程，使它恢复运行，非停止时忽略。</td>
+</tr>
+<tr>
+<td>SIGEMT</td>
+<td>依赖于实现的硬件错误</td>
+</tr>
+<tr>
+<td>SIGFPE/8</td>
+<td>算术错误，比如除0</td>
+</tr>
+<tr>
+<td>SIGHUP/1</td>
+<td>终端断开（挂机）</td>
+</tr>
+<tr>
+<td>SIGILL/4</td>
+<td>执行非法机器指令</td>
+</tr>
+<tr>
+<td>SIGINFO</td>
+<td>按Ctl+T产生，用于获取前台进程组状态信息</td>
+</tr>
+<tr>
+<td>SIGINT/2</td>
+<td>Ctl+C，用于终止进程</td>
+</tr>
+<tr>
+<td>SIGIO/29 <br> SIGPOLL</td>
+<td>fcntl设置在打开某些特定类型fd时产生</td>
+</tr>
+<tr>
+<td>SIGIOT<br>SIGABRT</td>
+<td>发生由实现定义的硬件错误</td>
+</tr>
+<tr>
+<td>SIGKILL/9</td>
+<td>终止进程，无法将其阻塞、忽略或捕获</td>
+</tr>
+<tr>
+<td>SIGLOST</td>
+<td>Linux未使用，UNIX才用</td>
+</tr>
+<tr>
+<td>SIGPIPE/13</td>
+<td>向管道写入信息</td>
+</tr>
+<tr>
+<td>SIGPROF/27</td>
+<td>由settimer设置的性能分析定时器过期时内核产生。</td>
+</tr>
+<tr>
+<td>SIGPWR/30</td>
+<td>电源故障，电量将耗尽</td>
+</tr>
+<tr>
+<td>SIGQUIT/3</td>
+<td>Ctl+\，终止进程并产生核心转储文件</td>
+</tr>
+<tr>
+<td>SIGSEGV/11</td>
+<td>内存引用无效</td>
+</tr>
+<tr>
+<td>SIGSTKFLT/16</td>
+<td>协处理器栈错误，Linux未使用</td>
+</tr>
+<tr>
+<td>SIGSTOP/19</td>
+<td>停止进程，无法阻止该信号</td>
+</tr>
+<tr>
+<td>SIGSYS/31</td>
+<td>发起的系统调用有误</td>
+</tr>
+<tr>
+<td>SIGTERM/15</td>
+<td>终止进程的标准信号</td>
+</tr>
+<tr>
+<td>SIGTRAP/5</td>
+<td>端点调试</td>
+</tr>
+<tr>
+<td>SIGTSTP/20</td>
+<td>Ctl+z，挂起</td>
+</tr>
+<tr>
+<td>SIGTTIN/21</td>
+<td>默认停止进程，在shell下运行时，后台进程组试图对终端read时，终端驱动程序向该进程组发送此信号</td>
+</tr>
+<tr>
+<td>SIGTTOU/22</td>
+<td>类似上面，但是是write</td>
+</tr>
+<tr>
+<td>SIGURG/23</td>
+<td>套接字上存在紧急数据</td>
+</tr>
+<tr>
+<td>SIGVTALRM/26</td>
+<td>settimer设置的虚拟定时器（根据使用的cpu时间定时）到期，内核产生</td>
+</tr>
+<tr>
+<td>SIGWINCH/28</td>
+<td>终端窗口尺寸发生变化</td>
+</tr>
+<tr>
+<td>SIGXCPU/24</td>
+<td>cpu时间超出对应资源限制</td>
+</tr>
+<tr>
+<td>SIGXFSZ/25</td>
+<td>当进程试图增大文件突破对进程文件大小的资源限制</td>
+</tr>
+</tbody>
+</table>
+<p>可以用strsignal打印信号说明</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>用signal和sigaction（首选）来设置。<br>signal 关联处理信号的函数,@1:信号，@2:回调（void(int sig)），@ret:旧的回调,会替换掉旧的回调；旧函数不建议使用<br>调用处理函数后会跳回原本程序位置继续执行<br>signal在设置时返回旧处理函数指针，sigaction不需要设置就可以获得当前处理函数指针。  </p>
+<p>sigaction 取代signal，@1信号，@2信号状态（在里面设置回调），@3返回旧状态<br>要用sigemptyset清空mask  </p>
+<p>当信号来时，内核会打断主程序流程，并代表进程来调用（似乎有不同的调用栈）处理程序，当返回时会从打断的位置恢复执行。  </p>
+<p>发送信号用 kill（pid&gt;0 指定pid，pid==0 自身和同组进程，pid&lt;-1 组id为|pid|的进程组，pid==-1 所有进程除了init和自身）、raise（向自身发送）、killpg（向某进程组所有成员发送）。<br>杀死pid要发SIGKILL（默认SIGTERM）<br>如果发0（空信号），kill只会执行错误检查，看是否可以像目标进程发送信号，可以用这个来检测特定pid是否存在，如果发送失败表示不存在  </p>
+<p>当需要使用一组信号时可以用信号集。<br>sigemptyset<br>sigfillset<br>sigaddset<br>sigdelset<br>sigismember<br>sigisemptyset<br>sigorset<br>sigandset  </p>
+<p>sigprocmask 设置掩码阻挡信号</p>
+<p>sigaction 跟signal差不多，功能更强大</p>
+<p>sigqueue 同kill，但会排入队列</p>
+<p>可用pthread_sigmask、sigprocmask设置信号掩码，可阻塞其信号传递，直到解除阻塞，但是只表明信号是否发生，而未表明发生次数（貌似内部是用置位设置而不是用队列管理）。</p>
+<p>可用pause暂停进程，直到有信号。<br>pause 让进程进入休眠状态直到收到信号，如果不处理信号则会终止进程,总是返回-1，如果触发处理函数，则处理在返回前执行  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright box-shadow">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Nargnos
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/2017/09/28/学习笔记/MMP/Linux相关API/" title="[MMP] Linux相关API">/2017/09/28/学习笔记/MMP/Linux相关API/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" class="fa fa-tag" rel="tag"> C++</a>
+          
+            <a href="/tags/MMP/" class="fa fa-tag" rel="tag"> MMP</a>
+          
+            <a href="/tags/Linux/" class="fa fa-tag" rel="tag"> Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/学习笔记/安全/安全技巧/" rel="next" title="安全技巧">
+                <i class="fa fa-chevron-left"></i> 安全技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/29/学习笔记/C++/元编程/" rel="prev" title="元编程笔记">
+                元编程笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Nargnos" />
+          <p class="site-author-name" itemprop="name">Nargnos</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进程"><span class="nav-number">1.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建"><span class="nav-number">1.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终止"><span class="nav-number">1.2.</span> <span class="nav-text">终止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控子进程"><span class="nav-number">1.3.</span> <span class="nav-text">监控子进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#僵尸孤儿"><span class="nav-number">1.4.</span> <span class="nav-text">僵尸孤儿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信息"><span class="nav-number">1.5.</span> <span class="nav-text">信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组、会话、作业控制"><span class="nav-number">1.6.</span> <span class="nav-text">组、会话、作业控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优先级"><span class="nav-number">1.7.</span> <span class="nav-text">优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#亲和力"><span class="nav-number">1.8.</span> <span class="nav-text">亲和力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源"><span class="nav-number">1.9.</span> <span class="nav-text">资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#守护进程"><span class="nav-number">1.10.</span> <span class="nav-text">守护进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#权限"><span class="nav-number">1.11.</span> <span class="nav-text">权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#能力"><span class="nav-number">1.12.</span> <span class="nav-text">能力</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程"><span class="nav-number">2.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-number">2.1.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#互斥量"><span class="nav-number">3.</span> <span class="nav-text">互斥量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#条件变量"><span class="nav-number">4.</span> <span class="nav-text">条件变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原子"><span class="nav-number">5.</span> <span class="nav-text">原子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管道-FIFO"><span class="nav-number">6.</span> <span class="nav-text">管道/FIFO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#管道"><span class="nav-number">6.1.</span> <span class="nav-text">管道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FIFO"><span class="nav-number">6.2.</span> <span class="nav-text">FIFO</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#System-V-IPC"><span class="nav-number">7.</span> <span class="nav-text">System V IPC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#消息队列"><span class="nav-number">7.1.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号量"><span class="nav-number">7.2.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享内存"><span class="nav-number">7.3.</span> <span class="nav-text">共享内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#POSIX-IPC"><span class="nav-number">8.</span> <span class="nav-text">POSIX IPC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#消息队列-1"><span class="nav-number">8.1.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号量-1"><span class="nav-number">8.2.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享内存-1"><span class="nav-number">8.3.</span> <span class="nav-text">共享内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#共享内存-2"><span class="nav-number">9.</span> <span class="nav-text">共享内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#System-V-共享内存"><span class="nav-number">9.1.</span> <span class="nav-text">System V 共享内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存映射"><span class="nav-number">9.2.</span> <span class="nav-text">内存映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POSIX-共享内存"><span class="nav-number">9.3.</span> <span class="nav-text">POSIX 共享内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件同步"><span class="nav-number">10.</span> <span class="nav-text">文件同步</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟内存操作"><span class="nav-number">11.</span> <span class="nav-text">虚拟内存操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信号"><span class="nav-number">12.</span> <span class="nav-text">信号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#类型和默认行为"><span class="nav-number">12.1.</span> <span class="nav-text">类型和默认行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">12.2.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<!--and theme.scheme === 'Pisces'-->
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js" id="ribbon" size="100" alpha='0.6' zIndex="-2"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
