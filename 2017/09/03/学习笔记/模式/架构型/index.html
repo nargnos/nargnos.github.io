@@ -104,7 +104,7 @@
 <meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/pac.jpg">
 <meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/microkernel.jpg">
 <meta property="og:image" content="/2017/09/03/学习笔记/模式/架构型/reflection.jpg">
-<meta property="og:updated_time" content="2017-10-11T06:42:01.272Z">
+<meta property="og:updated_time" content="2017-10-11T07:45:22.873Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[模式] 架构型">
 <meta name="twitter:description" content="不全待补">
@@ -555,7 +555,7 @@
 </li>
 <li>开发IDL编译器<br> 需要用编译器将接口定义转化为程序代码</li>
 </ol>
-<p>对于<strong>直接通信</strong>的BrokerBroker系统，Broker告诉客户机服务器提供了哪一条通信通道，从而客户机可以建立与指定服务器之间的连接。<br>如果以传输数据为重点的话，需要在原始数据附加消息类型、结构和其它相关额外信息。  </p>
+<p>对于<strong>直接通信</strong>的Broker系统，Broker告诉客户机服务器提供了哪一条通信通道，从而客户机可以建立与指定服务器之间的连接。<br>如果以传输数据为重点的话，需要在原始数据附加消息类型、结构和其它相关额外信息。  </p>
 <h3 id="特点-4"><a href="#特点-4" class="headerlink" title="特点"></a>特点</h3><p>定位透明性，CS之间互相不必关心对方位置</p>
 <h3 id="缺点-6"><a href="#缺点-6" class="headerlink" title="缺点"></a>缺点</h3><p>容错性较差，如果Broker或者服务器失效，依赖于它的程序都不能成功地继续进行，可以通过复制组件来提高可靠性。</p>
 <h2 id="客户端代理（Client-Proxy）"><a href="#客户端代理（Client-Proxy）" class="headerlink" title="客户端代理（Client Proxy）"></a>客户端代理（Client Proxy）</h2><h3 id="作用-13"><a href="#作用-13" class="headerlink" title="作用"></a>作用</h3><p>在访问远程组件服务的时候，客户端需要使用特定的数据格式和网络协议。但是，如果将格式和协议信息硬编码到客户端中，将导致客户端依赖于协作组件的“远程性”，因为远程组件的调用和本地组件是不同的。<br>因此，在客户端地址空间提供一个客户端代理，它可以<strong>代替远程组件</strong>。它提供了与远程组件相同的接口，并将客户端的调用映射到特定的消息格式或协议，以便跨网络发送这些调用请求。 </p>
